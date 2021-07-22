@@ -12,10 +12,16 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+env = environ.Env()
+READ_DOT_ENV_FILE = env.bool("DJANGO_READ_DOT_ENV_FILE", default=True)
+if READ_DOT_ENV_FILE:
+    # OS environment variables take precedence over variables from .env
+    env.read_env(str(BASE_DIR / ".env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -43,6 +49,7 @@ INSTALLED_APPS = [
     "allauth.account",
     "allauth.socialaccount",
     "users",
+    "phonenumber_field",
 ]
 
 MIDDLEWARE = [
@@ -128,6 +135,26 @@ STATIC_URL = '/static/'
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
 STATICFILES_DIRS = [str(BASE_DIR / "static")]
 
+# django-allauth
+# ------------------------------------------------------------------------------
+ACCOUNT_ALLOW_REGISTRATION = True # env.bool("DJANGO_ACCOUNT_ALLOW_REGISTRATION", True)
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_EMAIL_REQUIRED = True
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+ACCOUNT_ADAPTER = "users.adapters.AccountAdapter"
+# https://django-allauth.readthedocs.io/en/latest/configuration.html
+SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
+
+ACCOUNT_FORMS = {
+    'signup': 'users.forms.CustomSignupForm',
+    # 'login': 'users.forms.CustomLoginForm',
+    # 'reset_password': 'users.forms.CustomResetPasswordForm',
+}
+
 AUTHENTICATION_BACKENDS = [
    'django.contrib.auth.backends.ModelBackend',
    'allauth.account.auth_backends.AuthenticationBackend'
@@ -136,3 +163,25 @@ AUTHENTICATION_BACKENDS = [
 AUTH_USER_MODEL = 'users.User'
 
 SITE_ID = 1
+
+# https://github.com/stefanfoulis/django-phonenumber-field
+# PHONENUMBER_DB_FORMAT = 'NATIONAL'
+# PHONENUMBER_DEFAULT_REGION = 'US'
+
+
+# EMAIL
+# ------------------------------------------------------------------------------
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-backend
+EMAIL_BACKEND = env(
+    "DJANGO_EMAIL_BACKEND", default="django.core.mail.backends.smtp.EmailBackend"
+)
+# https://docs.djangoproject.com/en/dev/ref/settings/#email-timeout
+EMAIL_TIMEOUT = 5
+
+EMAIL_USE_TLS = env("EMAIL_USE_TLS", default=True)
+EMAIL_HOST = env("EMAIL_HOST", default="EMAIL_HOST")
+EMAIL_PORT = env("EMAIL_PORT", default="EMAIL_PORT")
+EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="EMAIL_HOST_USER")
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
+EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default="")

@@ -22,9 +22,8 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
-#    path('jillp2/', views.jillp2),
-#    path('orderbook/', views.orderbook),
-#    path('jillfarm/',views.jillfarm),
-   
+    # path('jillp2/', views.jillp2),
+    # path('orderbook/', views.orderbook),
+    # path('jillfarm/',views.jillfarm),
+
 ]
-    
