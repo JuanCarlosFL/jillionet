@@ -48,8 +48,11 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
-    "users",
+    
     "phonenumber_field",
+
+    "users.apps.UsersConfig",
+    "orderbook",
 ]
 
 MIDDLEWARE = [

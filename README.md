@@ -12,7 +12,7 @@ Orderbook Side(Buy-Sell),orderType(Market- Limit),Volume(),typeOfcontract(Future
 
 tradingPairs  BTC/EUR, ETH/EUR,JILL/EUR,BNB/EUR
 
-UserBalance  BTC,ETH,JILL,BNB,EUR
+UserBalance  BTC,ETH,JILL,BNB,BUSD
 
 yieldfarmContract   Contract1, Contract2, Contract3, Contract4, Contract5, Contract6, Contract7, Contract8, Contract9 
 
@@ -23,16 +23,26 @@ IaBotContract   Contract1, Contract2, Contract3, Contract4, Contract5, Contract6
 
 UserLevel Diamond, Gold, Silver, Copper, Platinum, Bronze
 
-UserLevelAmount Diamond(100000000), Gold(10000000), Silver(1000000), Copper(100000), Platinum(10000), Bronze(1000)
+
 
 
 JillPrice P0,P1,P2,P3,P4,P5,P6,P7,P8,P9
 
 Controler
 UserOrderSubmit
-UserLevelCalculate
+UserLevelCalculate----UserLevelAmount Diamond(100000000), Gold(10000000), Silver(1000000), Copper(100000), Platinum(10000), Bronze(5000)
 JillPriceBDSubmit
 CriptoDeposit
 CriptoWithdraw
 InternalTransfer
-![image](https://user-images.githubusercontent.com/2618737/126874508-652ab4f5-cf6d-4a32-bcef-568380efd86f.png)
+
+
+BTC chain 
+ETH ERC-20 Chain
+JILL ERC-20 Chain
+BNB  BEP-20 Chain
+BUSD BEP-20 Chain
+
+
+B-BOOK Internal book (Market maker)
+A-BOOK  Stock market book STP orders

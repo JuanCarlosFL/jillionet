@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
+from .models import UserBalance
 
 User = get_user_model()
 
@@ -15,7 +16,7 @@ class UserAdmin(auth_admin.UserAdmin):
     add_form = UserCreationForm
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "phone_number", "email")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "phone_number", "email", "user_level")}),
         (
             _("Permissions"),
             {
@@ -32,3 +33,6 @@ class UserAdmin(auth_admin.UserAdmin):
     )
     list_display = ["username", "is_superuser"]
     search_fields = ["username"]
+
+
+admin.site.register(UserBalance)
