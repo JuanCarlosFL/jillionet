@@ -46,3 +46,9 @@ BUSD BEP-20 Chain
 
 B-BOOK Internal book (Market maker)
 A-BOOK  Stock market book STP orders
+
+Session 1 #Make a register
+Session 2 #Make a orderbook model and user balance model
+Session 3 Make view of orderbook user balance view
+
+If the user is loged when click on the  /orderbook/ qwe habe a field requeast like http://127.0.0.1:8000/admin/orderbook/order/add/
