@@ -3,7 +3,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Hello World</title>
+  <title>Bienvenido a Jillionet</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
@@ -32,17 +32,18 @@
 
 <p class="text-center"> 
 <ol class="text-center">
-    <li><a href="/jillfarm">-JILLFARM</a></li>
-    <li><a href="/jillp2"> JILL P2</a></li>
+
     <li><a href="/admin">  ADMIN</a></li>
-    <li><a href="/admin">  ORDERBOOK</a></li>
+    <li><a href="{% url 'orderbook:orderbook' %}">  ORDERBOOK</a></li>
+    <li><a href="{% url 'app:market' %}"> Market</a></li>
+    <li><a href="{% url 'users:balance' %}">Balance</a></li>
     {% if user.is_authenticated %}
 
-    <li><a href="{% url 'account_logout' %}"> Logout</a></li>
+    <li><a href="{% url 'account_logout' %}"> Salir</a></li>
 
     {% else %}
-        <li><a href="{% url 'account_login' %}">  Login</a></li>
-        <li><a href="{% url 'account_signup' %}"> SignUp</a></li>
+        <li><a href="{% url 'account_login' %}">  Mi cuenta</a></li>
+        <li><a href="{% url 'account_signup' %}"> Registro</a></li>
     {% endif %}
 </ol>
 </p>

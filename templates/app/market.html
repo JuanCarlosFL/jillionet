@@ -1,0 +1,5 @@
+<div>
+  {% for market in object_list %} 
+  <p><a href="{% url 'orderbook:create_order' market.slug %}">{{market.pair}}</a></p>
+  {% endfor %}
+</div>

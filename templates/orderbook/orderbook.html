@@ -24,8 +24,16 @@
 </div>
 
 <p class="text-center">Orderbook <br><br></p>
-
-
+<table>
+  <tr>
+    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th>
+  </tr>
+  {% for order in object_list%}
+  <tr>
+    <td>{{order.trading_pair.pair}}</td><td>{{order.buy_sell}}</td><td>{{order.order_type}}</td><td>{{order.volume}}</td>
+  </tr>
+  {% endfor %}
+</table>
 
 
 </body>

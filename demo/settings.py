@@ -50,9 +50,10 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     
     "phonenumber_field",
+    "django_extensions",
 
     "users.apps.UsersConfig",
-    "orderbook",
+    "orderbook","yeildfarming",
 ]
 
 MIDDLEWARE = [

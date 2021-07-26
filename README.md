@@ -19,7 +19,6 @@ yieldfarmContract   Contract1, Contract2, Contract3, Contract4, Contract5, Contr
 IaBotPredict   Predict1, Predict2, Predict 3, Predict 4, Predict5, Predict6, Predict7, Predict8, Predict9
 
 
-IaBotContract   Contract1, Contract2, Contract3, Contract4, Contract5, Contract6, Contract7, Contract8, Contract9
 
 UserLevel Diamond, Gold, Silver, Copper, Platinum, Bronze
 
@@ -37,18 +36,24 @@ CriptoWithdraw
 InternalTransfer
 
 
+
+B-BOOK Internal book (Market maker)
+A-BOOK  Stock market book STP orders
+
+
+###################################################################################################################
+
+Session 1 #Make a register
+Session 2 #Make a orderbook model and user balance model
+Session 3 Make view of orderbook user balance view
+
+If the user is loged when click on the  /orderbook/ qwe have a field requeast like http://127.0.0.1:8000/admin/orderbook/order/add/
+
+in orderbook class currencies Add the blockhain network that works (Ej.ERC-20,BEP-20,BTC), now is comented with #
+ 
 BTC chain 
 ETH ERC-20 Chain
 JILL ERC-20 Chain
 BNB  BEP-20 Chain
 BUSD BEP-20 Chain
 
-
-B-BOOK Internal book (Market maker)
-A-BOOK  Stock market book STP orders
-
-Session 1 #Make a register
-Session 2 #Make a orderbook model and user balance model
-Session 3 Make view of orderbook user balance view
-
-If the user is loged when click on the  /orderbook/ qwe habe a field requeast like http://127.0.0.1:8000/admin/orderbook/order/add/

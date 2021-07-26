@@ -35,4 +35,14 @@ class UserAdmin(auth_admin.UserAdmin):
     search_fields = ["username"]
 
 
-admin.site.register(UserBalance)
+@admin.register(UserBalance)
+class UserBalanceAdmin(admin.ModelAdmin):
+    list_display = ['user', 'get_code', 'amount']
+
+    def get_code(self, obj):
+        try:
+            return obj.currency.code
+        except:
+            return None
+    get_code.short_description = 'Currency Code'
+    get_code.admin_order_field = 'currency__code'

@@ -1,6 +1,9 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.generic.list import ListView
+
+from orderbook.models import TradingPair
 
 
 def index(request):
@@ -8,23 +11,7 @@ def index(request):
     return render(request, 'inicio.html', {})
 
 
-
-#def orderbook(request):
-
-#    return render(request, 'orderbook.html', {})
-
-
-
-
-def jillfarm(request):
-    return HttpResponse("jillfarm")
-
-
-def jillp2(request):
-    return HttpResponse(p2venta)
-
-
-
-#
-
+class MarketListView(ListView):
+    model = TradingPair
+    template_name = 'app/market.html'
 

@@ -1,0 +1,8 @@
+<div>
+    <h2>{{view.kwargs.slug}}</h2>
+    <form action="." method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button>Order</button>
+    </form>
+</div>
