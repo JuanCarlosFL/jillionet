@@ -9,7 +9,8 @@ class TradingPairAdmin(admin.ModelAdmin):
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'buy_sell', 'status', 'trading_pair']
+    list_display = ['id', 'user', 'buy_sell', 'status', 'trading_pair','volume','price']
+    search_fields = ['buy_sell', 'user__username', 'trading_pair__pair']
 
     #def get_chain(self, obj):
     #    return obj.currency.chain

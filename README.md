@@ -46,6 +46,8 @@ A-BOOK  Stock market book STP orders
 Session 1 #Make a register
 Session 2 #Make a orderbook model and user balance model
 Session 3 Make view of orderbook user balance view
+Session User depost and user Withdraw, view of yeild farming and IA bot
+
 
 If the user is loged when click on the  /orderbook/ qwe have a field requeast like http://127.0.0.1:8000/admin/orderbook/order/add/
 
@@ -57,3 +59,13 @@ JILL ERC-20 Chain
 BNB  BEP-20 Chain
 BUSD BEP-20 Chain
 
+
+Alpha Version 0.1
+
+///Premium Funcions
+
+----
+-
+-
+-
+-

@@ -22,6 +22,7 @@ class Currency(models.Model):
     name = models.CharField(max_length=200, unique=True)
     code = models.CharField(max_length=10, unique=True)
     chain = models.CharField(max_length=10, default='ERC-20')
+    last_price = models.DecimalField(max_digits=32, decimal_places=18, null=True)
 
 
     def __str__(self):
@@ -63,11 +64,14 @@ class Order(models.Model):
     
     buy_sell = models.CharField(max_length=10, choices=BUY_SELL_CHOICES)
     order_type = models.CharField(max_length=200, choices=ORDER_TYPE_CHOICES, default=LIMIT)
-    volume = models.DecimalField(decimal_places=18, max_digits=36)
+    volume = models.DecimalField(decimal_places=18, max_digits=36, default=10000)
+    price = models.DecimalField(decimal_places=18, max_digits=36, default=0.005)# Default value change
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     status = models.CharField(max_length=200, choices=STATUS_CHOICES, default=NEW)
     contract_type = models.CharField(max_length=200, choices=CONTRACT_TYPE_CHOICES, default=SPOT)
     trading_pair = models.ForeignKey(TradingPair, on_delete=models.SET_NULL, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 

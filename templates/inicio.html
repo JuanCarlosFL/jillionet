@@ -34,7 +34,7 @@
 <ol class="text-center">
 
     <li><a href="/admin">  ADMIN</a></li>
-    <li><a href="{% url 'orderbook:orderbook' %}">  ORDERBOOK</a></li>
+    <li><a href="{% url 'orderbook:all_orderbook' %}">  ORDERBOOK</a></li>
     <li><a href="{% url 'app:market' %}"> Market</a></li>
     <li><a href="{% url 'users:balance' %}">Balance</a></li>
     {% if user.is_authenticated %}

@@ -17,4 +17,4 @@ class yeildcontract(models.Model):
     
 
     def __str__(self):
-        return f"{self.code}"
+        return f"{self.yeildpair}"

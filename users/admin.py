@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
-from .models import UserBalance
+from .models import UserBalance, User_level_field
 
 User = get_user_model()
 
@@ -46,3 +46,9 @@ class UserBalanceAdmin(admin.ModelAdmin):
             return None
     get_code.short_description = 'Currency Code'
     get_code.admin_order_field = 'currency__code'
+
+@admin.register(User_level_field)
+class User_level_field(admin.ModelAdmin):
+    list_display = ['level_key','max_withdraw_USDT', 'spred','borrow_interest','Futures_leverage','inicial_balance_USDT']
+
+

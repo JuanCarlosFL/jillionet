@@ -53,7 +53,7 @@ INSTALLED_APPS = [
     "django_extensions",
 
     "users.apps.UsersConfig",
-    "orderbook","yeildfarming",
+    "orderbook","yeildfarming","IaBotpredict",
 ]
 
 MIDDLEWARE = [

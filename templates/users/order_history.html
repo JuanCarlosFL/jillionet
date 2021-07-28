@@ -1,0 +1,13 @@
+<div>
+    <table class="text-center">
+        <tr>
+          <th>Pair</th><th>Buy/Sell</th><th>Status</th><th>Order type</th><th>Volume</th><th>Price</th>
+        </tr>
+        {% for order in object_list%}
+        <tr>
+          <td>{{order.trading_pair.pair}}</td><td>{{order.buy_sell}}</td><td>{{order.status}}</td><td>{{order.order_type}}</td><td>{{order.volume | floatformat:4}}</td><td>{{order.price | floatformat:4}}</td>
+        </tr>
+        {% endfor %}
+      </table>
+      
+</div>

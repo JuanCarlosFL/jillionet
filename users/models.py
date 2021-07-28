@@ -28,8 +28,23 @@ class UserBalance(models.Model):
    currency = models.ForeignKey('orderbook.Currency', on_delete=models.SET_NULL, null=True)
    amount = models.DecimalField(decimal_places=18, max_digits=36, default=0)
    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
+   public_key = models.TextField(null=True, blank=True)
+
 
    class Meta:
       unique_together = ['currency', 'user']
 
-   
+
+class User_level_field(models.Model):
+    level_key = models.CharField(max_length=200, unique=True)
+    spred = models.CharField(max_length=200, unique=True)
+    borrow_interest = models.CharField(max_length=200, unique=True)
+    margin_call = models.CharField(max_length=200, unique=True)
+    Futures_leverage = models.CharField(max_length=200, unique=True)
+    Margin_leverage = models.CharField(max_length=200, unique=True)
+    inicial_balance_USDT = models.CharField(max_length=200, unique=True)
+    inicial_balance_JILL = models.CharField(max_length=200, unique=True)
+    max_withdraw_USDT = models.CharField(max_length=200, unique=True)
+    max_withdraw_JILL = models.CharField(max_length=200, unique=True)
+
+

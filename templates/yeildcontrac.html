@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Hello World</title>
+  <title>Yeild contrtact</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 
@@ -19,13 +19,6 @@
     <div class="col-md-12">
       <h1 class="text-center">Bienvenido a Jillionet</h1>
       <br>
-
-      <h2 class="text-center">Orderbook Level spred</h2>
-
-      <h2 class="text-center">Trading pair {{ trading_pair.pair }}</h2>
-
-      <h2 class="text-center">Bid Price {{sell_orders.first.price | floatformat:2}}</h2>
-      <h2 class="text-center">Ask Price {{buy_orders.last.price | floatformat:2}}</h2>
 
 {% if form %}
       <div>
