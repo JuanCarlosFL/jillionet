@@ -6,4 +6,4 @@ from .models import iabotcontract
 
 class iabottable(ListView):
     model = iabotcontract
-    templete_name = 'iabotcontract.html'
+    template_name = 'iabotcontract.html'
