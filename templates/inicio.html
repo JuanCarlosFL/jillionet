@@ -34,16 +34,18 @@
 <ol class="text-center">
 
     <li><a href="/admin">  ADMIN</a></li>
+    <li><a href="{% url 'app:market' %}"> MARKET</a></li>
+    <li><a href="{% url 'app:yeild' %}">  JILLFARM  </a></li>
+    <li><a href="{% url 'app:iabot' %}">  JILLBOT</a></li>
     <li><a href="{% url 'orderbook:all_orderbook' %}">  ORDERBOOK</a></li>
-    <li><a href="{% url 'app:market' %}"> Market</a></li>
-    <li><a href="{% url 'users:balance' %}">Balance</a></li>
+    <li><a href="{% url 'users:balance' %}">FOUNDS</a></li>
     {% if user.is_authenticated %}
 
-    <li><a href="{% url 'account_logout' %}"> Salir</a></li>
+    <li><a href="{% url 'account_logout' %}"> SALIR</a></li>
 
     {% else %}
-        <li><a href="{% url 'account_login' %}">  Mi cuenta</a></li>
-        <li><a href="{% url 'account_signup' %}"> Registro</a></li>
+        <li><a href="{% url 'account_login' %}">  MI CUENTA</a></li>
+        <li><a href="{% url 'account_signup' %}"> REGISTRO/a></li>
     {% endif %}
 </ol>
 </p>

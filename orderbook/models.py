@@ -23,6 +23,7 @@ class Currency(models.Model):
     code = models.CharField(max_length=10, unique=True)
     chain = models.CharField(max_length=10, default='ERC-20')
     last_price = models.DecimalField(max_digits=32, decimal_places=18, null=True)
+    contract_creator_hash = models.CharField(max_length=200, default='none')
 
 
     def __str__(self):
@@ -60,6 +61,36 @@ class Order(models.Model):
     BUY_SELL_CHOICES = (
         (BUY, BUY.title()),
         (SELL, SELL.title())
+    )
+
+
+    KLINE_INTERVAL_1MINUTE = '1m'
+    KLINE_INTERVAL_3MINUTE = '3m'
+    KLINE_INTERVAL_5MINUTE = '5m'
+    KLINE_INTERVAL_15MINUTE = '15m'
+    KLINE_INTERVAL_30MINUTE = '30m'
+    KLINE_INTERVAL_1HOUR = '1h'
+    KLINE_INTERVAL_2HOUR = '2h'
+    KLINE_INTERVAL_4HOUR = '4h'
+    KLINE_INTERVAL_6HOUR = '6h'
+    KLINE_INTERVAL_8HOUR = '8h'
+    KLINE_INTERVAL_12HOUR = '12h'
+    KLINE_INTERVAL_1DAY = '1d'
+    KLINE_INTERVAL_3DAY = '3d'
+    KLINE_INTERVAL_1WEEK = '1w'
+    KLINE_INTERVAL_1MONTH = '1M'
+
+    TIMEFRAME_CHOICES = (
+        (KLINE_INTERVAL_1MINUTE, KLINE_INTERVAL_1MINUTE),
+        (KLINE_INTERVAL_3MINUTE, KLINE_INTERVAL_3MINUTE),
+        (KLINE_INTERVAL_5MINUTE, KLINE_INTERVAL_5MINUTE),
+        (KLINE_INTERVAL_15MINUTE, KLINE_INTERVAL_15MINUTE),
+        KLINE_INTERVAL_30MINUTE, KLINE_INTERVAL_30MINUTE),
+        (KLINE_INTERVAL_1HOUR, KLINE_INTERVAL_1HOUR),
+        (KLINE_INTERVAL_2HOUR, KLINE_INTERVAL_2HOUR),
+        (KLINE_INTERVAL_3HOUR,),
+        (,),
+        (,),
     )
     
     buy_sell = models.CharField(max_length=10, choices=BUY_SELL_CHOICES)

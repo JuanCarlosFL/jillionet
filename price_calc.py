@@ -12,4 +12,5 @@ velaBTC = client.get_klines(symbol='BTCEUR', interval=Client.KLINE_INTERVAL_1MIN
 
 CloseBTC =(velaBTC[0][4])
 
-print (CloseBTC)
+print (CloseBTC)            
+    

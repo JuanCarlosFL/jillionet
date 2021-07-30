@@ -1,9 +1,10 @@
 Views
 Menu HOME-JILLfarm-JILLBot-Markets-Trades-Dapps-Derivates-Founds
-Menu(Founds)Resume-Spot-Margin-Derivates-Card> deposit, withdraw, transfer,History
-Menu(Trades) Open_orders, Fill_orders
 Menu(Markets) List_of_pair
-Menu(Invest) JILLfarm-JILLBot
+Menu(Founds)Resume-Spot-Margin-Derivates-Card> deposit, withdraw, transfer,History
+
+
+Menu(Jillholders) Top of jillion wallets
 
 BDmodels 
 
@@ -25,15 +26,13 @@ UserLevel Diamond, Gold, Silver, Copper, Platinum, Bronze
 
 
 
-JillPrice P0,P1,P2,P3,P4,P5,P6,P7,P8,P9
 
 Controler
-UserOrderSubmit
-UserLevelCalculate----UserLevelAmount Diamond(100000000), Gold(10000000), Silver(1000000), Copper(100000), Platinum(10000), Bronze(5000)
-JillPriceBDSubmit
-CriptoDeposit
-CriptoWithdraw
-InternalTransfer
+
+
+JillPriceBDSubmit(use LIMIT_MAKER )
+
+
 
 
 
@@ -43,11 +42,53 @@ A-BOOK  Stock market book STP orders
 
 ###################################################################################################################
 
-Session 1 #Make a register
-Session 2 #Make a orderbook model and user balance model
-Session 3 Make view of orderbook user balance view
-Session User depost and user Withdraw, view of yeild farming and IA bot
+Logical Backend
 
+Session v0.1 #Make a register
+Session v0.2 #Make a orderbook model and user balance model
+Session v0.3 Make view of orderbook, user balance, 
+Session v0.4 BID Ask price,Order history market ordes
+>Session v0.5 View of yeild farming and IA bot,User deposit and user Withdraw, Match the orders,
+Session v0.6 Read the price  the market and put the market ordes in a B BOOK,InternalTransfer
+Session v0.7 Read the price of Binance save in a BD and make a simple graph,Borrows
+Session v0.8 Read the contracts in Pancakeswap and the user can purchase the contract
+Session v0.9 Read the price and make a Bot contract 
+Session v1 user can purchase the contract of IA Bot
+
+Frontend Visual user interface
+
+Session 1 
+Session 2 
+Session 3  
+Session 4 
+Session 5 
+Session 6 
+Session 7 
+Session 8 
+Session 9 
+Session 10 
+
+Backend B-BOOK> Market connect
+
+Session 1 
+Session 2 
+Session 3  
+Session 4 
+Session 5 
+Session 6 
+Session 7 
+Session 8 
+Session 9 
+Session 10 
+
+
+
+
+
+
+
+
+/// Get this project working to a certing level first
 
 If the user is loged when click on the  /orderbook/ qwe have a field requeast like http://127.0.0.1:8000/admin/orderbook/order/add/
 
@@ -63,6 +104,18 @@ BUSD BEP-20 Chain
 Alpha Version 0.1
 
 ///Premium Funcions
+
+Add LIMIT_MAKER Order tpype
+Internal blockchain to register the orderbook
+Automatic Orders Buy and sell in B-BOOK
+User validate the level whith the blockchian ERC-20 with de las 4 phone numbers
+User can use the chat
+User SMS send System
+Ofer When the user send 10 times cripto 
+User level jillion whithdraw/system (balance blocked or free)
+Only the diamond users can see who in putting the orders
+
+
 
 ----
 -

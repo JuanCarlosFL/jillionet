@@ -5,12 +5,18 @@ from django.contrib.auth import get_user_model
 User = get_user_model()
 
 
+
+
+
+
+
+
 class iabotcontract(models.Model):# Analize all market 
-    contractnumber = models.CharField(max_length=200, unique=True)
-    pair = models.CharField(max_length=200, unique=True)
-    timeframe = models.CharField(max_length=200, unique=True)
-    win_close_point = models.CharField(max_length=200, unique=True)
-    lose_close_point = models.CharField(max_length=200, unique=True)
+    contract_number = models.CharField(max_length=200, unique=True)
+    pair = models.ForeignKey('orderbook.TradingPair', on_delete=models.CASCADE)
+    timeframe = models.CharField(max_length=200)
+    win_close_point = models.CharField(max_length=200)
+    lose_close_point = models.CharField(max_length=200)
  
 
 

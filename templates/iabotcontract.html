@@ -20,14 +20,14 @@
       <h1 class="text-center">Bienvenido a Jillionet</h1>
       <br>
 
-<p class="text-center">Contract Yeild list <br><br></p>
+<p class="text-center">Contract IAbot list <br><br></p>
 <table class="text-center">
   <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th><th>Price</th>
+    <th>Contract number</th><th>Pair</th><th>Timeframe</th><th>Win close point</th><th>Lose close point</th>
   </tr>
-  {% for buy_order in buy_orders%}
+  {% for contract in object_list%}
   <tr>
-    <td>{{buy_order.trading_pair.pair}}</td><td>{{buy_order.buy_sell}}</td><td>{{buy_order.order_type}}</td><td>{{buy_order.volume | floatformat:4}}</td><td>{{buy_order.price | floatformat:4}}</td>
+    <td>{{contract.contract_number}}</td><td>{{contract.pair}}</td><td>{{contract.timeframe}}</td><td>{{contract.win_close_point}}</td><td>{{contract.lose_close_point}}</td>
   </tr>
   {% endfor %}
 </table>

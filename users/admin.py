@@ -49,6 +49,6 @@ class UserBalanceAdmin(admin.ModelAdmin):
 
 @admin.register(User_level_field)
 class User_level_field(admin.ModelAdmin):
-    list_display = ['level_key','max_withdraw_USDT', 'spred','borrow_interest','Futures_leverage','inicial_balance_USDT']
+    list_display = ['level_key','borrow_interest','maker_taker','inicial_balance_USDT','free_balance_JILL','inicial_balance_USDT','max_withdraw_USDT','Jillion_hold_trigger','Futures_leverage']
 
 
