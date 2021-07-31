@@ -4,6 +4,7 @@ from django.views.generic.list import ListView
 from django.urls import reverse
 
 from .models import Order, TradingPair
+#from .controller import get_exchange_price
 
 
 class OrderCreateView(CreateView):
@@ -38,10 +39,15 @@ class OrderListView(CreateView):
         trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
         buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair).order_by('-price')
         sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair).order_by('price')
+
+        if buy_order_qs.exists():
+            price = round(buy_order_qs.last().price, 2)
+        else:
+            price = 0
         
         return {
             'trading_pair': trading_pair.id,
-            'price': round(buy_order_qs.last().price, 2),
+            'price': price,
             'buy_orders': buy_order_qs,
             'sell_orders': sell_order_qs
         }
@@ -53,7 +59,9 @@ class OrderListView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()        
+        trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
+
+        #get_exchange_price()
 
         context.update({
             'buy_orders': self.get_initial().get('buy_orders'),
@@ -70,6 +78,8 @@ class AllOrderView(ListView):
         context = super().get_context_data(**kwargs)
         buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY)
         sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL)
+
+
 
         context.update({
             'buy_orders': buy_order_qs,

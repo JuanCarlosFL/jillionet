@@ -32,10 +32,6 @@ Controler
 
 JillPriceBDSubmit(use LIMIT_MAKER )
 
-
-
-
-
 B-BOOK Internal book (Market maker)
 A-BOOK  Stock market book STP orders
 
@@ -48,20 +44,26 @@ Session v0.1 #Make a register
 Session v0.2 #Make a orderbook model and user balance model
 Session v0.3 Make view of orderbook, user balance, 
 Session v0.4 BID Ask price,Order history market ordes
->Session v0.5 View of yeild farming and IA bot,User deposit and user Withdraw, Match the orders,
-Session v0.6 Read the price  the market and put the market ordes in a B BOOK,InternalTransfer
-Session v0.7 Read the price of Binance save in a BD and make a simple graph,Borrows
-Session v0.8 Read the contracts in Pancakeswap and the user can purchase the contract
+Session v0.5 finish view of farming and IA bot,
+>Session v0.6 finish View of yeild and begin of controlers
+Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion less maker and taker
+-----------------------------------------------------------------------------------------
+Session v0.8 ,Borrows,InternalTransfer,User
+Read the contracts in Pancakeswap and the user can purchase the contract,deposit and user Withdraw
 Session v0.9 Read the price and make a Bot contract 
 Session v1 user can purchase the contract of IA Bot
+make a maker and taker order of a JILL
+
+
 
 Frontend Visual user interface
 
 Session 1 
-Session 2 
+Session 2 Make a simple graph
 Session 3  
 Session 4 
-Session 5 
+Session 5
+-----------------------------------------------------------------------------------------
 Session 6 
 Session 7 
 Session 8 
@@ -69,6 +71,8 @@ Session 9
 Session 10 
 
 Backend B-BOOK> Market connect
+
+250USD/250USD
 
 Session 1 
 Session 2 

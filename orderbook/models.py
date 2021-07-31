@@ -111,3 +111,23 @@ class Order(models.Model):
 
 
 
+
+class ordermachmodel(models.Model):
+    
+    pair = models.ForeignKey(TradingPair, on_delete=models.CASCADE)
+    timeframe = models.CharField(max_length=200, choices=Order.TIMEFRAME_CHOICES)
+      
+
+    #def __str__(self):
+    #    return f"{self.contract_number}"
+
+
+class getexchangepricemodel(models.Model):# Analize all market 
+    
+    pair = models.ForeignKey(TradingPair, on_delete=models.CASCADE)
+    timeframe = models.CharField(max_length=200, choices=Order.TIMEFRAME_CHOICES)
+    exchange = models.CharField(max_length=200)
+    number_of_candel = models.CharField(max_length=200)
+
+    #def __str__(self):
+    #    return f"{self.contract_number}"

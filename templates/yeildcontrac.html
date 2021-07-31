@@ -23,11 +23,11 @@
 <p class="text-center">Contract Yeild list <br><br></p>
 <table class="text-center">
   <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th><th>Price</th>
+    <th>Yeildpair</th><th>liquidity</th><th>APR</th><th>APYd365</th><th>d30</th><th>d7</th><th>d1</th>
   </tr>
-  {% for buy_order in buy_orders%}
+  {% for yeild in object_list%}
   <tr>
-    <td>{{buy_order.trading_pair.pair}}</td><td>{{buy_order.buy_sell}}</td><td>{{buy_order.order_type}}</td><td>{{buy_order.volume | floatformat:4}}</td><td>{{buy_order.price | floatformat:4}}</td>
+    <td>{{yeild.yeildpair}}</td><td>{{yeild.liquidity}}</td><td>{{yeild.APR}}</td><td>{{yeild.APYd365}}</td><td>{{yeild.d30}}</td><td>{{yeild.d7}}</td><td>{{yeild.d1}}</td>
   </tr>
   {% endfor %}
 </table>

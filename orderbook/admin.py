@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Order, Currency, TradingPair
+from .models import Order, Currency, TradingPair, getexchangepricemodel
 
 
 @admin.register(TradingPair)
@@ -22,3 +22,7 @@ class OrderAdmin(admin.ModelAdmin):
 class CurrencyAdmin(admin.ModelAdmin):
     list_display = ['code', 'chain', 'name','last_price','contract_creator_hash']
 
+
+@admin.register(getexchangepricemodel)
+class getexchangepricemodelAdmin(admin.ModelAdmin):
+    list_display = ['pair', 'exchange']
