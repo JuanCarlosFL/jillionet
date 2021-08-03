@@ -45,12 +45,12 @@ Session v0.2 #Make a orderbook model and user balance model
 Session v0.3 Make view of orderbook, user balance, 
 Session v0.4 BID Ask price,Order history market ordes
 Session v0.5 finish view of farming and IA bot,
->Session v0.6 finish View of yeild and begin of controlers
-Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion less maker and taker
+Session v0.6 finish View of yeild and begin of controlers
+>Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion
 -----------------------------------------------------------------------------------------
-Session v0.8 ,Borrows,InternalTransfer,User
+Session v0.8 ,Borrows,InternalTransfer,Maker maker order,system that deducts commissions
 Read the contracts in Pancakeswap and the user can purchase the contract,deposit and user Withdraw
-Session v0.9 Read the price and make a Bot contract 
+Session v0.9 Read the price and make a Bot contract, phone brocast 
 Session v1 user can purchase the contract of IA Bot
 make a maker and taker order of a JILL
 
@@ -58,11 +58,11 @@ make a maker and taker order of a JILL
 
 Frontend Visual user interface
 
-Session 1 
-Session 2 Make a simple graph
-Session 3  
-Session 4 
-Session 5
+Session 1 Main menu and simple price chart get of the HISTORICALDATA
+Session 2 Orderbook view and maket view
+Session 3 Open trades and history buy and sell button
+Session 4 Donus chart in IA BOT and Deposit and withdraw table
+Session 5 Slider in the ordes volume and button of order type (Market or limit)
 -----------------------------------------------------------------------------------------
 Session 6 
 Session 7 
@@ -86,6 +86,8 @@ Session 9
 Session 10 
 
 
+
+/// Frontend Visual user interface Requests
 
 
 

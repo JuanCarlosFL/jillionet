@@ -51,9 +51,11 @@ INSTALLED_APPS = [
     
     "phonenumber_field",
     "django_extensions",
+    "django_celery_beat",
 
     "users.apps.UsersConfig",
     "orderbook","yeildfarming","IaBotpredict",
+    "historicalData"
 ]
 
 MIDDLEWARE = [
@@ -194,3 +196,5 @@ EMAIL_HOST_USER = env("EMAIL_HOST_USER", default="EMAIL_HOST_USER")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default="")
+
+CELERY_BROKER_URL = 'redis://localhost:6379' 

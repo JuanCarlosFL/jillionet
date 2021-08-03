@@ -14,6 +14,11 @@ class TradingPair(models.Model):
     pair = models.CharField(max_length=200, unique=True)
     slug = AutoSlugField(populate_from='pair', slugify_function=my_slugify_function, unique=True, null=True)
 
+    @property
+    def get_symbol(self):
+        symbol = self.pair.replace('/', '')
+        return symbol
+
     def __str__(self):
         return f"{self.pair}"
 
@@ -43,10 +48,12 @@ class Order(models.Model):
 
     NEW = 'new'
     FILL = 'fill'
+    PARTIAL_FILL = 'partial_fill'
 
     STATUS_CHOICES = (
         (NEW, NEW.title()),
-        (FILL, FILL.title())
+        (FILL, FILL.title()),
+        (PARTIAL_FILL, PARTIAL_FILL.title()),
     )
 
     SPOT = 'spot'
@@ -124,10 +131,10 @@ class ordermachmodel(models.Model):
 
 class getexchangepricemodel(models.Model):# Analize all market 
     
-    pair = models.ForeignKey(TradingPair, on_delete=models.CASCADE)
+    pair = models.OneToOneField(TradingPair, on_delete=models.CASCADE)
     timeframe = models.CharField(max_length=200, choices=Order.TIMEFRAME_CHOICES)
-    exchange = models.CharField(max_length=200)
-    number_of_candel = models.CharField(max_length=200)
+    exchange = models.CharField(max_length=200, default='Binance')
+    number_of_candel = models.IntegerField()
 
     #def __str__(self):
     #    return f"{self.contract_number}"

@@ -4,7 +4,8 @@ from django.views.generic.list import ListView
 from django.urls import reverse
 
 from .models import Order, TradingPair
-#from .controller import get_exchange_price
+from .controller import get_mathing_order
+from historicalData.controller import get_exchange_price
 
 
 class OrderCreateView(CreateView):
@@ -33,12 +34,13 @@ class OrderListView(CreateView):
     fields = ['buy_sell', 'trading_pair', 'order_type', 'volume','price']
 
     def get_success_url(self):
+        get_mathing_order(self.object)
         return reverse("orderbook:orderbook", args=[self.kwargs.get('slug')])
 
     def get_initial(self):
         trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
-        buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair).order_by('-price')
-        sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair).order_by('price')
+        buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, new=Order.NEW).order_by('-price')
+        sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, new=Order.NEW).order_by('-price')
 
         if buy_order_qs.exists():
             price = round(buy_order_qs.last().price, 2)

@@ -1,8 +1,12 @@
 
 import os
 from binance.client import Client
+from celery import Celery
 
-from .models import getexchangepricemodel, Order, TradingPair
+app = Celery()
+
+from orderbook.models import getexchangepricemodel, Order, TradingPair
+from historicalData.models import Historicaldata
 
 api_key = "3IyANOhqv4ka3vQWswY3Nkxf4Jii1z5u4Ee3z9odX1YI2fBfZXAay6INcWOuHMYf"
 api_secret = "ARqGpw44UOGSfJPCcZRvuWxzJPk0N9Tk1Jo2AGf6mDylpZHGK7YqCYbDGH1rzCzI"
@@ -12,15 +16,23 @@ client = Client(api_key, api_secret  , tld='com')
 
 #connect with API Binance CCXT API to get all the coins price
 
-
+@app.task
 def get_exchange_price():
-           
-    candel = client.get_klines(symbol='BTCEUR', interval=Client.KLINE_INTERVAL_1MINUTE)
-    #print(candel[0])
-    CloseBTC =(candel[0][4])
-    #print (CloseBTC)
-    trading_pair = TradingPair.objects.get(pair='BTC/EUR')
-    getexchangepricemodel.objects.create(pair=trading_pair, timeframe=Order.KLINE_INTERVAL_1MINUTE, number_of_candels=4, exchange=CloseBTC)   
+    print('HERE')
+    exchange_pairs = getexchangepricemodel.objects.all()
+
+    for pair in exchange_pairs:
+                           
+        candel = client.get_klines(symbol=pair.pair.get_symbol, interval=Client.KLINE_INTERVAL_1MINUTE, limit=1000)
+        Historicaldata.objects.create(symbol=pair.pair.get_symbol, data=candel)
+        #print(candel[0])
+        Close =(candel[0][4])
+        Open =(candel[0][1])
+        High =(candel[0][3])
+        Low =(candel[0][2])
+        #print (CloseBTC)
+        
+    #getexchangepricemodel.objects.create(pair=trading_pair, timeframe=Order.KLINE_INTERVAL_1MINUTE, number_of_candels=4, exchange=CloseBTC)   
 
 
 
