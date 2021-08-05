@@ -140,6 +140,10 @@ STATIC_URL = '/static/'
 # STATIC_ROOT = '/usr/local/lsws/Example/html/demo/public/static'
 STATIC_ROOT = str(BASE_DIR / "staticfiles")
 STATICFILES_DIRS = [str(BASE_DIR / "static")]
+STATICFILES_FINDERS = [
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+]
 
 # django-allauth
 # ------------------------------------------------------------------------------
@@ -197,4 +201,4 @@ DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default="")
 
-CELERY_BROKER_URL = 'redis://localhost:6379' 
+CELERY_BROKER_URL = 'redis://localhost:6379'
