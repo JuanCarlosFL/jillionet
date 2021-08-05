@@ -19,6 +19,15 @@ class TradingPair(models.Model):
         symbol = self.pair.replace('/', '')
         return symbol
 
+    def get_asset(self):
+        asset, buy_currency = self.pair.split('/')
+        return asset
+
+    @property
+    def get_asset_icon(self):
+        # return f"https://cryptoicons.org/api/icon/{self.get_asset().lower()}/200"
+        return f"https://cryptoicon-api.vercel.app/api/icon/{self.get_asset().lower()}"
+
     def __str__(self):
         return f"{self.pair}"
 

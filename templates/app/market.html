@@ -1,5 +1,73 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Home {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="row">
+
+                        {% for market in object_list %}
+{#                            <p><a href="{% url 'orderbook:create_order' market.slug %}">{{ market.pair }}</a></p>#}
+                            <div class="col-md-12 col-xl-4">
+                            <div class="card card-social">
+                                <div class="card-block border-bottom">
+                                    <div class="row align-items-center justify-content-center">
+                                        <div class="col-auto">
+{#                                            <i class="fab fa-facebook-f text-primary f-36"></i>#}
+                                            <img src="{{ market.get_asset_icon }}" alt="{{ market.pair }}" width="50">
+                                        </div>
+                                        <div class="col text-right">
+                                            <h3>12,281</h3>
+                                            <h5 class="text-c-green mb-0">+7.2% <span class="text-muted">Change</span></h5>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-block">
+                                    <div class="row align-items-center justify-content-center card-active">
+                                        <div class="col-6">
+                                            <h6 class="text-center m-b-10"><span class="text-muted m-r-5">{{ market.pair }}</span></h6>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-c-theme" role="progressbar" style="width:60%;height:6px;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <h6 class="text-center  m-b-10"><span class="text-muted m-r-5">Duration:</span>3,539</h6>
+                                            <div class="progress">
+                                                <div class="progress-bar progress-c-theme2" role="progressbar" style="width:45%;height:6px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                    <!-- [ Main Content ] end -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+{% comment %}
 <div>
   {% for market in object_list %} 
   <p><a href="{% url 'orderbook:create_order' market.slug %}">{{market.pair}}</a></p>
   {% endfor %}
 </div>
+{% endcomment %}
