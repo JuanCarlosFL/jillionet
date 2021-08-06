@@ -19,7 +19,7 @@
                         {% for market in object_list %}
 {#                            <p><a href="{% url 'orderbook:create_order' market.slug %}">{{ market.pair }}</a></p>#}
                             <div class="col-md-12 col-xl-4">
-                            <div class="card card-social">
+                            <a href="{% url 'orderbook:create_order' market.slug %}"><div class="card card-social">
                                 <div class="card-block border-bottom">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-auto">
@@ -27,8 +27,8 @@
                                             <img src="{{ market.get_asset_icon }}" alt="{{ market.pair }}" width="50">
                                         </div>
                                         <div class="col text-right">
-                                            <h3>12,281</h3>
-                                            <h5 class="text-c-green mb-0">+7.2% <span class="text-muted">Change</span></h5>
+                                            <h3 id="{{ market.get_symbol | lower }}"></h3>
+                                            <h5 class="text-c-green mb-0"><span id="change-{{ market.get_symbol | lower }}" >0</span>% <span class="text-muted">Change</span></h5>
                                         </div>
                                     </div>
                                 </div>
@@ -41,14 +41,14 @@
                                             </div>
                                         </div>
                                         <div class="col-6">
-                                            <h6 class="text-center  m-b-10"><span class="text-muted m-r-5">Duration:</span>3,539</h6>
+                                            <h6 class="text-center  m-b-10"><span class="text-muted m-r-5">Duration:</span>24hr</h6>
                                             <div class="progress">
                                                 <div class="progress-bar progress-c-theme2" role="progressbar" style="width:45%;height:6px;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div></a>
                         </div>
                         {% endfor %}
 
@@ -57,12 +57,41 @@
                 </div>
             </div>
         </div>
+
     </div>
 {% endblock content %}
 
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+    <script>
+    var  symbolList = {{ symbol_list | safe }}
+
+    var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+    biSocket.onmessage = function (event) {
+        {#console.log(event.data)#}
+    }
+
+    function streamPrice(symbol) {
+        let priceTag = document.getElementById(symbol)
+        let changeTag = document.getElementById(`change-${symbol}`)
+        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+        biSocket.onmessage = function (event) {
+            let messageObject = JSON.parse(event.data)
+            priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
+            changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+        }
+
+    }
+
+    symbolList.forEach(function (item) {
+        streamPrice(item);
+    })
+
+
+
+    </script>
+{% endblock javascripts %}
 
 {% comment %}
 <div>

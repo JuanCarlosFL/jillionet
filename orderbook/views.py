@@ -39,8 +39,8 @@ class OrderListView(CreateView):
 
     def get_initial(self):
         trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
-        buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, new=Order.NEW).order_by('-price')
-        sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, new=Order.NEW).order_by('-price')
+        buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, status=Order.NEW).order_by('-price')
+        sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, status=Order.NEW).order_by('-price')
 
         if buy_order_qs.exists():
             price = round(buy_order_qs.last().price, 2)

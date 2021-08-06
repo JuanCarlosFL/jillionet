@@ -16,6 +16,17 @@ class MarketListView(ListView):
     model = TradingPair
     template_name = 'app/market.html'
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        symbol_list = [symbol.get_symbol.lower() for symbol in self.object_list if 'jill' not in symbol.get_symbol.lower()]
+        print(symbol_list)
+
+        context.update({
+            'symbol_list': symbol_list
+        })
+
+        return context
+
 class yeildwatchListView(ListView):
     model = yeildcontract
     template_name = 'yeildcontrac.html'
