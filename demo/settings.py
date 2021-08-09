@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    'django.contrib.humanize',
+
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
@@ -52,6 +54,7 @@ INSTALLED_APPS = [
     "phonenumber_field",
     "django_extensions",
     "django_celery_beat",
+    "crispy_forms",
 
     "users.apps.UsersConfig",
     "orderbook","yeildfarming","IaBotpredict",
@@ -202,3 +205,6 @@ EMAIL_HOST_PASSWORD = env("EMAIL_HOST_PASSWORD", default="")
 EMAIL_SUBJECT_PREFIX = env("EMAIL_SUBJECT_PREFIX", default="")
 
 CELERY_BROKER_URL = 'redis://localhost:6379'
+
+# http://django-crispy-forms.readthedocs.io/en/latest/install.html#template-packs
+CRISPY_TEMPLATE_PACK = "bootstrap4"

@@ -1,3 +1,213 @@
+{% extends "layouts/base.html" %}
+{% load humanize crispy_forms_tags %}
+
+{% block title %} Home {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Create Order</h5>
+                            </div>
+                            <div class="card-body">
+                                <h5>{{ trading_pair.pair }}</h5>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <form>
+                                            {{ form | crispy }}
+                                            {% comment %}
+                                            <div class="form-group">
+                                                <label for="exampleInputEmail1">Email address</label>
+                                                <input type="email" class="form-control" id="exampleInputEmail1"
+                                                       aria-describedby="emailHelp" placeholder="Enter email">
+                                                <small id="emailHelp" class="form-text text-muted">We'll never share
+                                                    your email
+                                                    with anyone else.</small>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Password</label>
+                                                <input type="password" class="form-control" id="exampleInputPassword1"
+                                                       placeholder="Password">
+                                            </div>
+                                            <div class="form-group form-check">
+                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                            </div>
+                                            {% endcomment %}
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <form>
+                                            <div class="form-group">
+                                                <label>Text</label>
+                                                <input type="text" class="form-control" placeholder="Text">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlSelect1">Example select</label>
+                                                <select class="form-control" id="exampleFormControlSelect1">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea1">Example textarea</label>
+                                                <textarea class="form-control" id="exampleFormControlTextarea1"
+                                                          rows="3"></textarea>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-8 col-md-12 m-b-30">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab"
+                                       aria-controls="home" aria-selected="false">History</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile"
+                                       role="tab" aria-controls="profile" aria-selected="true">Open Orders</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
+                                       aria-controls="contact" aria-selected="false">All</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="myTabContent">
+                                <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Pair</th>
+                                            <th>Buy/Sell</th>
+                                            <th>Timestanp</th>
+                                            <th>Volume</th>
+                                            {#                                                <th class="text-right"></th>#}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for order in all_order %}
+                                            <tr>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.trading_pair.pair }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.buy_sell }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.timestamp | naturaltime }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0 text-c-green">{{ order.volume | floatformat:2 | intcomma }}</h6>
+                                                </td>
+                                                {#                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>#}
+                                            </tr>
+                                        {% endfor %}
+
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="tab-pane fade active show" id="profile" role="tabpanel"
+                                     aria-labelledby="profile-tab">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Pair</th>
+                                            <th>Buy/Sell</th>
+                                            <th>Timestanp</th>
+                                            <th>Volume</th>
+                                            {#                                                <th class="text-right"></th>#}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for order in open_orders %}
+                                            <tr>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.trading_pair.pair }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.buy_sell }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.timestamp | naturaltime }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0 text-c-green">{{ order.volume | floatformat:2 | intcomma }}</h6>
+                                                </td>
+                                                {#                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>#}
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th>Pair</th>
+                                            <th>Buy/Sell</th>
+                                            <th>Timestanp</th>
+                                            <th>Volume</th>
+                                            {#                                                <th class="text-right"></th>#}
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        {% for order in all_order %}
+                                            <tr>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.trading_pair.pair }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.buy_sell }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.timestamp | naturaltime }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0 text-c-green">{{ order.volume | floatformat:2 | intcomma }}</h6>
+                                                </td>
+                                                {#                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>#}
+                                            </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ Main Content ] end -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+{% endblock content %}
+
+
+{% comment %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,3 +284,4 @@
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% endcomment %}

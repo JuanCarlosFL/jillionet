@@ -68,9 +68,12 @@ class OrderListView(CreateView):
         context.update({
             'buy_orders': self.get_initial().get('buy_orders'),
             'sell_orders': self.get_initial().get('sell_orders'),
-            'trading_pair': trading_pair
+            'trading_pair': trading_pair,
+            'all_order': self.model.objects.all(),
+            'open_orders': self.model.objects.filter(status=Order.NEW)
         })
         return context
+
 
 class AllOrderView(ListView):
     model = Order
