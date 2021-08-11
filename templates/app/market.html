@@ -1,6 +1,7 @@
 {% extends "layouts/base.html" %}
+{% load static %}
 
-{% block title %} Home {% endblock %}
+{% block title %} Market {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -24,7 +25,7 @@
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-auto">
 {#                                            <i class="fab fa-facebook-f text-primary f-36"></i>#}
-                                            <img src="{{ market.get_asset_icon }}" alt="{{ market.pair }}" width="50">
+                                            <img src="{% if 'JILL' in market.get_symbol %}{% static '/img/jill_icon.jpeg' %}{% else %}{{ market.get_asset_icon }}{% endif %}" alt="{{ market.pair }}" width="50">
                                         </div>
                                         <div class="col text-right">
                                             <h3 id="{{ market.get_symbol | lower }}">0</h3>
@@ -64,29 +65,61 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
     <script>
     var  symbolList = {{ symbol_list | safe }}
+    var jillSymbolList = {{ jill_symbol_list | safe }}
 
     var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
     biSocket.onmessage = function (event) {
         {#console.log(event.data)#}
     }
 
-    function streamPrice(symbol) {
-        let priceTag = document.getElementById(symbol)
-        let changeTag = document.getElementById(`change-${symbol}`)
+    function streamPrice(symbol='btcusdt', changeEl) {
+        let priceTag = document.getElementById(changeEl)
+        let changeTag = document.getElementById(`change-${changeEl}`)
+        //console.log(changeEl, priceTag)
         var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
         biSocket.onmessage = function (event) {
             let messageObject = JSON.parse(event.data)
-            priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
-            changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+            if (changeEl.includes('jill')) {
+                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
+                let pr = messageObject.c/thousandthPrice
+                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                .then(function (response) {
+                    
+                    priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
+                    changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+                    //console.log(response.data.last_price * pr)
+
+                })
+                .catch(function (error) {
+                    console.log
+                }).then(function (response) {})
+                //console.log(pr)
+
+            } else {
+                priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
+                changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+
+            }
+            
+            //console.log(thousandthPrice)
+            
         }
 
     }
 
     symbolList.forEach(function (item) {
-        streamPrice(item);
+        streamPrice(item, item);
+        //console.log(item)
     })
+    jillSymbolList.forEach(function (item) {
+        streamPrice(symbol='btcusdt', changeEl=item);
+        //console.log(item)
+    })
+
 
 
 

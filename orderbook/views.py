@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
@@ -73,6 +74,20 @@ class OrderListView(CreateView):
             'open_orders': self.model.objects.filter(status=Order.NEW)
         })
         return context
+
+
+def get_half_jillion_price(request, slug):
+
+    #(ask+bid)/2
+    trading_pair = TradingPair.objects.get(slug=slug)
+
+    #buy_order_qs = Order.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, status=Order.NEW).order_by('-price')
+    sell_order_qs = Order.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, status=Order.FILL).order_by('-timestamp')
+       
+
+    return JsonResponse(data={
+        'last_price': sell_order_qs.first().price
+    })
 
 
 class AllOrderView(ListView):

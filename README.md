@@ -46,27 +46,25 @@ Session v0.3 Make view of orderbook, user balance,
 Session v0.4 BID Ask price,Order history market ordes
 Session v0.5 finish view of farming and IA bot,
 Session v0.6 finish View of yeild and begin of controlers
->Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion
+Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion
 -----------------------------------------------------------------------------------------
-Session v0.8 ,Borrows,InternalTransfer,Maker maker order,system that deducts commissions
-Read the contracts in Pancakeswap and the user can purchase the contract,deposit and user Withdraw
-Session v0.9 Read the price and make a Bot contract, phone brocast 
-Session v1 user can purchase the contract of IA Bot
-make a maker and taker order of a JILL
+Session v0.8 Submit the order with de new interfacem,phone brocast sms.JILL/USDT
+Session v0.9 Maker maker order,system that deducts commissions,Read the contracts in Pancakeswap and the user can purchase the contract and put the mouth gain 
 
 
-
+Session v1 user can purchase the contract of IA Bot,deposit and user Withdraw Read the price and make a Bot contract, ,,Borrows,,InternalTransfer,
+Make a maker and taker order of a JILL
 Frontend Visual user interface
 
-Session 1 Main menu and simple price chart get of the HISTORICALDATA
-Session 2 Orderbook view and maket view
-Session 3 Open trades and history buy and sell button
-Session 4 Donus chart in IA BOT and Deposit and withdraw table
-Session 5 Slider in the ordes volume and button of order type (Market or limit)
+Session 1 Main menu and  get of the HISTORICALDATA
+Session 2 Orderbook view and 
+Session 3 Open trades and history 
+Session 4 maket view
+>Session 5 and button of order type (Market or limit)
 -----------------------------------------------------------------------------------------
-Session 6 
-Session 7 
-Session 8 
+Session 6 tradingview price chart icon of pair and jillion
+Session 7 Slider in the ordes volume, buy and sell button
+Session 8 Deposit and withdraw table
 Session 9 
 Session 10 
 

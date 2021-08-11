@@ -46,6 +46,28 @@ def make_market_order(order, market_price):
       order_user_balance = order.user.userbalance_set.filter(currency__code=buy_currency).first()
       order_user_balance.amount = order_user_balance.amount + order.volume
       order_user_balance.save()
+
+       #MAKE A MARKET SYSTEM ORDER FILL JILL/USDT
+       #1 Buy order 23.6%
+       #2 Buy order 38.2%
+       #3 Buy order 50%
+       #4 Buy order 76.4%
+       #5 Buy order 100%
+       #6 Sell order 23.6%
+       #7 Sell order 38.2%
+       #8 Sell order 50%
+       #9 Sell order 76.4
+       #10 Sell order 100%
+
+
+##((/x+ETH/X)/2)*(Lastorderbook price)
+    ##
+
+      
+
+
+
+      
    
 
       #MAKE A MARKET SYSTEM ORDER FILL

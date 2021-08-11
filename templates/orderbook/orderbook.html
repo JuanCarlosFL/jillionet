@@ -88,10 +88,7 @@
                                     <a class="nav-link active show" id="profile-tab" data-toggle="tab" href="#profile"
                                        role="tab" aria-controls="profile" aria-selected="true">Open Orders</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
-                                       aria-controls="contact" aria-selected="false">All</a>
-                                </li>
+                                
                             </ul>
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
@@ -99,8 +96,10 @@
                                         <thead>
                                         <tr>
                                             <th>Pair</th>
+                                            <th>Price</th>
+                                            <th>Order type</th>
                                             <th>Buy/Sell</th>
-                                            <th>Timestanp</th>
+                                            <th>Timestamp</th>
                                             <th>Volume</th>
                                             {#                                                <th class="text-right"></th>#}
                                         </tr>
@@ -110,6 +109,12 @@
                                             <tr>
                                                 <td>
                                                     <h6 class="m-0">{{ order.trading_pair.pair }}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.price | floatformat:4}}</h6>
+                                                </td>
+                                                <td>
+                                                    <h6 class="m-0">{{ order.order_type }}</h6>
                                                 </td>
                                                 <td>
                                                     <h6 class="m-0">{{ order.buy_sell }}</h6>
@@ -164,39 +169,7 @@
                                     </table>
 
                                 </div>
-                                <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
-                                    <table class="table table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th>Pair</th>
-                                            <th>Buy/Sell</th>
-                                            <th>Timestanp</th>
-                                            <th>Volume</th>
-                                            {#                                                <th class="text-right"></th>#}
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        {% for order in all_order %}
-                                            <tr>
-                                                <td>
-                                                    <h6 class="m-0">{{ order.trading_pair.pair }}</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">{{ order.buy_sell }}</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0">{{ order.timestamp | naturaltime }}</h6>
-                                                </td>
-                                                <td>
-                                                    <h6 class="m-0 text-c-green">{{ order.volume | floatformat:2 | intcomma }}</h6>
-                                                </td>
-                                                {#                                                <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>#}
-                                            </tr>
-                                        {% endfor %}
-
-                                        </tbody>
-                                    </table>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
