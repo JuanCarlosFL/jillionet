@@ -1,25 +1,66 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Yeild contrtact</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+{% extends "layouts/base.html" %}
+{% load humanize crispy_forms_tags %}
 
+{% block title %} Contract Yeild {% endblock %}
 
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
 
-</head>
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
 
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+                        <!-- [ Hover-table ] start -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Contract Yeild list</h5>
+                                    {#                                    <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span>#}
+                                </div>
+                                <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Contract number</th>
+                                                <th>Pair</th>
+                                                <th>Timeframe</th>
+                                                <th>Win close point</th>
+                                                <th>Lose close point</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for contract in object_list %}
+                                                <tr>
+                                                    <td>{{ contract.contract_number }}</td>
+                                                    <td>{{ contract.pair }}</td>
+                                                    <td>{{ contract.timeframe }}</td>
+                                                    <td>{{ contract.win_close_point }}</td>
+                                                    <td>{{ contract.lose_close_point }}</td>
+                                                </tr>
+                                            {% endfor %}
 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ Hover-table ] end -->
+                    </div>
 
-<body>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
 
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">Bienvenido a Jillionet</h1>
-      <br>
-
+{% comment %}
 <p class="text-center">Contract IAbot list <br><br></p>
 <table class="text-center">
   <tr>
@@ -32,8 +73,4 @@
   {% endfor %}
 </table>
 
-
-
-
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% endcomment %}

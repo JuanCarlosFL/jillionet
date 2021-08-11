@@ -5,7 +5,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from .models import UserBalance
 from orderbook.models import Order
 
-class UserBalanceView(ListView):
+
+class UserBalanceView(LoginRequiredMixin, ListView):
     model = UserBalance
     template_name = 'users/balance.html'
     def get_queryset(self):

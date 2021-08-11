@@ -1,25 +1,69 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Yeild contrtact</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
+{% extends "layouts/base.html" %}
+{% load humanize crispy_forms_tags %}
 
+{% block title %} Home {% endblock %}
 
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
 
-</head>
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
 
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <div class="row">
+                        <!-- [ Hover-table ] start -->
+                        <div class="col-xl-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Contract Yeild list</h5>
+{#                                    <span class="d-block m-t-5">use class <code>table-hover</code> inside table element</span>#}
+                                </div>
+                                <div class="card-block table-border-style">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Yeildpair</th>
+                                                <th>liquidity</th>
+                                                <th>APR</th>
+                                                <th>APYd365</th>
+                                                <th>d30</th>
+                                                <th>d7</th>
+                                                <th>d1</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {% for yeild in object_list %}
+                                                <tr>
+                                                    <td>{{ yeild.yeildpair }}</td>
+                                                    <td>{{ yeild.liquidity }}</td>
+                                                    <td>{{ yeild.APR }}</td>
+                                                    <td>{{ yeild.APYd365 }}</td>
+                                                    <td>{{ yeild.d30 }}</td>
+                                                    <td>{{ yeild.d7 }}</td>
+                                                    <td>{{ yeild.d1 }}</td>
+                                                </tr>
+                                            {% endfor %}
 
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- [ Hover-table ] end -->
+                    </div>
 
-<body>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">Bienvenido a Jillionet</h1>
-      <br>
-
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+{% comment %}
 <p class="text-center">Contract Yeild list <br><br></p>
 <table class="text-center">
   <tr>
@@ -31,9 +75,4 @@
   </tr>
   {% endfor %}
 </table>
-
-
-
-
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+{% endcomment %}
