@@ -23,56 +23,87 @@
                             <div class="card-body">
                                 <h5>{{ trading_pair.pair }}</h5>
                                 <div class="row">
-                                    <div class="col-md-6">
+                                    
+                                    
+                                    <div class="col-md-8">
+                                        <!-- TradingView Widget BEGIN -->
+<div class="tradingview-widget-container">
+  <div id="tradingview_8e91b"></div>
+  <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE" rel="noopener" target="_blank"><span class="blue-text">BTCUSDT Chart</span></a> by TradingView</div>
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+  <script type="text/javascript">
+  new TradingView.widget(
+  {
+  "width": "100%",
+  "symbol": "BINANCE:BTCUSDT",
+  "interval": "D",
+  "timezone": "Etc/UTC",
+  "theme": "light",
+  "style": "1",
+  "locale": "en",
+  "toolbar_bg": "#f1f3f6",
+  "enable_publishing": false,
+  "allow_symbol_change": true,
+  "container_id": "tradingview_8e91b"
+}
+  );
+  </script>
+</div>
+<!-- TradingView Widget END -->
+                                    </div>
+                                    <div class="col-md-4">
+                                    {% comment %}
                                         <form method="post">
+                                            {% csrf_token %}
                                             {{ form | crispy }}
-                                            {% comment %}
-                                            <div class="form-group">
-                                                <label for="exampleInputEmail1">Email address</label>
-                                                <input type="email" class="form-control" id="exampleInputEmail1"
-                                                       aria-describedby="emailHelp" placeholder="Enter email">
-                                                <small id="emailHelp" class="form-text text-muted">We'll never share
-                                                    your email
-                                                    with anyone else.</small>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleInputPassword1">Password</label>
-                                                <input type="password" class="form-control" id="exampleInputPassword1"
-                                                       placeholder="Password">
-                                            </div>
-                                            <div class="form-group form-check">
-                                                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                                                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-                                            </div>
-                                            {% endcomment %}
+                                           
                                             <button type="submit" class="btn btn-primary">Submit</button>
                                         </form>
-                                    </div>
-                                    {% comment %}
-                                    <div class="col-md-6">
-                                        <form>
-                                            <div class="form-group">
-                                                <label>Text</label>
-                                                <input type="text" class="form-control" placeholder="Text">
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlSelect1">Example select</label>
-                                                <select class="form-control" id="exampleFormControlSelect1">
-                                                    <option>1</option>
-                                                    <option>2</option>
-                                                    <option>3</option>
-                                                    <option>4</option>
-                                                    <option>5</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="exampleFormControlTextarea1">Example textarea</label>
-                                                <textarea class="form-control" id="exampleFormControlTextarea1"
-                                                          rows="3"></textarea>
-                                            </div>
-                                        </form>
-                                    </div>
                                     {% endcomment %}
+                                        
+                                    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="pills-buy-tab" data-toggle="pill" href="#pills-buy" role="tab" aria-controls="pills-buy" aria-selected="true">Buy</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="pills-sell-tab" data-toggle="pill" href="#pills-sell" role="tab" aria-controls="pills-sell" aria-selected="false">Sell</a>
+                                        </li>
+                                        
+                                    </ul>
+                                    <div class="tab-content" id="pills-tabContent">
+                                        <div class="tab-pane fade show active" id="pills-buy" role="tabpanel" aria-labelledby="pills-buy-tab">
+                                            <form method="post">
+                                            {% csrf_token %}
+                                            
+                                            <input type="hidden" name="buy_sell" id="id_buy_sell" value="buy">
+                                            {{ form.price | as_crispy_field }}                                            
+                                            {{ form.order_type | as_crispy_field }}
+                                            {{ form.volume | as_crispy_field }}
+                                            <label for="customRange3">Example range</label>
+                                        <input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
+                                            <input type="hidden" name="trading_pair" id="id_trading_pair" value="{{trading_pair.id}}">
+                                           
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                        </div>
+                                        <div class="tab-pane fade" id="pills-sell" role="tabpanel" aria-labelledby="pills-sell-tab">
+                                            <form method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="buy_sell" id="id_buy_sell" value="sell">
+                                            <input type="hidden" name="trading_pair" id="id_trading_pair" value="{{trading_pair.id}}">
+                                            {{ form.price | as_crispy_field }}                                            
+                                            {{ form.order_type | as_crispy_field }}
+                                            {{ form.volume | as_crispy_field }}
+                                            {#<label for="customRange3">Example range</label>#}
+                                        <input type="range" class="custom-range" min="0" max="1000" step="0.5" onchange="updateVolume(this.value)" id="customRange2">
+                                           
+                                            <button type="submit" class="btn btn-primary">Submit</button>
+                                        </form>
+                                        </div>
+                                        
+                                    </div>
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -181,6 +212,16 @@
     </div>
 {% endblock content %}
 
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}
+<script>
+ function updateVolume(val){
+     var volumeElement = document.getElementById('id_volume');
+     volumeElement.value = val;
+     console.log(volumeElement, val);
+ }
+</script>
+{% endblock javascripts%}
 
 {% comment %}
 <!DOCTYPE html>

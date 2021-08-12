@@ -25,7 +25,7 @@
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-auto">
 {#                                            <i class="fab fa-facebook-f text-primary f-36"></i>#}
-                                            <img src="{% if 'JILL' in market.get_symbol %}{% static '/img/jill_icon.jpeg' %}{% else %}{{ market.get_asset_icon }}{% endif %}" alt="{{ market.pair }}" width="50">
+                                            <img src="{% if 'JILL' in market.get_symbol %}{% static '/img/jill_icon.png' %}{% else %}{{ market.get_asset_icon }}{% endif %}" alt="{{ market.pair }}" width="50">
                                         </div>
                                         <div class="col text-right">
                                             <h3 id="{{ market.get_symbol | lower }}">0</h3>

@@ -19,7 +19,7 @@ from app import views
 
 
 urlpatterns = [
-    path('', views.index, name='index'),
+    path('', views.MarketListView.as_view(), name='index'),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('', include('app.urls', namespace='app')),

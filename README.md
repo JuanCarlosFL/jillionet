@@ -46,9 +46,9 @@ Session v0.3 Make view of orderbook, user balance,
 Session v0.4 BID Ask price,Order history market ordes
 Session v0.5 finish view of farming and IA bot,
 Session v0.6 finish View of yeild and begin of controlers
-Session v0.7 ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion
+>Session v0.7 ,Jillion live price
 -----------------------------------------------------------------------------------------
-Session v0.8 Submit the order with de new interfacem,phone brocast sms.JILL/USDT
+Session v0.8 Submit the order with de new interfacem,phone brocast sms.JILL/USDT ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion,change withs pair of market "symbol": "BINANCE:BTCUSDT",
 Session v0.9 Maker maker order,system that deducts commissions,Read the contracts in Pancakeswap and the user can purchase the contract and put the mouth gain 
 
 
@@ -60,17 +60,15 @@ Session 1 Main menu and  get of the HISTORICALDATA
 Session 2 Orderbook view and 
 Session 3 Open trades and history 
 Session 4 maket view
->Session 5 and button of order type (Market or limit)
+Session 5 and button of order type (Market or limit)
 -----------------------------------------------------------------------------------------
-Session 6 tradingview price chart icon of pair and jillion
+>Session 6 tradingview price chart icon of pair and jillion
 Session 7 Slider in the ordes volume, buy and sell button
 Session 8 Deposit and withdraw table
 Session 9 
 Session 10 
 
 Backend B-BOOK> Market connect
-
-250USD/250USD
 
 Session 1 
 Session 2 
