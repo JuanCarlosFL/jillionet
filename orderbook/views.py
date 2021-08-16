@@ -71,7 +71,8 @@ class OrderListView(CreateView):
             'sell_orders': self.get_initial().get('sell_orders'),
             'trading_pair': trading_pair,
             'all_order': self.model.objects.all(),
-            'open_orders': self.model.objects.filter(status=Order.NEW)
+            'open_orders': self.model.objects.filter(status=Order.NEW),
+            'current_price': self.get_initial().get('price')
         })
         return context
 
