@@ -2,6 +2,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic.list import ListView
+from django.views.generic.base import TemplateView
 
 from orderbook.models import TradingPair
 from yeildfarming.models import yeildcontract
@@ -40,3 +41,29 @@ class yeildwatchListView(ListView):
 class iabotListView(ListView):
     model = iabotcontract
     template_name = 'iabotcontract.html'
+
+
+class SettingsView(TemplateView):
+    template_name = 'coming_soon.html'
+
+
+class DappsView(TemplateView):
+    template_name = 'coming_soon.html'
+
+
+class HoldersView(TemplateView):
+    template_name = 'coming_soon.html'
+
+
+class MultiwayView(TemplateView):
+    template_name = 'coming_soon.html'
+
+
+class BroadcastView(TemplateView):
+    template_name = 'coming_soon.html'
+
+
+class NftsView(TemplateView):
+    template_name = 'coming_soon.html'
+
+

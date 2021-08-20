@@ -73,7 +73,14 @@
                     <li data-username="JillFarm" class="nav-item"><a href="{% url 'app:yeild' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-tractor"></i></span><span class="pcoded-mtext">JILLFARM</span></a></li>
                     <li data-username="JillBot" class="nav-item"><a href="{% url 'app:iabot' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-robot"></i></span><span class="pcoded-mtext">JILLBOT</span></a></li>
                     
-                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'users:balance' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-wallet"></i></span><span class="pcoded-mtext">FOUNDS</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:dapps' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-store-alt"></i></span><span class="pcoded-mtext">Dapps</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:holders' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-trophy"></i></span><span class="pcoded-mtext">Holders</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:nfts' %}" class="nav-link"><span class="pcoded-micon"><i class="fab fa-opencart"></i></span><span class="pcoded-mtext">NFTs</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:multiway' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-paper-plane"></i></span><span class="pcoded-mtext">Multi-way</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:broadcast' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-broadcast-tower"></i></span><span class="pcoded-mtext">Broadcast</span></a></li>
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'app:settings_view' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-tools"></i></span><span class="pcoded-mtext">Settings</span></a></li>
+
+                    <li data-username="FOUNDS" class="nav-item"><a href="{% url 'users:balance' %}" class="nav-link"><span class="pcoded-micon"><i class="fas fa-wallet"></i></span><span class="pcoded-mtext">FOUNDS</span></a></li>                    
 
                     {% if user.is_authenticated %}
                     <li data-username="Disabled Menu" class="nav-item">

@@ -48,9 +48,13 @@ Session v0.5 finish view of farming and IA bot,
 Session v0.6 finish View of yeild and begin of controlers
 >Session v0.7 ,Jillion live price
 -----------------------------------------------------------------------------------------
-Session v0.8 Submit the order with de new interfacem,phone brocast sms.JILL/USDT ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion,change withs pair of market "symbol": "BINANCE:BTCUSDT",
-Session v0.9 Maker maker order,system that deducts commissions,Read the contracts in Pancakeswap and the user can purchase the contract and put the mouth gain 
+Session v0.8 Pancakeswap and the user can purchase the contract and put the mouth gain 
+Session v0.9 Maker maker order,system that deducts commissions,
+Session v1.0  Future trading binance 
+Session v1.1 Broacst
 
+
+Submit the order with de new interfacem,phone brocast sms.JILL/USDT ,Read the Binance price and save in historical,Match Bbook the orders with a simple funcion,change withs pair of market "symbol": "BINANCE:BTCUSDT",
 
 Session v1 user can purchase the contract of IA Bot,deposit and user Withdraw Read the price and make a Bot contract, ,,Borrows,,InternalTransfer,
 Make a maker and taker order of a JILL
@@ -62,11 +66,26 @@ Session 3 Open trades and history
 Session 4 maket view
 Session 5 and button of order type (Market or limit)
 -----------------------------------------------------------------------------------------
->Session 6 tradingview price chart icon of pair and jillion
+Session 6 tradingview price chart icon of pair and jillion
 Session 7 Slider in the ordes volume, buy and sell button
-Session 8 Deposit and withdraw table
-Session 9 
-Session 10 
+>Session 8 Deposit and withdraw / Donut Chart
+Session 9 Settings > Change currency and lenguaje
+Session 10 DApps //demo card view 
+Session 11 Simple Broacast//SMS Send system
+
+
+Area [ Smooth ] Chart/// Donut Chart balance is in the main currency (EUR)
+
+contract balance>Jillfarm USDT,BUSD,BTC
+contract balance>jillbot > USDT,BUSD,BTC
+
+
+Main balance
+Main available balance
+Main staked balance
+Exchange balance
+Contract staked balance
+Contract available balance
 
 Backend B-BOOK> Market connect
 
@@ -116,8 +135,6 @@ User SMS send System
 Ofer When the user send 10 times cripto 
 User level jillion whithdraw/system (balance blocked or free)
 Only the diamond users can see who in putting the orders
-
-
 
 ----
 -
