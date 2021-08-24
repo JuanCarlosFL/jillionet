@@ -4,14 +4,13 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
-from .models import UserBalance, User_level_field
+from .models import UserBalance, User_level_field, BalanceFor
 
 User = get_user_model()
 
 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
-
     form = UserChangeForm
     add_form = UserCreationForm
     fieldsets = (
@@ -37,18 +36,31 @@ class UserAdmin(auth_admin.UserAdmin):
 
 @admin.register(UserBalance)
 class UserBalanceAdmin(admin.ModelAdmin):
-    list_display = ['user', 'get_code', 'amount']
+    list_display = ['user', 'get_code', 'amount', 'get_balance_for']
 
     def get_code(self, obj):
         try:
             return obj.currency.code
         except:
             return None
+
     get_code.short_description = 'Currency Code'
     get_code.admin_order_field = 'currency__code'
 
+    def get_balance_for(self, obj):
+        try:
+            return obj.balance_for.name
+        except:
+            return None
+
+    get_balance_for.short_description = 'Balance for'
+    get_balance_for.admin_order_field = 'balance_for__name'
+
+
 @admin.register(User_level_field)
 class User_level_field(admin.ModelAdmin):
-    list_display = ['level_key','borrow_interest','maker_taker','inicial_balance_USDT','free_balance_JILL','inicial_balance_USDT','max_withdraw_USDT','Jillion_hold_trigger','Futures_leverage']
+    list_display = ['level_key', 'borrow_interest', 'maker_taker', 'inicial_balance_USDT', 'free_balance_JILL',
+                    'inicial_balance_USDT', 'max_withdraw_USDT', 'Jillion_hold_trigger', 'Futures_leverage']
 
 
+admin.site.register(BalanceFor)

@@ -162,6 +162,8 @@ ACCOUNT_ADAPTER = "users.adapters.AccountAdapter"
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = "users.adapters.SocialAccountAdapter"
 
+ACCOUNT_LOGOUT_ON_GET = True
+
 ACCOUNT_FORMS = {
     'signup': 'users.forms.CustomSignupForm',
     # 'login': 'users.forms.CustomLoginForm',

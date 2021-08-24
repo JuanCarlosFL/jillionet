@@ -39,10 +39,13 @@ class Currency(models.Model):
     last_price = models.DecimalField(max_digits=32, decimal_places=18, null=True)
     contract_creator_hash = models.CharField(max_length=200, default='none')
 
-
     def __str__(self):
         return f"{self.code}"
 
+    @property
+    def get_currency_icon(self):
+        # return f"https://cryptoicons.org/api/icon/{self.get_asset().lower()}/200"
+        return f"https://cryptoicon-api.vercel.app/api/icon/{self.code.lower()}"
 
 
 class Order(models.Model):

@@ -2,7 +2,7 @@
 $(document).ready(function() {
     setTimeout(function() {
     // [ bar-simple ] chart start
-    Morris.Bar({
+    /*Morris.Bar({
         element: 'morris-bar-chart',
         data: [{
                 y: '2008',
@@ -43,11 +43,11 @@ $(document).ready(function() {
         ykeys: ['a', 'b', 'c'],
         labels: ['Bar 1', 'Bar 2', 'Bar 3'],
         barColors: ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4", "#04a9f5"]
-    });
+    });*/
     // [ bar-simple ] chart end
 
     // [ bar-stacked ] chart start
-    Morris.Bar({
+    /*Morris.Bar({
         element: 'morris-bar-stacked-chart',
         data: [{
                 y: '2008',
@@ -89,11 +89,11 @@ $(document).ready(function() {
         ykeys: ['a', 'b', 'c'],
         labels: ['Bar 1', 'Bar 2', 'Bar 3'],
         barColors: ["0-#1de9b6-#1dc4e9", "0-#899FD4-#A389D4", "#04a9f5"]
-    });
+    });*/
     // [ bar-stacked ] chart end
 
     // [ area-angle-chart ] start
-    Morris.Area({
+    /*Morris.Area({
         element: 'morris-area-chart',
         data: [{
                 y: '2006',
@@ -145,11 +145,11 @@ $(document).ready(function() {
         responsive:true,
         lineColors: ['#b4becb', '#A389D4'],
         resize: true
-    });
+    });*/
     // [ area-angle-chart ] end
 
     // [ area-smooth-chart ] start
-    Morris.Area({
+    /*Morris.Area({
         element: 'morris-area-curved-chart',
         data: [{
             period: '2010',
@@ -199,11 +199,11 @@ $(document).ready(function() {
         behaveLikeLine: true,
         gridLineColor: '#d2d2d2',
         hideHover: 'auto'
-    });
+    });*/
     // [ area-smooth-chart ] end
 
     // [ line-angle-chart ] Start
-    Morris.Line({
+    /*Morris.Line({
         element: 'morris-line-chart',
         data: [{
                 y: '2006',
@@ -250,10 +250,10 @@ $(document).ready(function() {
         responsive:true,
         labels: ['Series A', 'Series B'],
         lineColors: ['#1de9b6', '#04a9f5']
-    });
+    });*/
     // [ line-angle-chart ] end
     // [ line-smooth-chart ] start
-    Morris.Line({
+    /*Morris.Line({
         element: 'morris-line-smooth-chart',
         data: [{
                 y: '2006',
@@ -299,7 +299,7 @@ $(document).ready(function() {
         responsive:true,
         labels: ['Series A', 'Series B'],
         lineColors: ['#1de9b6', '#A389D4']
-    });
+    });*/
     // [ line-smooth-chart ] end
 
     // [ Donut-chart ] Start
