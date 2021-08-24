@@ -61,9 +61,9 @@
                                                             <h6 class="text-muted">{{ balance.amount | floatformat:4 }}</h6>
                                                             <p class="m-0 small">€ 0.00</p>
                                                         </td>
-                                                        <td><a href="#!" class="label theme-bg2 text-white f-12">Withdraw</a><a
-                                                                href="#!"
-                                                                class="label theme-bg text-white f-12">Deposit</a></td>
+                                                        <td><button data-toggle="modal" data-target="#withdrawModal{{ balance.id }}" type="button" class="label theme-bg2 text-white f-12">Withdraw</button><button
+                                                                type="button" data-toggle="modal" data-target="#depositModal{{ balance.id }}"
+                                                                class="label theme-bg text-white f-12">Deposit</button></td>
                                                     </tr>
                                                 {% endfor %}
 
@@ -73,6 +73,49 @@
                                     </div>
                                 </div>
                             </div>
+                            {% for balance in my_bal %}
+                                <!-- Withdraw Modal -->
+                                <div class="modal fade" id="withdrawModal{{ balance.id }}" tabindex="-1" role="dialog" aria-labelledby="withdrawModal{{ balance.id }}Label" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="withdrawModal{{ balance.id }}Label">Withdraw {{ balance.currency.code }} from {{ balance.balance_for.name }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        ...
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <!-- Deposit Modal -->
+                                <div class="modal fade" id="depositModal{{ balance.id }}" tabindex="-1" role="dialog" aria-labelledby="depositModal{{ balance.id }}Label" aria-hidden="true">
+                                  <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                      <div class="modal-header">
+                                        <h5 class="modal-title" id="depositModal{{ balance.id }}Label">Deposit {{ balance.currency.code }} to {{ balance.balance_for.name }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                          <span aria-hidden="true">&times;</span>
+                                        </button>
+                                      </div>
+                                      <div class="modal-body">
+                                        ...
+                                      </div>
+                                      <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                            {% endfor %}
                         {% endfor %}
 
                     </div>

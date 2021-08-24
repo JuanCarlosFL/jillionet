@@ -43,6 +43,7 @@ class UserBalance(models.Model):
 
     class Meta:
         unique_together = ['currency', 'user', 'balance_for']
+        ordering = ['user', 'currency__code']
 
 
 class User_level_field(models.Model):
