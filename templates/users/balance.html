@@ -36,7 +36,7 @@
 
                     </div>
 </div>
-                    <div class="row">
+                    <div id="my-funds-dom" class="row">
                         {% for bal_type in balances %}
                             {% get_bal bal_type user as my_bal %}
                             <div class="col-xl-8 col-md-6">
@@ -119,7 +119,7 @@
                         {% endfor %}
 
                     </div>
-                    <div>
+                    {% comment %}<div>
                         <table>
                             <tr>
                                 <th>Currency</th>
@@ -137,7 +137,7 @@
 
                         <p>The Balance total in € is:</p>
 
-                    </div>
+                    </div>{% endcomment %}
 
 
                 </div>
@@ -153,7 +153,46 @@
 
     <script src="{% static 'assets/plugins/chart-morris/js/raphael.min.js' %}"></script>
     <script src="{% static 'assets/plugins/chart-morris/js/morris.min.js' %}"></script>
-    <script src="{% static 'assets/js/pages/chart-morris-custom.js' %}"></script>
+    {{ all_fund_json|json_script:"my-funds" }}
+    <script>
+    const myFunds = JSON.parse(JSON.parse(document.getElementById('my-funds').textContent))
+
+    function getTotal(funds) {
+        for (const fundName in funds){
+            //console.log(fundName)
+            funds[fundName].map(async item => {
+
+                item['test'] = 'tetet'
+                if (item.currency__code.includes('USD')){
+                    let price = await getCurrentPrice('EUR'+item.currency__code)
+                    //console.log(price.price * parseFloat(item.amount))
+                }else {
+                    let price = await getCurrentPrice(item.currency__code+'EUR')
+                    //console.log(price.price * parseFloat(item.amount))
+                }
+
+            })
+        }
+
+    }
+
+    getTotal(myFunds)
+
+    async function getCurrentPrice(symbol) {
+        try {
+            const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`)
+            const data = response.data;
+
+            return data
+        } catch (e) {
+            console.log(e)
+        }
+
+
+    }
+
+    </script>
+    <script src="{% static 'js/fundsComponent.js' %}"></script>
 
 {% endblock javascripts %}
 {% comment %}

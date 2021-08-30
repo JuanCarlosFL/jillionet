@@ -1,7 +1,17 @@
+import json
+
 from django.contrib.auth.models import AbstractUser
+from django.core import serializers
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from decimal import Decimal
 
+
+class DecimalEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, Decimal):
+            return str(obj)
+        return json.JSONEncoder.default(self, obj)
 
 # Create your models here.
 
@@ -26,6 +36,12 @@ class User(AbstractUser):
     user_level = models.CharField(max_length=50, choices=USER_LEVEL_CHOICES, default=BRONZE)
     # balance = models.ForeignKey("UserBalance", on_delete=models.SET_NULL, null=True, blank=True)
 
+    def get_balance(self, bal_type):
+        my_balance = self.userbalance_set.filter(user=self, balance_for=bal_type)
+        my_balance_values = my_balance.values('id', 'balance_for__name', 'amount', 'staked', 'currency__code')
+        # print(my_balance_json)
+        return my_balance_values
+
 
 class BalanceFor(models.Model):
     name = models.CharField(max_length=200, unique=True)
@@ -40,6 +56,7 @@ class UserBalance(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     public_key = models.TextField(null=True, blank=True)
     balance_for = models.ForeignKey(BalanceFor, on_delete=models.SET_NULL, null=True)
+    staked = models.DecimalField(decimal_places=18, max_digits=36, default=0)
 
     class Meta:
         unique_together = ['currency', 'user', 'balance_for']
