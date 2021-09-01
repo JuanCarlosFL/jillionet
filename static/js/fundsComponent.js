@@ -115,7 +115,7 @@ const currencyCont = (name, bal) => {
 
 var availableCurrency = (code, amount, id, name) => {
     let btn;
-    if (name === "main"){
+    if (name === "main" || name === "spot"){
         btn = `<button data-toggle="modal" data-target="#withdrawModal${id}" type="button" class="label theme-bg2 text-white f-12">Withdraw</button>
                 <button type="button" data-toggle="modal" data-target="#depositModal${id}" class="label theme-bg text-white f-12">Deposit</button>`
     }else {
@@ -207,7 +207,7 @@ let tranferModalComponent = (id, code, amount, name) => {
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
-                    <h5 class="modal-title" id="transferModal${id}Label">tranfer ${code} from ${name}</h5>
+                    <h5 class="modal-title" id="transferModal${id}Label">Transfer ${code} from ${name}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
                     </button>
@@ -215,18 +215,21 @@ let tranferModalComponent = (id, code, amount, name) => {
                   <div class="modal-body">
                     <form>
                     <h3 class="text-center">${numberFormatter.format(amount)} ${code}</h3>
-                        <div><input type="number" class="form-control" placeholder="Amount"></div>
-                        <div>
-                            <select>
-                                <option>Spot</option>
-                                <option>Jillbot</option>
-                                <option>Jillfarm</option>
-                            </select>
+                        <div><input id="tranfer-amount${id}" type="number" class="form-control" placeholder="Amount"></div>
+                        <div class="form-group mt-1">
+                            
+                            <input type="range" class="custom-range" min="0" max="${numberFormatter.format(amount)}" onchange="updateAmount(this.value, 'tranfer-amount${id}')" step="0.5" id="customRange${id}">
                         </div>
-                        <div>
-                            <label for="customRange3">Example range</label>
-                            <input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
-                        </div>                                                                                
+                        <div class="">
+                        
+                            <select class="form-control custom-select">
+                                <option value='spot'>Spot</option>
+                                <option value='jillbot'>Jillbot</option>
+                                <option value='jillfarm'>Jillfarm</option>
+                            </select>                            
+                            
+                        </div>
+                                                                                                        
                     </form>
                   </div>
                   <div class="modal-footer">
@@ -273,5 +276,11 @@ const mainComponent = (mainFunds) => {
     `
 }
 
+function updateAmount(val, elmId) {
+  var volumeElement
+  volumeElement = document.getElementById(elmId);
+  
+  volumeElement.value = val;
+}
 
 fundsContainer(myFunds)

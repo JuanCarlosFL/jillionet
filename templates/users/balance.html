@@ -203,11 +203,21 @@
 
     async function getCurrentPrice(symbol) {
         try {
+            if(symbol.includes('JILL')){
+                
+                const response = await axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                const data = response.data;
+                return {
+                    price: response.data.last_price
+                }                
+
+            }
             const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`)
             const data = response.data;
 
             return data
         } catch (e) {
+            console.log(symbol)
             console.log(e)
         }
 
