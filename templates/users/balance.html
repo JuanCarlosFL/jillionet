@@ -20,7 +20,28 @@
                 <div class="page-wrapper">
                     <!-- [ Main Content ] start -->
 <div class="row">
-                    <div class="col-xl-8 col-md-6">
+    <div id="main-funds" class="col-xl-6 col-md-6">
+        <div class="card-block px-0 py-3">
+        <div class="card Recent-Users">
+            <div class="card-header">
+                <h5>Main</h5>
+            </div>
+            <div class="card-block px-0 py-3">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tbody>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+                        <tr><td></td></tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+                    <div class="col-xl-6 col-md-6">
 
 
                             <div class="card-block px-0 py-3">
@@ -61,9 +82,11 @@
                                                             <h6 class="text-muted">{{ balance.amount | floatformat:4 }}</h6>
                                                             <p class="m-0 small">€ 0.00</p>
                                                         </td>
-                                                        <td><button data-toggle="modal" data-target="#withdrawModal{{ balance.id }}" type="button" class="label theme-bg2 text-white f-12">Withdraw</button><button
+                                                        <td><button data-toggle="modal" data-target="#withdrawModal{{ balance.id }}" type="button" class="label theme-bg2 text-white f-12">Withdraw</button>
+                                                            <button
                                                                 type="button" data-toggle="modal" data-target="#depositModal{{ balance.id }}"
-                                                                class="label theme-bg text-white f-12">Deposit</button></td>
+                                                                class="label theme-bg text-white f-12">Deposit</button>
+                                                        </td>
                                                     </tr>
                                                 {% endfor %}
 
