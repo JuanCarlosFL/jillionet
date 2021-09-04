@@ -72,7 +72,7 @@
 
     var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
     biSocket.onmessage = function (event) {
-        {#console.log(event.data)#}
+
     }
 
     function streamPrice(symbol='btcusdt', changeEl) {

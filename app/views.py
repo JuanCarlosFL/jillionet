@@ -67,3 +67,5 @@ class NftsView(TemplateView):
     template_name = 'coming_soon.html'
 
 
+class Contract(TemplateView):
+    template_name = 'contract.html'

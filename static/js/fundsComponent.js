@@ -183,11 +183,10 @@ let depositWithdrawModalComponent = (id, code, amount, name) => {
                                       </div>
                                       <div class="modal-body">
                                         <form>
-                                        <h3 class="text-center">${numberFormatter.format(amount)} ${code}</h3>
-                                            <div><input type="number" class="form-control" placeholder="Amount"></div>
+                                                                                    
                                             <div>
-                                                <label for="customRange3">Example range</label>
-                                                <input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
+                                                <p><b>Public key</b></p>
+                                                <p>lnhbfcrtfchgxfxjbcxftkhgg</p>
                                             </div>                                                                                
                                         </form>
                                       </div>
