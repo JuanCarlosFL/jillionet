@@ -5,7 +5,7 @@ from django.views.generic.list import ListView
 from django.views.generic.base import TemplateView
 
 from orderbook.models import TradingPair
-from yeildfarming.models import yeildcontract
+from yeildfarming.models import YeildContract
 from IaBotpredict.models import iabotcontract
 
 def index(request):
@@ -34,7 +34,7 @@ class MarketListView(ListView):
         return context
 
 class yeildwatchListView(ListView):
-    model = yeildcontract
+    model = YeildContract
     template_name = 'yeildcontrac.html'
 
 
