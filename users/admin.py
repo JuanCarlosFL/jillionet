@@ -36,7 +36,7 @@ class UserAdmin(auth_admin.UserAdmin):
 
 @admin.register(UserBalance)
 class UserBalanceAdmin(admin.ModelAdmin):
-    list_display = ['user', 'get_code', 'amount', 'get_balance_for']
+    list_display = ['user', 'get_code', 'amount', 'get_balance_for', 'action', 'updated_at']
 
     def get_code(self, obj):
         try:

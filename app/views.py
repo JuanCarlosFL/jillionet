@@ -40,7 +40,7 @@ class yeildwatchListView(ListView):
 
 class iabotListView(ListView):
     model = iabotcontract
-    template_name = 'iabotcontract.html'
+    template_name = 'app/jillbot.html'
 
 
 class SettingsView(TemplateView):
@@ -52,7 +52,7 @@ class DappsView(TemplateView):
 
 
 class HoldersView(TemplateView):
-    template_name = 'coming_soon.html'
+    template_name = 'app/holders.html'
 
 
 class MultiwayView(TemplateView):
@@ -64,7 +64,7 @@ class BroadcastView(TemplateView):
 
 
 class NftsView(TemplateView):
-    template_name = 'coming_soon.html'
+    template_name = 'app/nfts.html'
 
 
 class Contract(TemplateView):

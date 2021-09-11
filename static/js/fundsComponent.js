@@ -22,18 +22,24 @@ function groupBy(objectArray, property) {
 
 const fundsContainer = async (funds) => {
 
-    let initialCont = '';
+    let initialCont = document.getElementById('my-funds-dom');
+    initialCont.innerHTML = ''
     let mainFunds = [];
     let totalFundsSet = [];
     let totalFundsSet2 = [];
 
     for (const fundName in funds){
-        initialCont += currencyCont(fundName, funds[fundName])
+        
+        initialCont.innerHTML += currencyCont(fundName, funds[fundName])
 
 
         let initialValue = 0;
         let totalFunds = await funds[fundName].reduce(async (previousValue, currentValue) => {
             totalFundsSet2.push(currentValue)
+            //console.log(`qrcode-${currentValue.id}`)
+            if (currentValue.public_key && currentValue.balance_for__name == 'spot'){
+              generateQrCode(`qrcode-${currentValue.id}`, currentValue.public_key)
+            }
             let price = await (currentValue.currency__code.includes('USD')? getCurrentPrice('EUR'+currentValue.currency__code): getCurrentPrice(currentValue.currency__code+'EUR'))
             //console.log(price)
             return await previousValue + ((parseFloat(currentValue.amount) + parseFloat(currentValue.staked)) * price.price)
@@ -79,7 +85,7 @@ const fundsContainer = async (funds) => {
         }
     });
 
-    document.getElementById('my-funds-dom').innerHTML = initialCont;
+    //document.getElementById('my-funds-dom').innerHTML = initialCont;
     document.getElementById('main-funds').innerHTML = mainComponent(mainFunds);
     $(".js-range-slider").ionRangeSlider();
 }
@@ -89,7 +95,8 @@ const currencyCont = (name, bal) => {
     let currencyModals = '';
     let rows = bal.forEach(item => {
         currencyRows += availableCurrency(item.currency__code, item.amount, item.id, name)
-        currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name): tranferModalComponent(item.id, item.currency__code, item.amount, name)
+        currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name, item.public_key): tranferModalComponent(item.id, item.currency__code, item.amount, name)
+        
     })
 
     return `
@@ -143,7 +150,7 @@ var availableCurrency = (code, amount, id, name) => {
     return currencyRow
 }
 
-let depositWithdrawModalComponent = (id, code, amount, name) => {
+let depositWithdrawModalComponent = (id, code, amount, name, public_key) => {
     return `<!-- Withdraw Modal -->
                                 <div class="modal fade" id="withdrawModal${id}" tabindex="-1" role="dialog" aria-labelledby="withdrawModal${id}Label" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
@@ -190,7 +197,8 @@ let depositWithdrawModalComponent = (id, code, amount, name) => {
                                                                                     
                                             <div>
                                                 <p><b>Public key</b></p>
-                                                <p>lnhbfcrtfchgxfxjbcxftkhgg</p>
+                                                <p>${public_key}</p>
+                                                <div id="qrcode-${id}" class="qrcode"></div>
                                             </div>                                                                                
                                         </form>
                                       </div>
@@ -284,6 +292,13 @@ function updateAmount(val, elmId) {
   volumeElement = document.getElementById(elmId);
   
   volumeElement.value = val;
+}
+
+const generateQrCode = (id, publicKey) => {
+  let qrcodeContainer = document.getElementById(id);
+  console.log(qrcodeContainer);
+  qrcodeContainer.innerHTML = "";
+  new QRCode(qrcodeContainer, publicKey);
 }
 
 fundsContainer(myFunds)
