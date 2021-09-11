@@ -81,6 +81,7 @@ const fundsContainer = async (funds) => {
 
     document.getElementById('my-funds-dom').innerHTML = initialCont;
     document.getElementById('main-funds').innerHTML = mainComponent(mainFunds);
+    $(".js-range-slider").ionRangeSlider();
 }
 
 const currencyCont = (name, bal) => {
@@ -157,15 +158,18 @@ let depositWithdrawModalComponent = (id, code, amount, name) => {
                                         <form>
                                         <h3 class="text-center">${numberFormatter.format(amount)} ${code}</h3>
                                             <div><input type="number" class="form-control" placeholder="Amount"></div>
-                                            <div>
-                                                <label for="customRange3">Example range</label>
-                                                <input type="range" class="custom-range" min="0" max="5" step="0.5" id="customRange3">
-                                            </div>                                                                                
+                                            <div class="mt-2">
+                                                
+                                               <input type="text" class="js-range-slider" name="my_range" data-max="${amount}" value="" />
+                                            </div> 
+                                            <div class="mt-3">
+                                                <input type="text" class="form-control" placeholder="Pulic key">
+                                            </div>                                                                               
                                         </form>
                                       </div>
                                       <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
+                                        <button type="button" class="btn btn-primary">Withdraw</button>
                                       </div>
                                     </div>
                                   </div>
@@ -283,3 +287,4 @@ function updateAmount(val, elmId) {
 }
 
 fundsContainer(myFunds)
+
