@@ -132,7 +132,7 @@ var availableCurrency = (code, amount, id, name) => {
     let currencyRow = `    
         <tr class="unread">
             <td><img class="rounded-circle" style="width:40px;"
-                     src="https://cryptoicon-api.vercel.app/api/icon/${code.toLowerCase()}"
+                     src="/static/img/currency_icons/${code}.svg"
                      alt="activity-user"></td>
             <td>
                 <h6 class="mb-1">${code}</h6>
