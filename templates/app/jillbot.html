@@ -3,19 +3,52 @@
 
 {% block title %} Jillbot {% endblock %}
 {% block content %}
-<div id="foo"></div>
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    
+                    <div class="col-sm-12">
+                      <div class="row">
+                      {% for a in analysis %}
+                        <div class="col-lg-6">
+
+                          <div class="card">
+                              <div class="card-header">
+                                  <h5>{{a.symbol}}</h5>
+                              </div>
+                              <div class="card-body">
+                                <canvas class="mt-5" id="{{a.symbol}}"></canvas>
+                              </div>
+                          </div>
+                        </div>
+                        {% endfor %}
+
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 {% endblock content %}
 
 {% block javascripts %} 
-<script src="{% static 'js/gauge.min.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/gauge.js' %}"></script>
 <script type="text/javascript">
+var analysisResults = {{analysis | safe }}
+
 var opts = {
-  angle: 0.15, // The span of the gauge arc
-  lineWidth: 0.44, // The line thickness
+  angle: -0.2, // The span of the gauge arc
+  lineWidth: 0.2, // The line thickness
   radiusScale: 1, // Relative radius
   pointer: {
-    length: 0.85, // // Relative to gauge radius
-    strokeWidth: 0.097, // The thickness
+    length: 0.6, // // Relative to gauge radius
+    strokeWidth: 0.035, // The thickness
     color: '#000000' // Fill color
   },
   limitMax: false,     // If false, max value increases automatically if value > maxValue
@@ -24,14 +57,25 @@ var opts = {
   colorStop: '#8FC0DA',    // just experiment with them
   strokeColor: '#E0E0E0',  // to see which ones work best for you
   generateGradient: true,
-  highDpiSupport: true,     // High resolution support
+  highDpiSupport: true,     // High resolution support  
+  staticZones: [
+    {strokeStyle: "rgb(255,0,0)", min: 0, max: 8},
+    {strokeStyle: "rgb(200,100,0)", min: 9, max: 16},
+    {strokeStyle: "rgb(150,150,0)", min: 17, max: 26},
+    
+  ]
   
 };
-var target = document.getElementById('foo'); // your canvas element
-var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
-gauge.maxValue = 3000; // set max gauge value
-gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
-gauge.animationSpeed = 72; // set animation speed (32 is default value)
-gauge.set(1400); // set actual value
+
+analysisResults.forEach((item) => {
+  var target = document.getElementById(item.symbol); // your canvas element
+  var gauge = new Gauge(target).setOptions(opts); // create sexy gauge!
+  
+  gauge.maxValue = 26; // set max gauge value
+  gauge.setMinValue(0);  // Prefer setter over gauge.minValue = 0
+  gauge.animationSpeed = 32; // set animation speed (32 is default value)
+  gauge.set(item.summary[item.summary.RECOMMENDATION]); // set actual value
+})
+
 </script>
 {% endblock javascripts %}

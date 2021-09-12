@@ -1,0 +1,69 @@
+{% extends "layouts/base.html" %}
+{% load static %}
+
+{% block title %} Market {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <div class="page-wrapper">
+                    <!-- [ Main Content ] start -->
+                    <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Create Order</h5>
+                            </div>
+                            <div class="card-body">
+
+                                <input type="text" id="slider1" class="js-range-slider" name="my_range" value="" />
+                                <input type="text" id="slider2" class="js-range-slider" name="my_range" value="" />
+                                <input type="text" id="slider3" class="js-range-slider" name="my_range" value="" />
+                                <input type="text" id="slider4" class="js-range-slider" name="my_range" value="" />
+                                <input type="text" id="slider5" class="js-range-slider" name="my_range" value="" />
+                                <form>
+                                    <div class="form-group">
+                                        <label for="exampleInputEmail1"></label>
+                                        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                                        
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exampleInputPassword1"></label>
+                                        <input type="text" class="form-control" id="exampleInputPassword1">
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+<script>
+    $(".js-range-slider").ionRangeSlider({
+        skin: "big",
+        type: "double",
+        min: 0,
+        max: 10000,
+        from: 5000,
+        to: 8000,
+        onChange: function (data) {
+            console.dir(data);
+        }
+    });
+
+</script>
+
+{% endblock javascripts %}

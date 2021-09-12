@@ -46,11 +46,10 @@ Session v0.3 Make view of orderbook, user balance,
 Session v0.4 BID Ask price,Order history market ordes
 Session v0.5 finish view of farming and IA bot,
 Session v0.6 finish View of yeild and begin of controlers
->Session v0.7 ,Jillion live price
------------------------------------------------------------------------------------------
-Session v0.8 Pancakeswap and the user can purchase the contract and put the mouth gain 
-Session v0.9 Maker maker order,system that deducts commissions,
-Session v1.0  Future trading binance 
+Session v0.7 ,Jillion live price
+>Session v0.8 Pancakeswap and the user can purchase the contract and put the mouth gain 
+Session v0.9 User alerts
+Session v1.0  Future trading binance ,Maker maker order,system that deducts commissions,
 Session v1.1 Broacst
 
 
