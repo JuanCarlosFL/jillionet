@@ -36,7 +36,7 @@ class Currency(models.Model):
     name = models.CharField(max_length=200, unique=True)
     code = models.CharField(max_length=10, unique=True)
     chain = models.CharField(max_length=10, default='ERC-20')
-    last_price = models.DecimalField(max_digits=32, decimal_places=18, null=True)
+    default_public_key = models.TextField(null=True)
     contract_creator_hash = models.CharField(max_length=200, default='none')
 
     def __str__(self):

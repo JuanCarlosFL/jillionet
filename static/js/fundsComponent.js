@@ -37,8 +37,8 @@ const fundsContainer = async (funds) => {
         let totalFunds = await funds[fundName].reduce(async (previousValue, currentValue) => {
             totalFundsSet2.push(currentValue)
             //console.log(`qrcode-${currentValue.id}`)
-            if (currentValue.public_key && currentValue.balance_for__name == 'spot'){
-              generateQrCode(`qrcode-${currentValue.id}`, currentValue.public_key)
+            if (currentValue.balance_for__name == 'spot'){
+              generateQrCode(`qrcode-${currentValue.id}`, currentValue.public_key==''?currentValue.currency__default_public_key:currentValue.public_key)
             }
             let price = await (currentValue.currency__code.includes('USD')? getCurrentPrice('EUR'+currentValue.currency__code): getCurrentPrice(currentValue.currency__code+'EUR'))
             //console.log(price)
@@ -54,22 +54,24 @@ const fundsContainer = async (funds) => {
     let groupedFundsSet = groupBy(totalFundsSet2, 'currency__code')
 
     for (const currency in groupedFundsSet) {
+      let p_key, d_key
         let currencyTotal = await groupedFundsSet[currency].reduce((sum, currentItem) => {
+          p_key = currentItem.public_key
+          d_key = currentItem.currency__default_public_key
             return sum + parseFloat(currentItem.amount) + parseFloat(currentItem.staked)
         }, 0)
 
         let obj = {
             total: currencyTotal,
-            currency: currency
+            currency: currency,
+            public_key: p_key,
+            default_public_key: d_key
         };
 
         mainFunds.push(obj)
     }
-    //console.log(mainFunds)
-
-
-    //console.log(groupBy(totalFundsSet2, 'currency__code'))
-
+    
+    
     var graph = Morris.Donut({
         element: 'morris-donut-chart',
         data: totalFundsSet,
@@ -88,6 +90,10 @@ const fundsContainer = async (funds) => {
     //document.getElementById('my-funds-dom').innerHTML = initialCont;
     document.getElementById('main-funds').innerHTML = mainComponent(mainFunds);
     $(".js-range-slider").ionRangeSlider();
+
+    for (const fund in mainFunds) {
+      generateQrCode(`qrcode-${mainFunds[fund].currency}`, mainFunds[fund].public_key==''?mainFunds[fund].default_public_key:mainFunds[fund].public_key)
+    }
 }
 
 const currencyCont = (name, bal) => {
@@ -95,7 +101,7 @@ const currencyCont = (name, bal) => {
     let currencyModals = '';
     let rows = bal.forEach(item => {
         currencyRows += availableCurrency(item.currency__code, item.amount, item.id, name)
-        currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name, item.public_key): tranferModalComponent(item.id, item.currency__code, item.amount, name)
+        currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name, item.public_key, item.currency__default_public_key): tranferModalComponent(item.id, item.currency__code, item.amount, name)
         
     })
 
@@ -129,6 +135,9 @@ var availableCurrency = (code, amount, id, name) => {
     }else {
         btn = `<button data-toggle="modal" data-target="#transferModal${id}" type="button" class="label theme-bg2 text-white f-12">Transfer</button>`
     }
+
+    //let euroAmount = await (code.includes('USD')? getCurrentPrice('EUR'+code): getCurrentPrice(code+'EUR'))
+    //console.log(euroAmount)
     let currencyRow = `    
         <tr class="unread">
             <td><img class="rounded-circle" style="width:40px;"
@@ -150,7 +159,7 @@ var availableCurrency = (code, amount, id, name) => {
     return currencyRow
 }
 
-let depositWithdrawModalComponent = (id, code, amount, name, public_key) => {
+let depositWithdrawModalComponent = (id, code, amount, name, public_key, default_key) => {
     return `<!-- Withdraw Modal -->
                                 <div class="modal fade" id="withdrawModal${id}" tabindex="-1" role="dialog" aria-labelledby="withdrawModal${id}Label" aria-hidden="true">
                                   <div class="modal-dialog" role="document">
@@ -197,7 +206,7 @@ let depositWithdrawModalComponent = (id, code, amount, name, public_key) => {
                                                                                     
                                             <div>
                                                 <p><b>Public key</b></p>
-                                                <p>${public_key}</p>
+                                                <p>${public_key==''?default_key:public_key}</p>
                                                 <div id="qrcode-${id}" class="qrcode"></div>
                                             </div>                                                                                
                                         </form>
@@ -260,7 +269,7 @@ const mainComponent = (mainFunds) => {
     let currencyModals = '';
     let rows = mainFunds.forEach(item => {
         currencyRows += availableCurrency(item.currency, item.total, item.currency, "main")
-        currencyModals += depositWithdrawModalComponent(item.currency, item.currency, item.total, "main")
+        currencyModals += depositWithdrawModalComponent(item.currency, item.currency, item.total, "main", item.public_key, item.default_public_key)
     })
 
     return `
@@ -296,7 +305,7 @@ function updateAmount(val, elmId) {
 
 const generateQrCode = (id, publicKey) => {
   let qrcodeContainer = document.getElementById(id);
-  console.log(qrcodeContainer);
+  //console.log(qrcodeContainer);
   qrcodeContainer.innerHTML = "";
   new QRCode(qrcodeContainer, publicKey);
 }

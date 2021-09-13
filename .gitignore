@@ -278,7 +278,7 @@ media/
 .envs/*
 .idea/
 .vscode/
-
+db.sqlite3
 stderr.log
 
 *.pyc

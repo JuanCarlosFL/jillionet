@@ -39,7 +39,7 @@ class User(AbstractUser):
 
     def get_balance(self, bal_type):
         my_balance = self.userbalance_set.filter(user=self, balance_for=bal_type)
-        my_balance_values = my_balance.values('id', 'balance_for__name', 'amount', 'staked', 'currency__code', 'public_key')
+        my_balance_values = my_balance.values('id', 'balance_for__name', 'amount', 'staked', 'currency__code', 'currency__default_public_key', 'public_key')
         # print(my_balance_json)
         return my_balance_values
 

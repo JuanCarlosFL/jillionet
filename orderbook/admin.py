@@ -20,7 +20,7 @@ class OrderAdmin(admin.ModelAdmin):
 
 @admin.register(Currency)
 class CurrencyAdmin(admin.ModelAdmin):
-    list_display = ['code', 'chain', 'name','last_price','contract_creator_hash']
+    list_display = ['code', 'chain', 'name','default_public_key','contract_creator_hash']
 
 
 @admin.register(getexchangepricemodel)
