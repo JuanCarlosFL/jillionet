@@ -26,11 +26,12 @@ class UserBalanceView(LoginRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         balances = BalanceFor.objects.all()
+        self.request.user.get_jill_balance()
 
         # total_fund = [{x.name: list(self.request.user.get_balance(x))} for x in balances]
         total_fund = {}
         for x in balances:
-            total_fund[x.name] = list(self.request.user.get_balance(x))
+            total_fund[x.name] = list(self.request.user.get_balance(x.name))
         # print(json.dumps(total_fund, cls=DecimalEncoder))
 
         context.update({

@@ -24,6 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app.urls', namespace='app')),
     path('users/', include('users.urls')),
-    path('orderbook/', include('orderbook.urls', namespace='orderbook'))
+    path('orderbook/', include('orderbook.urls', namespace='orderbook')),
+    path('yeildfarming/', include('yeildfarming.urls', namespace='yeildfarming'))
 
 ]

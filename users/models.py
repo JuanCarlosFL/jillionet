@@ -38,10 +38,13 @@ class User(AbstractUser):
     # balance = models.ForeignKey("UserBalance", on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_balance(self, bal_type):
-        my_balance = self.userbalance_set.filter(user=self, balance_for=bal_type)
+        my_balance = self.userbalance_set.filter(user=self, balance_for__name=bal_type)
         my_balance_values = my_balance.values('id', 'balance_for__name', 'amount', 'staked', 'currency__code', 'currency__default_public_key', 'public_key')
-        # print(my_balance_json)
+        #print(my_balance_values)
         return my_balance_values
+
+    def get_jill_balance(self):
+        return self.get_balance('jillfarm').filter(currency__code='JILL').first()
 
 
 class BalanceFor(models.Model):
