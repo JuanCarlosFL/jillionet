@@ -1,10 +1,11 @@
 {% extends "layouts/base.html" %}
-{% load humanize crispy_forms_tags %}
+{% load humanize crispy_forms_tags static %}
 
 {% block title %} Order Book {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
+<link rel="stylesheet" href="{% static 'css/farm.css' %}">
 <style>
 .nav-pills .nav-link.active.sell { 
     background-color: red;
@@ -107,15 +108,29 @@
                                                     </div>
                                                     <div class="form-group">
 
-                                                        <input type="range" class="custom-range _buy" min="0" max="1000"
+                                                        <!--<input type="range" class="custom-range _buy" min="0" max="1000"
                                                                step="0.5" onchange="updateVolume(this.value, this)"
-                                                               id="customRange3">
+                                                               id="customRange3">-->
+                                                        <input type="text" class="js-range-slider" name="my_range" value=""
+                                                            
+                                                            data-min="0"
+                                                            data-max="1000"                                                            
+                                                            data-grid="true"
+                                                         />
                                                     </div>
 
                                                     <input type="hidden" name="trading_pair" id="id_trading_pair"
                                                            value="{{ trading_pair.id }}">
 
-                                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                    {% if user.is_authenticated%}
+                                                        {%if user.get_jill_balance.amount < 10000 %} 
+                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#needMoreJillModal">
+                                                            Submit
+                                                            </button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                        {% endif %}
+                                                    {% endif %}
                                                 </form>
                                             </div>
                                             <div class="tab-pane fade" id="pills-sell" role="tabpanel"
@@ -143,7 +158,17 @@
                                                                id="customRange2">
                                                     </div>
 
-                                                    <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                    {% if user.is_authenticated%}
+                                                        {%if user.get_jill_balance.amount < 10000 %} 
+                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#needMoreJillModal">
+                                                            Submit
+                                                            </button>
+                                                        {% else %}
+                                                            <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                        {% endif %}
+                                                    {% endif %}
+
+                                                    
                                                 </form>
                                             </div>
 
@@ -256,11 +281,46 @@
         </div>
 
     </div>
+    <div class="modal fade" id="needMoreJillModal" tabindex="-1" aria-labelledby="needMoreJillModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="sc-jSFjdj sc-dtLLSn bQHYpP ctFTfa sc-hKiEVl iEOpyR">
+                    <div class="sc-gIvpjk gJMct">
+                        <div class="sc-jSFjdj sc-gKAaRy sc-euEtCV kJmatq jcNvwq hTuscY"><h2
+                                color="text"
+                                class="sc-gtsrHT sc-iJCRrE jDnmwq jXZUNo">
+                            Insufficient JILL</h2></div>
+                        <button class="sc-hKFxyN YaON sc-eCApnc fAYopv" data-dismiss="modal"
+                                aria-label="Close" scale="md">
+                            <svg viewBox="0 0 24 24" color="primary" width="20px"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="sc-bdnxRM ACFFk">
+                                <path d="M18.3 5.70997C17.91 5.31997 17.28 5.31997 16.89 5.70997L12 10.59L7.10997 5.69997C6.71997 5.30997 6.08997 5.30997 5.69997 5.69997C5.30997 6.08997 5.30997 6.71997 5.69997 7.10997L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.10997C18.68 6.72997 18.68 6.08997 18.3 5.70997Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="sc-jSFjdj sc-gKAaRy sc-fHCHyC hXVokk jcNvwq crlswz">
+                        <div class="sc-exqIPC jyeDSm">
+                            <p>You need 10,000 JILL to buy this contract</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
     <script>
+
+        $(".js-range-slider").ionRangeSlider({
+            onChange: function (data) {
+                console.log(data.input.dat)
+            }
+        })
+
         function updateVolume(val, elm) {
             var volumeElement
             volumeElement = document.getElementById('id_buy_volume');
