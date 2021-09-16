@@ -46,6 +46,9 @@ class User(AbstractUser):
     def get_jill_balance(self):
         return self.get_balance('jillfarm').filter(currency__code='JILL').first()
 
+    def get_currency_balance(self, balance_for, currency):
+        return self.get_balance(balance_for).filter(currency__code=currency).first()
+
 
 class BalanceFor(models.Model):
     name = models.CharField(max_length=200, unique=True)
