@@ -12,7 +12,9 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import os
+import json
 import environ
+from .jillion_abi import *
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -213,3 +215,6 @@ CRISPY_TEMPLATE_PACK = "bootstrap4"
 
 BINANCE_API_KEY = env("BINANCE_API_KEY", default="")
 BINANCE_API_SECRET = env("BINANCE_API_SECRET", default="")
+
+JILLION_ABI = json.loads(ABI_json)
+INFURA_KEY = env("INFURA_KEY", default="")

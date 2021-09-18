@@ -7,11 +7,21 @@ from django.contrib import messages
 
 
 from .models import YeildContract, YeildOrderBook
+from users.models import UserLevel
 
 
 class YeildContractListView(ListView):
     model = YeildContract
     template_name = 'contract.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context.update({
+            'user_levels': UserLevel.objects.all()
+        })
+
+        return context
 
 
 class BuyContractView(LoginRequiredMixin, CreateView):

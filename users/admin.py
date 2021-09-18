@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
-from .models import UserBalance, User_level_field, BalanceFor
+from .models import UserBalance, UserLevel, BalanceFor
 
 User = get_user_model()
 
@@ -15,7 +15,7 @@ class UserAdmin(auth_admin.UserAdmin):
     add_form = UserCreationForm
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "phone_number", "email", "user_level")}),
+        (_("Personal info"), {"fields": ("first_name", "last_name", "phone_number", "email", "level", "jillion_public_key")}),
         (
             _("Permissions"),
             {
@@ -57,7 +57,7 @@ class UserBalanceAdmin(admin.ModelAdmin):
     get_balance_for.admin_order_field = 'balance_for__name'
 
 
-@admin.register(User_level_field)
+@admin.register(UserLevel)
 class User_level_field(admin.ModelAdmin):
     list_display = ['level_key', 'borrow_interest', 'maker_taker', 'inicial_balance_USDT', 'free_balance_JILL',
                     'inicial_balance_USDT', 'max_withdraw_USDT', 'Jillion_hold_trigger', 'Futures_leverage']

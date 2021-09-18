@@ -1,4 +1,5 @@
 import json
+from web3 import Web3
 
 from django.contrib.auth.models import AbstractUser
 from django.core import serializers
@@ -6,6 +7,7 @@ from django.utils import timezone
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from decimal import Decimal
+from django.conf import settings
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -34,7 +36,9 @@ class User(AbstractUser):
         (BRONZE, BRONZE.title()),
     )
     phone_number = PhoneNumberField(unique=True)
-    user_level = models.CharField(max_length=50, choices=USER_LEVEL_CHOICES, default=BRONZE)
+    level = models.ForeignKey('UserLevel', on_delete=models.SET_NULL, null=True, blank=True)
+    jillion_public_key = models.TextField(blank=True, null=True)
+    # user_level = models.CharField(max_length=50, choices=USER_LEVEL_CHOICES, default=BRONZE, null=True)
     # balance = models.ForeignKey("UserBalance", on_delete=models.SET_NULL, null=True, blank=True)
 
     def get_balance(self, bal_type):
@@ -48,6 +52,18 @@ class User(AbstractUser):
 
     def get_currency_balance(self, balance_for, currency):
         return self.get_balance(balance_for).filter(currency__code=currency).first()
+
+    def get_jill_wallet_ballance(self):
+        # ABI = json.loads(ABI_json)
+        w3 = Web3(Web3.HTTPProvider(settings.INFURA_KEY))
+        #print(w3.isConnected())
+
+        contract_address = '0x83053843161Ef9fe5b44211a56d2ADf201BeDEF9'
+
+        contract = w3.eth.contract(contract_address, abi=settings.JILLION_ABI)
+        holder = Web3.toChecksumAddress(self.jillion_public_key)
+        raw_balance = contract.functions.balanceOf(holder).call()
+        return Decimal(raw_balance)/(10**18)
 
 
 class BalanceFor(models.Model):
@@ -83,12 +99,15 @@ class UserBalance(models.Model):
         ordering = ['user', 'currency__code']
 
 
-class User_level_field(models.Model):
+class UserLevel(models.Model):
     level_key = models.CharField(max_length=200, unique=True)
     borrow_interest = models.CharField(max_length=200, unique=True)
     maker_taker = models.CharField(max_length=200, unique=True)
     inicial_balance_USDT = models.CharField(max_length=200, unique=True)
-    free_balance_JILL = models.CharField(max_length=200, unique=True)
+    free_balance_JILL = models.DecimalField(decimal_places=18, max_digits=36, default=0)
     max_withdraw_USDT = models.CharField(max_length=200, unique=True)
-    Jillion_hold_trigger = models.CharField(max_length=200, unique=True)
+    Jillion_hold_trigger = models.DecimalField(decimal_places=18, max_digits=36, default=0)
     Futures_leverage = models.CharField(max_length=200, unique=True)
+
+    def __str__(self):
+        return self.level_key

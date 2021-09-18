@@ -142,6 +142,35 @@
                         {% endfor %}
 
                     </div>
+
+                    <div class="col-xl-8 col-md-6">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>External wallet</h5>
+                                        
+                                    </div>
+                                    <div class="card-block px-0 py-3">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                    <tr class="unread">
+                                                        <td><img class="rounded-circle" style="width:40px;"
+                                                                 src="{% static 'img/jill_icon.png' %}"
+                                                                 alt="jill"></td>
+                                                        
+                                                        <td>
+                                                            <h6 class="text-muted">{{ user.get_jill_wallet_ballance }}</h6>
+                                                            <p id="jill-wallet" class="m-0 small">€ 0.00</p>
+                                                        </td>
+                                                        
+                                                    </tr>
+                                                <tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                            </div>
                     {% comment %}<div>
                         <table>
                             <tr>
@@ -224,6 +253,53 @@
 
 
     }
+
+    var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
+    
+    var jillWalletBalance = parseFloat('{{user.get_jill_wallet_ballance}}')
+
+    function streamPrice(symbol='btcusdt', changeEl) {
+        let priceTag = document.getElementById(changeEl)
+        //let changeTag = document.getElementById(`change-${changeEl}`)
+        //console.log(changeEl, priceTag)
+        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+        biSocket.onmessage = function (event) {
+            let messageObject = JSON.parse(event.data)
+            if (changeEl.includes('jill')) {
+                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
+                let pr = messageObject.c/thousandthPrice
+                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                .then(function (response) {
+
+                    let currentprice = response.data.last_price * pr            
+                    priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(currentprice * jillWalletBalance)
+                    //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+                    //console.log(response.data.last_price * pr)
+
+                })
+                .catch(function (error) {
+                    console.log
+                }).then(function (response) {})
+                //console.log(pr)
+
+            } else {
+                priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
+                //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+
+            }
+            
+            //console.log(thousandthPrice)
+            
+        }
+
+    }
+
+    
+    
+    streamPrice(symbol='btcusdt', 'jill-wallet');
+    
+
+
 
     </script>
     <script src="{% static 'js/fundsComponent.js' %}"></script>

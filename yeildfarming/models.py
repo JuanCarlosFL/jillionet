@@ -12,7 +12,8 @@ class YeildContract(models.Model):
     APYd365 = models.CharField(max_length=200)
     d30 = models.CharField(max_length=200)
     d7 = models.CharField(max_length=200)
-    d1 = models.CharField(max_length=200)    
+    d1 = models.CharField(max_length=200)
+    required_level = models.ForeignKey('users.UserLevel', on_delete=models.CASCADE, null=True) 
 
     def __str__(self):
         return f"{self.yeildpair}"
