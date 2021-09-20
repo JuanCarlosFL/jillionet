@@ -94,6 +94,35 @@ const fundsContainer = async (funds) => {
     for (const fund in mainFunds) {
       generateQrCode(`qrcode-${mainFunds[fund].currency}`, mainFunds[fund].public_key==''?mainFunds[fund].default_public_key:mainFunds[fund].public_key)
     }
+
+    //let fundAmount = document.getElementsByClassName('fund-amount')
+    [...document.getElementsByClassName('fund-amount')].forEach(async item => {
+      let amount = parseFloat(item.innerText)
+      let itemId = item.id
+      var price
+
+      
+      if (itemId.includes('USD')){
+        streamFundPrice(`EUR${itemId.split('-').pop()}`.toLocaleLowerCase(), itemId, amount)
+        //getCurrentPrice('EUR'+itemId.split('-').pop())
+        //.then((price) =>{
+        //  var el = document.createElement("small");
+        //  el.innerText = price.price * amount;
+        //  item.parentNode.insertBefore(el, item.nextSibling)
+        //})
+        
+      }else {
+        streamFundPrice(`${itemId.split('-').pop()}EUR`.toLocaleLowerCase(), itemId, amount)
+      //  getCurrentPrice(itemId.split('-').pop()+'EUR')
+      //  .then((price) => {
+      //    var el = document.createElement("small");
+      //    el.innerText = price.price * amount;
+      //    item.parentNode.insertBefore(el, item.nextSibling)
+      //  })
+      }
+      console.log(price)
+    })
+
 }
 
 const currencyCont = (name, bal) => {
@@ -148,8 +177,8 @@ var availableCurrency = (code, amount, id, name) => {
                 
             </td>
             <td>
-                <h6 class="text-muted">${amount}</h6>
-                <p class="m-0 small">€ 0.00</p>
+                <h6 id="fund-${name}-${code}" class="fund-amount text-muted">${amount}</h6>
+                <p id="fund-${name}-${code}-euro" class="m-0 small">€ 0.00</p>
             </td>
             <td>
                 ${btn}

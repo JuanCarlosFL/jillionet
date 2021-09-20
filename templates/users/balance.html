@@ -294,6 +294,48 @@
 
     }
 
+    function streamFundPrice(symbol='btcusdt', changeEl, amount) {
+        let priceTag = document.getElementById(changeEl)
+        let euroPrice = document.getElementById(changeEl+'-euro')
+                
+        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+        biSocket.onmessage = function (event) {
+            let messageObject = JSON.parse(event.data)
+            
+            if (changeEl.includes('jill')) {
+                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
+                let pr = messageObject.c/thousandthPrice
+                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                .then(function (response) {
+
+                    let currentprice = response.data.last_price * pr            
+                    //priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(currentprice * jillWalletBalance)
+                    //var el = document.createElement("small");
+                    //el.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(currentprice * amount);
+                    //priceTag.parentNode.insertBefore(el, priceTag.nextSibling)
+                    euroPrice.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(currentprice * amount);
+
+                })
+                .catch(function (error) {
+                    console.log
+                }).then(function (response) {})
+                //console.log(pr)
+
+            } else {
+                //priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
+                //var el = document.createElement("small");
+                euroPrice.innerText = new Intl.NumberFormat().format(messageObject.c * amount);
+                //priceTag.parentNode.insertBefore(el, priceTag.nextSibling)                
+
+            }
+            
+            //console.log(thousandthPrice)
+            
+        }
+
+    }
+
+
     
     
     streamPrice(symbol='btcusdt', 'jill-wallet');
