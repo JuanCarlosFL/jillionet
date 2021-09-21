@@ -1,5 +1,11 @@
-let currencyFormatter = new Intl.NumberFormat("en-EN", {
+let currencyFormatter = new Intl.NumberFormat(Intl.locale, {
     maximumFractionDigits: 2,
+    style: 'currency',
+    currency: 'EUR',
+})
+
+let jillEuroCurrencyFormatter = new Intl.NumberFormat(Intl.locale, {
+    maximumFractionDigits: 8,
     style: 'currency',
     currency: 'EUR',
 })
@@ -29,7 +35,7 @@ const fundsContainer = async (funds) => {
     let totalFundsSet2 = [];
 
     for (const fundName in funds){
-        
+
         initialCont.innerHTML += currencyCont(fundName, funds[fundName])
 
 
@@ -70,8 +76,8 @@ const fundsContainer = async (funds) => {
 
         mainFunds.push(obj)
     }
-    
-    
+
+
     var graph = Morris.Donut({
         element: 'morris-donut-chart',
         data: totalFundsSet,
@@ -96,23 +102,25 @@ const fundsContainer = async (funds) => {
     }
 
     //let fundAmount = document.getElementsByClassName('fund-amount')
-    [...document.getElementsByClassName('fund-amount')].forEach(async item => {
+    [...document.getElementsByClassName('fund-amount')].map(async item => {
       let amount = parseFloat(item.innerText)
       let itemId = item.id
       var price
+        var currencyCode = itemId.split('-').pop()
 
-      
+
       if (itemId.includes('USD')){
-        streamFundPrice(`EUR${itemId.split('-').pop()}`.toLocaleLowerCase(), itemId, amount)
+        streamFundPrice(`EUR${currencyCode}`.toLocaleLowerCase(), itemId, amount)
         //getCurrentPrice('EUR'+itemId.split('-').pop())
         //.then((price) =>{
         //  var el = document.createElement("small");
         //  el.innerText = price.price * amount;
         //  item.parentNode.insertBefore(el, item.nextSibling)
         //})
-        
+
       }else {
-        streamFundPrice(`${itemId.split('-').pop()}EUR`.toLocaleLowerCase(), itemId, amount)
+          //console.log(currencyCode, 'kkk')
+        streamFundPrice(currencyCode=='JILL'? 'btcusdt':`${currencyCode}EUR`.toLocaleLowerCase(), itemId, amount)
       //  getCurrentPrice(itemId.split('-').pop()+'EUR')
       //  .then((price) => {
       //    var el = document.createElement("small");
@@ -131,7 +139,7 @@ const currencyCont = (name, bal) => {
     let rows = bal.forEach(item => {
         currencyRows += availableCurrency(item.currency__code, item.amount, item.id, name)
         currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name, item.public_key, item.currency__default_public_key): tranferModalComponent(item.id, item.currency__code, item.amount, name)
-        
+
     })
 
     return `
@@ -328,7 +336,7 @@ const mainComponent = (mainFunds) => {
 function updateAmount(val, elmId) {
   var volumeElement
   volumeElement = document.getElementById(elmId);
-  
+
   volumeElement.value = val;
 }
 
