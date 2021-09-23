@@ -17,7 +17,10 @@ def market_currency_balance(pair, user):
     _, currecy_code = pair.split('_')
 
     try:
-        #user_balance = 
-        return user.get_currency_balance('spot', currecy_code)['amount']
+        #user_balance =
+        if user.is_authenticated:
+            return user.get_currency_balance('spot', currecy_code)['amount']
+        else:
+            return 0
     except TypeError:
         return 0

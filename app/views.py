@@ -90,7 +90,7 @@ class iabotListView(ListView):
                 print("No Data")
             continue
 
-        print(result)
+        # print(result)
 
         context.update({
             'analysis': result
