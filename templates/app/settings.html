@@ -1,0 +1,45 @@
+{% extends "layouts/base.html" %}
+{% load static i18n %}
+
+{% block title %} Coming Soon {% endblock %}
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+    <div class="pcoded-content">
+        <div class="pcoded-inner-content">
+            <!-- [ breadcrumb ] start -->
+            {% get_current_language as LANGUAGE_CODE %}
+
+            <!-- [ breadcrumb ] end -->
+            <div class="main-body">
+                <form action="{% url 'set_language' %}" method="post">
+                <h5>Select Language</h5>
+                    {% csrf_token %}
+                    <input type="hidden" name="next" value="{{redirect_to}}">
+                    <select name="language">
+
+                        {% get_available_languages as  LANGUAGES %}
+                        {% get_language_info_list for LANGUAGES as languages %}
+                        {% for language in languages %}
+
+                            <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %}selected{% endif %}>
+                                {{language.name_local}} {{language.code}}
+                            </option>
+
+                        {% endfor %}
+                    </select>
+                    <input type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Display the countdown timer in an element -->
+
+
+<script>
+
+
+</script>
+{% endblock content %}

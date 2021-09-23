@@ -20,11 +20,13 @@ from app import views
 
 urlpatterns = [
     path('', views.index, name='index'),
+    path('i18n/', include('django.conf.urls.i18n')),
     path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('', include('app.urls', namespace='app')),
     path('users/', include('users.urls')),
     path('orderbook/', include('orderbook.urls', namespace='orderbook')),
-    path('yeildfarming/', include('yeildfarming.urls', namespace='yeildfarming'))
+    path('yeildfarming/', include('yeildfarming.urls', namespace='yeildfarming')),
+    
 
 ]

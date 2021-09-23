@@ -13,13 +13,15 @@ def get_bal(bal_type, user):
 
 
 @register.simple_tag
-def market_currency_balance(pair, user):
+def market_currency_balance(pair, user, order_type):
     _, currecy_code = pair.split('_')
 
     try:
         #user_balance =
         if user.is_authenticated:
-            return user.get_currency_balance('spot', currecy_code)['amount']
+            if order_type == 'buy':
+                return user.get_currency_balance('spot', currecy_code)['amount']
+            return user.get_currency_balance('spot', _)['amount']
         else:
             return 0
     except TypeError:

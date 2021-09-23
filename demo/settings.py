@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "django_celery_beat",
     "crispy_forms",
+    "autotranslate",
 
     "users.apps.UsersConfig",
     "orderbook","yeildfarming","IaBotpredict",
@@ -66,6 +67,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -218,3 +220,26 @@ BINANCE_API_SECRET = env("BINANCE_API_SECRET", default="")
 
 JILLION_ABI = json.loads(ABI_json)
 INFURA_KEY = env("INFURA_KEY", default="")
+
+LOCALE_PATHS = [
+    os.path.join(BASE_DIR, 'locale'),  # base folder where manage.py resides
+    #os.path.join(BASE_DIR, 'simple/locale')  # app folder
+]
+
+from django.utils.translation import ugettext_lazy as _
+
+# create a list of tuples ('LANGUAGE_CODE,' 'LANGUAGE NAME')
+from django.utils.translation import ugettext_lazy as _
+
+# create a list of tuples ('LANGUAGE_CODE,' 'LANGUAGE NAME')
+LANGUAGE_CODE = 'es'
+LANGUAGES = [
+   #('de', _('German')),
+   ('en', _('English')),
+   #('fr', _('French')),
+   ('es', _('Spanish')),
+   #('pt', _('Portuguese'))
+]
+
+AUTOTRANSLATE_TRANSLATOR_SERVICE = 'autotranslate.services.GoogleAPITranslatorService'
+GOOGLE_TRANSLATE_KEY = '<google-api-key>'

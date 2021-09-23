@@ -100,7 +100,7 @@ class iabotListView(ListView):
 
 
 class SettingsView(TemplateView):
-    template_name = 'coming_soon.html'
+    template_name = 'app/settings.html'
 
 
 class DappsView(TemplateView):

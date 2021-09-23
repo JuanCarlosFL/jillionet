@@ -114,9 +114,11 @@
                                                         <input type="text" class="js-range-slider" name="my_range" value=""
                                                             
                                                             data-min="0"
-                                                            data-max="{% market_currency_balance view.kwargs.slug user %}"                                                            
+                                                            data-max-fund="{% market_currency_balance view.kwargs.slug user 'buy' %}"
+                                                            data-max="100"
                                                             data-grid="true"
                                                             data-input-id="id_buy_volume"
+                                                            data-step="25"
                                                          />
                                                     </div>
 
@@ -163,9 +165,11 @@
                                                         <input type="text" class="js-range-slider" name="my_range2" value=""
                                                             
                                                             data-min="0"
-                                                            data-max="{% market_currency_balance view.kwargs.slug user %}"                                                            
+                                                            data-max-fund="{% market_currency_balance view.kwargs.slug user 'sell' %}"
+                                                            data-max="100"
                                                             data-grid="true"
                                                             data-input-id="id_sell_volume"
+                                                            data-step="25"
                                                          />
                                                     </div>
 
@@ -330,7 +334,9 @@
             onChange: function (data) {
                 
                 let inputDom = document.getElementById($(data.input).data('input-id'))
-                inputDom.value = data.from
+                var maxFund = $(data.input).data('max-fund')
+                console.log(maxFund, data.from_percent, maxFund * data.from_percent, data.from)
+                inputDom.value = maxFund * data.from/100.0
             }
         })
 
