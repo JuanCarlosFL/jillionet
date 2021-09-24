@@ -275,7 +275,7 @@
 
                 })
                 .catch(function (error) {
-                    console.log
+                    console.log(error)
                 }).then(function (response) {})
                 //console.log(pr)
 
@@ -317,8 +317,12 @@
                 //console.log(pr)
 
             } else {
+                if(symbol.startsWith('eur')) {
+                    euroPrice.innerText = currencyFormatter.format(1/messageObject.c * amount);
+                } else {
+                    euroPrice.innerText = currencyFormatter.format(messageObject.c * amount);
+                }
 
-                euroPrice.innerText = currencyFormatter.format(messageObject.c * amount);
 
             }
             

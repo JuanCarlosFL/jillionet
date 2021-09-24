@@ -105,30 +105,18 @@ const fundsContainer = async (funds) => {
     [...document.getElementsByClassName('fund-amount')].map(async item => {
       let amount = parseFloat(item.innerText)
       let itemId = item.id
-      var price
-        var currencyCode = itemId.split('-').pop()
+      let currencyCode = itemId.split('-').pop()
 
 
       if (itemId.includes('USD')){
         streamFundPrice(`EUR${currencyCode}`.toLocaleLowerCase(), itemId, amount)
-        //getCurrentPrice('EUR'+itemId.split('-').pop())
-        //.then((price) =>{
-        //  var el = document.createElement("small");
-        //  el.innerText = price.price * amount;
-        //  item.parentNode.insertBefore(el, item.nextSibling)
-        //})
 
       }else {
-          //console.log(currencyCode, 'kkk')
+
         streamFundPrice(currencyCode=='JILL'? 'btcusdt':`${currencyCode}EUR`.toLocaleLowerCase(), itemId, amount)
-      //  getCurrentPrice(itemId.split('-').pop()+'EUR')
-      //  .then((price) => {
-      //    var el = document.createElement("small");
-      //    el.innerText = price.price * amount;
-      //    item.parentNode.insertBefore(el, item.nextSibling)
-      //  })
+
       }
-      console.log(price)
+
     })
 
 }
