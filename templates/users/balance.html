@@ -216,11 +216,11 @@
             funds[fundName].map(async item => {
 
                 item['test'] = 'tetet'
-                if (item.currency__code.includes('USD')){
-                    let price = await getCurrentPrice('EUR'+item.currency__code)
+                if (item.currency_code.includes('USD')){
+                    let price = await getCurrentPrice('EUR'+item.currency_code)
                     //console.log(price.price * parseFloat(item.amount))
                 }else {
-                    let price = await getCurrentPrice(item.currency__code+'EUR')
+                    let price = await getCurrentPrice(item.currency_code+'EUR')
                     //console.log(price.price * parseFloat(item.amount))
                 }
 

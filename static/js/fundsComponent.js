@@ -43,10 +43,10 @@ const fundsContainer = async (funds) => {
         let totalFunds = await funds[fundName].reduce(async (previousValue, currentValue) => {
             totalFundsSet2.push(currentValue)
             //console.log(`qrcode-${currentValue.id}`)
-            if (currentValue.balance_for__name == 'spot'){
-              generateQrCode(`qrcode-${currentValue.id}`, currentValue.public_key==''?currentValue.currency__default_public_key:currentValue.public_key)
+            if (currentValue.balance_name == 'spot'){
+              generateQrCode(`qrcode-${currentValue.id}`, currentValue.public_key==''?currentValue.default_public_key:currentValue.public_key)
             }
-            let price = await (currentValue.currency__code.includes('USD')? getCurrentPrice('EUR'+currentValue.currency__code): getCurrentPrice(currentValue.currency__code+'EUR'))
+            let price = await (currentValue.currency_code.includes('USD')? getCurrentPrice('EUR'+currentValue.currency_code): getCurrentPrice(currentValue.currency_code+'EUR'))
             //console.log(price)
             return await previousValue + ((parseFloat(currentValue.amount) + parseFloat(currentValue.staked)) * price.price)
         }, initialValue)
@@ -57,13 +57,13 @@ const fundsContainer = async (funds) => {
         })
     }
 
-    let groupedFundsSet = groupBy(totalFundsSet2, 'currency__code')
+    let groupedFundsSet = groupBy(totalFundsSet2, 'currency_code')
 
     for (const currency in groupedFundsSet) {
       let p_key, d_key
         let currencyTotal = await groupedFundsSet[currency].reduce((sum, currentItem) => {
           p_key = currentItem.public_key
-          d_key = currentItem.currency__default_public_key
+          d_key = currentItem.default_public_key
             return sum + parseFloat(currentItem.amount) + parseFloat(currentItem.staked)
         }, 0)
 
@@ -122,11 +122,12 @@ const fundsContainer = async (funds) => {
 }
 
 const currencyCont = (name, bal) => {
+    console.log(bal)
     let currencyRows = '';
     let currencyModals = '';
     let rows = bal.forEach(item => {
-        currencyRows += availableCurrency(item.currency__code, item.amount, item.id, name)
-        currencyModals += item.balance_for__name==="spot" || item.balance_for__name==="main"? depositWithdrawModalComponent(item.id, item.currency__code, item.amount, name, item.public_key, item.currency__default_public_key): tranferModalComponent(item.id, item.currency__code, item.amount, name)
+        currencyRows += availableCurrency(item.currency_code, item.amount, item.id, name)
+        currencyModals += item.balance_name==="spot" || item.balance_name==="main"? depositWithdrawModalComponent(item.id, item.currency_code, item.amount, name, item.public_key, item.currency_default_public_key): tranferModalComponent(item.id, item.currency_code, item.amount, name)
 
     })
 

@@ -1,4 +1,6 @@
 import json
+
+from django.db.models import F
 from web3 import Web3
 
 from django.contrib.auth.models import AbstractUser
@@ -8,6 +10,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from decimal import Decimal
 from django.conf import settings
+
 
 
 class DecimalEncoder(json.JSONEncoder):
@@ -43,8 +46,13 @@ class User(AbstractUser):
 
     def get_balance(self, bal_type):
         my_balance = self.userbalance_set.filter(user=self, balance_for__name=bal_type)
-        my_balance_values = my_balance.values('id', 'balance_for__name', 'amount', 'staked', 'currency__code', 'currency__default_public_key', 'public_key')
-        #print(my_balance_values)
+        my_balance_values = my_balance.values(
+            'id', 'amount', 'staked', 'public_key',
+            balance_name=F('balance_for__name'),
+            currency_code=F('currency__code'),
+            default_public_key=F('currency__default_public_key')
+        )
+
         return my_balance_values
 
     def get_jill_balance(self):
@@ -64,6 +72,24 @@ class User(AbstractUser):
         holder = Web3.toChecksumAddress(self.jillion_public_key)
         raw_balance = contract.functions.balanceOf(holder).call()
         return Decimal(raw_balance)/(10**18)
+
+    def get_all_contract_funds(self):
+        all_funds = [{'balance_name': x.name, 'funds': list(self.get_balance(x.name))} for x in BalanceFor.objects.all()]
+        return json.dumps(all_funds, cls=DecimalEncoder)
+
+    def all_asset_total(self):
+        """ :returns json list of all user asset and the total amount """
+        assets = []
+
+        from orderbook.models import Currency
+        for currency in Currency.objects.all():
+            user_currency_balance_qs = self.userbalance_set.filter(currency=currency)
+            assets.append({
+                'symbol': currency.code,
+                'amount': sum([x.amount+x.staked for x in user_currency_balance_qs])
+            })
+
+        return json.dumps(assets, cls=DecimalEncoder)
 
 
 class BalanceFor(models.Model):
@@ -97,6 +123,9 @@ class UserBalance(models.Model):
     class Meta:
         unique_together = ['currency', 'user', 'balance_for']
         ordering = ['user', 'currency__code']
+
+    def __str__(self):
+        return f'{self.user.username}_{self.currency.code}_{self.balance_for.name}'
 
 
 class UserLevel(models.Model):
