@@ -33,6 +33,10 @@ class UserAdmin(auth_admin.UserAdmin):
     list_display = ["username", "is_superuser"]
     search_fields = ["username"]
 
+    add_fieldsets = auth_admin.UserAdmin.add_fieldsets + (
+        (None, {'fields': ('phone_number',)}),
+    )
+
 
 @admin.register(UserBalance)
 class UserBalanceAdmin(admin.ModelAdmin):
