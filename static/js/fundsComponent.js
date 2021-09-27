@@ -1,19 +1,3 @@
-let currencyFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 2,
-    style: 'currency',
-    currency: 'EUR',
-})
-
-let jillEuroCurrencyFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 8,
-    style: 'currency',
-    currency: 'EUR',
-})
-
-let numberFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 2,
-
-})
 
 function groupBy(objectArray, property) {
   return objectArray.reduce(function (acc, obj) {

@@ -12,7 +12,6 @@ from decimal import Decimal
 from django.conf import settings
 
 
-
 class DecimalEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, Decimal):
@@ -64,7 +63,6 @@ class User(AbstractUser):
     def get_jill_wallet_ballance(self):
         # ABI = json.loads(ABI_json)
         w3 = Web3(Web3.HTTPProvider(settings.INFURA_KEY))
-        #print(w3.isConnected())
 
         contract_address = '0x83053843161Ef9fe5b44211a56d2ADf201BeDEF9'
 
@@ -79,6 +77,20 @@ class User(AbstractUser):
 
     def all_asset_total(self):
         """ :returns json list of all user asset and the total amount """
+        assets = []
+
+        from orderbook.models import Currency
+        for currency in Currency.objects.all():
+            user_currency_balance_qs = self.userbalance_set.filter(currency=currency)
+            assets.append({
+                'symbol': currency.code,
+                'amount': sum([x.amount+x.staked for x in user_currency_balance_qs])
+            })
+
+        return json.dumps(assets, cls=DecimalEncoder)
+
+    def get_balance_for_total(self):
+        """ :returns json list of all user balance for total amount """
         assets = []
 
         from orderbook.models import Currency
