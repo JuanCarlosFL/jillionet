@@ -117,6 +117,12 @@ const fundsContainer = async (funds) => {
 
       }
 
+    });
+
+    //apply funds total to balance type cards
+    [...document.getElementsByClassName('fund-total')].map(item => {
+        let amount = totalFundsSet.find(el => el.label == item.id.split('-').pop() )
+        item.innerText = currencyFormatter.format(amount.value)
     })
 
 }
@@ -135,6 +141,7 @@ const currencyCont = (name, bal) => {
         <div class="card Recent-Users">
             <div class="card-header">
                 <h5>${name}</h5>
+                <h5 id="bal-${name}" class="fund-total float-right"></h5>
             </div>
             <div class="card-block px-0 py-3">
                 <div class="table-responsive">
