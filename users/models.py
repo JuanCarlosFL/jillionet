@@ -38,6 +38,7 @@ class User(AbstractUser):
     phone_number = PhoneNumberField(unique=True)
     level = models.ForeignKey('UserLevel', on_delete=models.SET_NULL, null=True, blank=True)
     jillion_public_key = models.TextField(blank=True, null=True)
+    rank = models.IntegerField(null=True, blank=True)
     # user_level = models.CharField(max_length=50, choices=USER_LEVEL_CHOICES, default=BRONZE, null=True)
     # balance = models.ForeignKey("UserBalance", on_delete=models.SET_NULL, null=True, blank=True)
 
