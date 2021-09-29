@@ -45,6 +45,7 @@
                                             <script type="text/javascript"
                                                     src="https://s3.tradingview.com/tv.js"></script>
                                             <script type="text/javascript">
+                                            if (!'{{ trading_pair.get_symbol }}'.includes('JILL')){
                                                 new TradingView.widget(
                                                     {
                                                         "width": "100%",
@@ -60,6 +61,8 @@
                                                         "container_id": "tradingview_8e91b"
                                                     }
                                                 );
+                                            }
+                                                
                                             </script>
                                         </div>
                                         <!-- TradingView Widget END -->
@@ -94,7 +97,9 @@
                                                     {% csrf_token %}
 
                                                     <input type="hidden" name="buy_sell" id="id_buy_sell" value="buy">
+                                                    <div id="id_price_buy">
                                                     {{ form.price | as_crispy_field }}
+                                                    </div>
                                                     {{ form.order_type | as_crispy_field }}
                                                     <div id="div_id_buy_volume" class="form-group">
                                                         <label for="id_buy_volume" class=" requiredField">
@@ -143,7 +148,7 @@
                                                     <input type="hidden" name="buy_sell" id="id_buy_sell" value="sell">
                                                     <input type="hidden" name="trading_pair" id="id_trading_pair"
                                                            value="{{ trading_pair.id }}">
-                                                    {{ form.price | as_crispy_field }}
+                                                    <div id="id_price_sell">{{ form.price | as_crispy_field }}</div>
                                                     {{ form.order_type | as_crispy_field }}
                                                     <div id="div_id_sell_volume" class="form-group">
                                                         <label for="id_sell_volume" class=" requiredField">
@@ -339,6 +344,23 @@
                 inputDom.value = maxFund * data.from/100.0
             }
         })
+
+        let priceInputTag = document.getElementsByName('order_type')
+        
+        for (const element of priceInputTag){
+            element.addEventListener('change', (e) =>{
+                let priceParentElement = e.target.parentNode.parentNode.previousElementSibling
+                if (e.target.value === 'market'){
+                                        
+                    priceParentElement.style.display = 'none'
+                    console.log(priceParentElement.getElementsByTagName('input')[0])
+
+                }else if(e.target.value === 'limit'){
+                    priceParentElement.style.display = 'block'
+                }
+                
+            })
+        }
 
         function updateVolume(val, elm) {
             var volumeElement

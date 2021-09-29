@@ -21,6 +21,8 @@ def market_currency_balance(pair, user, order_type):
         if user.is_authenticated:
             if order_type == 'buy':
                 return user.get_currency_balance('spot', currecy_code)['amount']
+            if _ == 'JILL':
+                return user.get_jill_wallet_ballance()
             return user.get_currency_balance('spot', _)['amount']
         else:
             return 0

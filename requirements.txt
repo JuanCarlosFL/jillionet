@@ -11,3 +11,4 @@ selenium==3.141.0
 webdriver-manager==3.4.2
 qrcode==7.3
 tradingview-ta==3.2.9
+django-autotranslate
