@@ -282,3 +282,4 @@ media/
 stderr.log
 
 *.pyc
+db.sqlite3
