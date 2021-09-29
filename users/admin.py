@@ -30,8 +30,9 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "is_superuser", "rank", "jillion_public_key"]
+    list_display = ["username", "first_name", "last_name", "phone_number", "rank", "jillion_public_key"]
     search_fields = ["username"]
+    list_filter = ()
 
     add_fieldsets = auth_admin.UserAdmin.add_fieldsets + (
         (None, {'fields': ('phone_number',)}),
