@@ -29,9 +29,8 @@
                                 <h5>{% trans "Create Order" %}</h5>
                             </div>
                             <div class="card-body">
-                                <h5>{{ trading_pair.pair }}</h5>
+                                <h5>{{ trading_pair.pair }} <span id="current-price-{{ trading_pair.get_symbol | lower }}" class="float-right"></span></h5>
                                 <div class="row">
-
 
                                     <div class="col-md-8">
                                         <!-- TradingView Widget BEGIN -->
@@ -399,6 +398,46 @@
                 
             })
         }
+
+        function streamPrice(symbol='btcusdt', changeEl) {
+            let priceTag = document.getElementById(changeEl)
+            //let changeTag = document.getElementById(`change-${changeEl}`)
+            
+            var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+            biSocket.onmessage = function (event) {
+                let messageObject = JSON.parse(event.data)
+                if (changeEl.includes('jill')) {
+                    let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
+                    let pr = messageObject.c/thousandthPrice
+                    axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                    .then(function (response) {
+                        
+                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
+                        //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+                        
+
+                    })
+                    .catch(function (error) {
+                        console.log
+                    }).then(function (response) {})
+                    //console.log(pr)
+
+                } else {
+                    priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
+                    changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+
+                }
+                
+                //console.log(thousandthPrice)
+                
+            }
+
+        }
+
+        streamPrice(
+            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}', 
+            'current-price-{{ trading_pair.get_symbol | lower }}'
+            )
 
         function updateVolume(val, elm) {
             var volumeElement
