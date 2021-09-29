@@ -19,29 +19,35 @@
             <div class="main-body">
                 <div class="page-wrapper">
                     <!-- [ Main Content ] start -->
-<div class="row">
-    <div id="main-funds" class="col-xl-6 col-md-6">
-        <div class="card-block px-0 py-3">
-        <div class="card Recent-Users">
-            <div class="card-header">
-                <h5>Main</h5>
-            </div>
-            <div class="card-block px-0 py-3">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <tbody>
-                        <tr><td></td></tr>
-                        <tr><td></td></tr>
-                        <tr><td></td></tr>
+                    <div class="row">
+                        <div id="main-funds" class="col-xl-6 col-md-6">
+                            <div class="card-block px-0 py-3">
+                                <div class="card Recent-Users">
+                                    <div class="card-header">
+                                        <h5>Main</h5>
+                                    </div>
+                                    <div class="card-block px-0 py-3">
+                                        <div class="table-responsive">
+                                            <table class="table table-hover">
+                                                <tbody>
+                                                <tr>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td></td>
+                                                </tr>
 
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-                    <div class="col-xl-6 col-md-6">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-md-6">
 
 
                             <div class="card-block px-0 py-3">
@@ -55,8 +61,8 @@
                                 </div>
                             </div>
 
+                        </div>
                     </div>
-</div>
                     <div id="my-funds-dom" class="row">
                         {% for bal_type in balances %}
                             {% get_bal bal_type user as my_bal %}
@@ -82,10 +88,17 @@
                                                             <h6 class="text-muted">{{ balance.amount | floatformat:4 }}</h6>
                                                             <p class="m-0 small">€ 0.00</p>
                                                         </td>
-                                                        <td><button data-toggle="modal" data-target="#withdrawModal{{ balance.id }}" type="button" class="label theme-bg2 text-white f-12">Withdraw</button>
+                                                        <td>
+                                                            <button data-toggle="modal"
+                                                                    data-target="#withdrawModal{{ balance.id }}"
+                                                                    type="button"
+                                                                    class="label theme-bg2 text-white f-12">Withdraw
+                                                            </button>
                                                             <button
-                                                                type="button" data-toggle="modal" data-target="#depositModal{{ balance.id }}"
-                                                                class="label theme-bg text-white f-12">Deposit</button>
+                                                                    type="button" data-toggle="modal"
+                                                                    data-target="#depositModal{{ balance.id }}"
+                                                                    class="label theme-bg text-white f-12">Deposit
+                                                            </button>
                                                         </td>
                                                     </tr>
                                                 {% endfor %}
@@ -98,45 +111,57 @@
                             </div>
                             {% for balance in my_bal %}
                                 <!-- Withdraw Modal -->
-                                <div class="modal fade" id="withdrawModal{{ balance.id }}" tabindex="-1" role="dialog" aria-labelledby="withdrawModal{{ balance.id }}Label" aria-hidden="true">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="withdrawModal{{ balance.id }}Label">Withdraw {{ balance.currency.code }} from {{ balance.balance_for.name }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        ...
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                      </div>
+                                <div class="modal fade" id="withdrawModal{{ balance.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="withdrawModal{{ balance.id }}Label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="withdrawModal{{ balance.id }}Label">
+                                                    Withdraw {{ balance.currency.code }}
+                                                    from {{ balance.balance_for.name }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
 
                                 <!-- Deposit Modal -->
-                                <div class="modal fade" id="depositModal{{ balance.id }}" tabindex="-1" role="dialog" aria-labelledby="depositModal{{ balance.id }}Label" aria-hidden="true">
-                                  <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title" id="depositModal{{ balance.id }}Label">Deposit {{ balance.currency.code }} to {{ balance.balance_for.name }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        ...
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-primary">Save changes</button>
-                                      </div>
+                                <div class="modal fade" id="depositModal{{ balance.id }}" tabindex="-1" role="dialog"
+                                     aria-labelledby="depositModal{{ balance.id }}Label" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="depositModal{{ balance.id }}Label">
+                                                    Deposit {{ balance.currency.code }}
+                                                    to {{ balance.balance_for.name }}</h5>
+                                                <button type="button" class="close" data-dismiss="modal"
+                                                        aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                ...
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Close
+                                                </button>
+                                                <button type="button" class="btn btn-primary">Save changes</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                  </div>
                                 </div>
                             {% endfor %}
                         {% endfor %}
@@ -144,33 +169,33 @@
                     </div>
 
                     <div class="col-xl-8 col-md-6">
-                                <div class="card Recent-Users">
-                                    <div class="card-header">
-                                        <h5>External wallet</h5>
-                                        
-                                    </div>
-                                    <div class="card-block px-0 py-3">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <tbody>
-                                                    <tr class="unread">
-                                                        <td><img class="rounded-circle" style="width:40px;"
-                                                                 src="{% static 'img/jill_icon.png' %}"
-                                                                 alt="jill"></td>
-                                                        
-                                                        <td>
-                                                            <h6 class="text-muted">{{ user.get_jill_wallet_ballance }}</h6>
-                                                            <p id="JILL-wallet" class="m-0 small">€ 0.00</p>
-                                                        </td>
-                                                        
-                                                    </tr>
-                                                <tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                    
+                        <div class="card Recent-Users">
+                            <div class="card-header">
+                                <h5>External wallet</h5>
+
+                            </div>
+                            <div class="card-block px-0 py-3">
+                                <div class="table-responsive">
+                                    <table class="table table-hover">
+                                        <tbody>
+                                        <tr class="unread">
+                                            <td><img class="rounded-circle" style="width:40px;"
+                                                     src="{% static 'img/jill_icon.png' %}"
+                                                     alt="jill"></td>
+
+                                            <td>
+                                                <h6 class="text-muted">{{ user.get_jill_wallet_ballance }}</h6>
+                                                <p id="JILL-wallet" class="m-0 small">€ 0.00</p>
+                                            </td>
+
+                                        </tr>
+                                        <tbody>
+                                    </table>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
                     {% comment %}<div>
                         <table>
                             <tr>
@@ -208,133 +233,133 @@
     <script src="{% static 'assets/plugins/chart-morris/js/morris.min.js' %}"></script>
     {{ all_fund_json|json_script:"my-funds" }}
     <script>
-    const myFunds = JSON.parse(JSON.parse(document.getElementById('my-funds').textContent))
+        const myFunds = JSON.parse(JSON.parse(document.getElementById('my-funds').textContent))
 
-    function getTotal(funds) {
-        for (const fundName in funds){
-            //console.log(fundName)
-            funds[fundName].map(async item => {
+        function getTotal(funds) {
+            for (const fundName in funds) {
+                //console.log(fundName)
+                funds[fundName].map(async item => {
 
-                item['test'] = 'tetet'
-                if (item.currency__code.includes('USD')){
-                    let price = await getCurrentPrice('EUR'+item.currency__code)
-                    //console.log(price.price * parseFloat(item.amount))
-                }else {
-                    let price = await getCurrentPrice(item.currency__code+'EUR')
-                    //console.log(price.price * parseFloat(item.amount))
-                }
+                    item['test'] = 'tetet'
+                    if (item.currency__code.includes('USD')) {
+                        let price = await getCurrentPrice('EUR' + item.currency__code)
+                        //console.log(price.price * parseFloat(item.amount))
+                    } else {
+                        let price = await getCurrentPrice(item.currency__code + 'EUR')
+                        //console.log(price.price * parseFloat(item.amount))
+                    }
 
-            })
+                })
+            }
+
         }
 
-    }
+        getTotal(myFunds)
 
-    getTotal(myFunds)
+        async function getCurrentPrice(symbol) {
+            try {
+                if (symbol.includes('JILL')) {
 
-    async function getCurrentPrice(symbol) {
-        try {
-            if(symbol.includes('JILL')){
-                
-                const response = await axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                    const response = await axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                    const data = response.data;
+                    return {
+                        price: response.data.last_price
+                    }
+
+                }
+                const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`)
                 const data = response.data;
-                return {
-                    price: response.data.last_price
-                }                
 
+                return data
+            } catch (e) {
+                console.log(symbol)
+                console.log(e)
             }
-            const response = await axios.get(`https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`)
-            const data = response.data;
 
-            return data
-        } catch (e) {
-            console.log(symbol)
-            console.log(e)
+
         }
 
+        var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
 
-    }
+        var jillWalletBalance = parseFloat('{{user.get_jill_wallet_ballance}}')
 
-    var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
-    
-    var jillWalletBalance = parseFloat('{{user.get_jill_wallet_ballance}}')
+        function streamPrice(symbol = 'btcusdt', changeEl) {
+            let priceTag = document.getElementById(changeEl)
 
-    function streamPrice(symbol='btcusdt', changeEl) {
-        let priceTag = document.getElementById(changeEl)
+            var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+            biSocket.onmessage = function (event) {
+                let messageObject = JSON.parse(event.data)
+                if (changeEl.includes('JILL')) {
+                    let thousandthPrice = Math.round(messageObject.c / 1000) * 1000;
+                    let pr = messageObject.c / thousandthPrice
+                    axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                        .then(function (response) {
 
-        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
-        biSocket.onmessage = function (event) {
-            let messageObject = JSON.parse(event.data)
-            if (changeEl.includes('JILL')) {
-                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
-                let pr = messageObject.c/thousandthPrice
-                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
-                .then(function (response) {
+                            let currentprice = response.data.last_price * pr
+                            priceTag.innerText = jillEuroCurrencyFormatter.format(currentprice * jillWalletBalance)
 
-                    let currentprice = response.data.last_price * pr            
-                    priceTag.innerText = jillEuroCurrencyFormatter.format(currentprice * jillWalletBalance)
+                        })
+                        .catch(function (error) {
+                            console.log(error)
+                        }).then(function (response) {
+                    })
+                    //console.log(pr)
 
-                })
-                .catch(function (error) {
-                    console.log(error)
-                }).then(function (response) {})
-                //console.log(pr)
-
-            } else {
-                priceTag.innerText = currencyFormatter.format(messageObject.c)
-
-            }
-            
-            //console.log(thousandthPrice)
-            
-        }
-
-    }
-
-    function streamFundPrice(symbol='btcusdt', changeEl, amount) {
-        let priceTag = document.getElementById(changeEl)
-        let euroPrice = document.getElementById(changeEl+'-euro')
-        let currencyCode = changeEl.split('-').pop()
-
-        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
-        biSocket.onmessage = function (event) {
-            let messageObject = JSON.parse(event.data)
-
-            if (currencyCode.includes('JILL')) {
-
-                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
-                let pr = messageObject.c/thousandthPrice
-                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
-                .then(function (response) {
-
-                    let currentprice = response.data.last_price * pr
-
-                    euroPrice.innerText = jillEuroCurrencyFormatter.format(currentprice * amount);
-
-                })
-                .catch(function (error) {
-                    console.error(error)
-                }).then(function (response) {})
-                //console.log(pr)
-
-            } else {
-                if(symbol.startsWith('eur')) {
-                    euroPrice.innerText = currencyFormatter.format(1/messageObject.c * amount);
                 } else {
-                    euroPrice.innerText = currencyFormatter.format(messageObject.c * amount);
+                    priceTag.innerText = currencyFormatter.format(messageObject.c)
+
                 }
 
+                //console.log(thousandthPrice)
 
             }
-            
-            //console.log(thousandthPrice)
-            
+
         }
 
-    }
-    
-    streamPrice(symbol='btcusdt', 'JILL-wallet');
-    
+        function streamFundPrice(symbol = 'btcusdt', changeEl, amount) {
+            let priceTag = document.getElementById(changeEl)
+            let euroPrice = document.getElementById(changeEl + '-euro')
+            let currencyCode = changeEl.split('-').pop()
 
+            var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+            biSocket.onmessage = function (event) {
+                let messageObject = JSON.parse(event.data)
+
+                if (currencyCode.includes('JILL')) {
+
+                    let thousandthPrice = Math.round(messageObject.c / 1000) * 1000;
+                    let pr = messageObject.c / thousandthPrice
+                    axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                        .then(function (response) {
+
+                            let currentprice = response.data.last_price * pr
+
+                            euroPrice.innerText = jillEuroCurrencyFormatter.format(currentprice * amount);
+
+                        })
+                        .catch(function (error) {
+                            console.error(error)
+                        }).then(function (response) {
+                    })
+                    //console.log(pr)
+
+                } else {
+                    if (symbol.startsWith('eur')) {
+                        euroPrice.innerText = currencyFormatter.format(1 / messageObject.c * amount);
+                    } else {
+                        euroPrice.innerText = currencyFormatter.format(messageObject.c * amount);
+                    }
+
+
+                }
+
+                //console.log(thousandthPrice)
+
+            }
+
+        }
+
+        streamPrice(symbol = 'btcusdt', 'JILL-wallet');
 
 
     </script>

@@ -1,5 +1,5 @@
 {% extends "layouts/base.html" %}
-{% load humanize crispy_forms_tags static get_type_balances %}
+{% load humanize crispy_forms_tags static get_type_balances i18n %}
 
 {% block title %} Order Book {% endblock %}
 
@@ -26,7 +26,7 @@
                     <div class="col-sm-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5>Create Order</h5>
+                                <h5>{% trans "Create Order" %}</h5>
                             </div>
                             <div class="card-body">
                                 <h5>{{ trading_pair.pair }}</h5>
@@ -97,9 +97,9 @@
                                                     {% csrf_token %}
 
                                                     <input type="hidden" name="buy_sell" id="id_buy_sell" value="buy">
-                                                    <div id="id_price_buy">
+
                                                     {{ form.price | as_crispy_field }}
-                                                    </div>
+
                                                     {{ form.order_type | as_crispy_field }}
                                                     <div id="div_id_buy_volume" class="form-group">
                                                         <label for="id_buy_volume" class=" requiredField">
@@ -131,13 +131,18 @@
                                                            value="{{ trading_pair.id }}">
 
                                                     {% if user.is_authenticated%}
-                                                        {%if user.get_jill_balance.amount < 10000 %} 
-                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#needMoreJillModal">
+                                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                        {% comment %}
+                                                        {%if user.get_jill_balance.amount < 10000 %}
+                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#loginRequiredModal">
                                                             Submit
                                                             </button>
                                                         {% else %}
                                                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                                         {% endif %}
+                                                        {% endcomment %}
+                                                    {% else %}
+                                                        <a class="btn btn-primary btn-block" href="{% url 'account_login' %}?next={{ request.path }}">{% trans "Login" %}</a>
                                                     {% endif %}
                                                 </form>
                                             </div>
@@ -148,7 +153,7 @@
                                                     <input type="hidden" name="buy_sell" id="id_buy_sell" value="sell">
                                                     <input type="hidden" name="trading_pair" id="id_trading_pair"
                                                            value="{{ trading_pair.id }}">
-                                                    <div id="id_price_sell">{{ form.price | as_crispy_field }}</div>
+                                                    {{ form.price | as_crispy_field }}
                                                     {{ form.order_type | as_crispy_field }}
                                                     <div id="div_id_sell_volume" class="form-group">
                                                         <label for="id_sell_volume" class=" requiredField">
@@ -179,13 +184,18 @@
                                                     </div>
 
                                                     {% if user.is_authenticated%}
+                                                        <button type="submit" class="btn btn-primary btn-block">Submit</button>
+                                                        {% comment %}
                                                         {%if user.get_jill_balance.amount < 10000 %} 
-                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#needMoreJillModal">
+                                                            <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#loginRequiredModal">
                                                             Submit
                                                             </button>
                                                         {% else %}
                                                             <button type="submit" class="btn btn-primary btn-block">Submit</button>
                                                         {% endif %}
+                                                        {% endcomment %}
+                                                    {% else %}
+                                                        <a class="btn btn-primary btn-block" href="{% url 'account_login' %}?next={{ request.path }}">{% trans "Login" %}</a>
                                                     {% endif %}
 
                                                     
@@ -329,6 +339,34 @@
             </div>
         </div>
     </div>
+    <div class="modal fade" id="loginRequiredModal" tabindex="-1" aria-labelledby="loginRequiredModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="sc-jSFjdj sc-dtLLSn bQHYpP ctFTfa sc-hKiEVl iEOpyR">
+                    <div class="sc-gIvpjk gJMct">
+                        <div class="sc-jSFjdj sc-gKAaRy sc-euEtCV kJmatq jcNvwq hTuscY"><h2
+                                color="text"
+                                class="sc-gtsrHT sc-iJCRrE jDnmwq jXZUNo">
+                            {% trans "Login Required" %}</h2></div>
+                        <button class="sc-hKFxyN YaON sc-eCApnc fAYopv" data-dismiss="modal"
+                                aria-label="Close" scale="md">
+                            <svg viewBox="0 0 24 24" color="primary" width="20px"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    class="sc-bdnxRM ACFFk">
+                                <path d="M18.3 5.70997C17.91 5.31997 17.28 5.31997 16.89 5.70997L12 10.59L7.10997 5.69997C6.71997 5.30997 6.08997 5.30997 5.69997 5.69997C5.30997 6.08997 5.30997 6.71997 5.69997 7.10997L10.59 12L5.69997 16.89C5.30997 17.28 5.30997 17.91 5.69997 18.3C6.08997 18.69 6.71997 18.69 7.10997 18.3L12 13.41L16.89 18.3C17.28 18.69 17.91 18.69 18.3 18.3C18.69 17.91 18.69 17.28 18.3 16.89L13.41 12L18.3 7.10997C18.68 6.72997 18.68 6.08997 18.3 5.70997Z"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="sc-jSFjdj sc-gKAaRy sc-fHCHyC hXVokk jcNvwq crlswz">
+                        <div class="sc-exqIPC jyeDSm">
+                            <p>Please <a href="{% url 'account_login' %}?next={{ request.path }}">login</a> to place your order.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
@@ -372,82 +410,3 @@
         }
     </script>
 {% endblock javascripts %}
-
-{% comment %}
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Hello World</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
-
-
-
-</head>
-
-
-
-<body>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">Bienvenido a Jillionet</h1>
-      <br>
-
-      <h2 class="text-center">Orderbook Level spred</h2>
-
-      <h2 class="text-center">Trading pair {{ trading_pair.pair }}</h2>
-
-      <h2 class="text-center">Bid Price {{sell_orders.first.price | floatformat:2}}</h2>
-      <h2 class="text-center">Ask Price {{buy_orders.last.price | floatformat:2}}</h2>
-
-{% if form %}
-      <div>
-        <h2>{{view.kwargs.slug}}</h2>
-        <form action="." method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button>Order</button>
-        </form>
-    </div>
-    {% endif %}
-     
-    </div>
-  </div>
-
-</div>
-
-<p class="text-center">Buybook <br><br></p>
-<table class="text-center">
-  <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th><th>Price</th>
-  </tr>
-  {% for buy_order in buy_orders%}
-  <tr>
-    <td>{{buy_order.trading_pair.pair}}</td><td>{{buy_order.buy_sell}}</td><td>{{buy_order.order_type}}</td><td>{{buy_order.volume | floatformat:4}}</td><td>{{buy_order.price | floatformat:4}}</td>
-  </tr>
-  {% endfor %}
-</table>
-
-<p>Sellbook <br><br></p>
-
-<table>
-
-  <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th>
-  </tr>
-  {% for sell_order in sell_orders %}
-  <tr>
-    <td>{{sell_order.trading_pair.pair}}</td><td>{{sell_order.buy_sell}}</td><td>{{sell_order.order_type}}</td><td>{{sell_order.volume | floatformat:4}}</td><td>{{sell_order.price | floatformat:4}}</td>
-  </tr>
-  {% endfor %}
-
-</table>
-
-
-
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-{% endcomment %}

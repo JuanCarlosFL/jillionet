@@ -42,20 +42,23 @@ class OrderListView(CreateView):
         trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
         buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, status=Order.NEW).order_by('-price')
         sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, status=Order.NEW).order_by('-price')
-
-        if buy_order_qs.exists():
-            price = round(buy_order_qs.last().price, 2)
-        else:
-            price = 0
-        
-        return {
+        initial_vals = {
             'trading_pair': trading_pair.id,
-            'price': price,
             'buy_orders': buy_order_qs,
             'sell_orders': sell_order_qs
         }
 
+        if buy_order_qs.exists():
+            price = round(buy_order_qs.last().price, 2)
+            initial_vals.update({
+                'price': price
+            })
+
+        return initial_vals
+
     def form_valid(self, form):
+        # TODO: get market price and replace if market is selected in order form
+
         form.instance.user = self.request.user
 
         return super().form_valid(form)

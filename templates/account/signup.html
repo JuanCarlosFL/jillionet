@@ -21,11 +21,11 @@
                         <i class="feather icon-user-plus auth-icon"></i>
                     </div>
                     <h3 class="mb-4">
-                        Register
+                        {% trans "Register" %}
                     </h3>
 
                     <span class="mb-0 text-muted">
-                        Add your credentials
+                        {% trans "Add your credentials" %}
                     </span>
 
                     <br/>
@@ -42,7 +42,7 @@
                         {% endif %}
                         <button class="btn btn-primary" type="submit">{% trans "Sign Up" %} &raquo;</button>
                     </form>
-                    <p class="mb-0 text-muted">Already have an account? <a href="/login.html">Login</a></p>
+                    <p class="mb-0 text-muted">Already have an account? <a href="{% url 'account_login' %}">Login</a></p>
                     <br/>
 
                     <p class="mb-2 text-muted">
