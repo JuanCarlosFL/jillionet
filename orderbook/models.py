@@ -129,6 +129,10 @@ class Order(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
+class JillPrice(models.Model):
+    data = models.JSONField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 
 class ordermachmodel(models.Model):

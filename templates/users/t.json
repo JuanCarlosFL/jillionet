@@ -1,0 +1,30 @@
+[
+  {
+    "symbol": "JILLBTC",
+    "lastPrice": "43645.38000000",
+    "lowPrice": "42697.01000000",
+    "openTime": 1632973825314,
+    "closeTime": 1633060225314
+  },
+  {
+    "symbol": "JILLBTC",
+    "lastPrice": "43954.13000000",
+    "lowPrice": "42697.01000000",
+    "openTime": 1632982036850,
+    "closeTime": 1633068436850
+  },
+  {
+    "symbol": "JILLBTC",
+    "lastPrice": "43954.13000000",
+    "lowPrice": "42697.01000000",
+    "openTime": 1632982039351,
+    "closeTime": 1633068439351
+  },
+  {
+    "symbol": "JILLBTC",
+    "lastPrice": "43974.63000000",
+    "lowPrice": "42697.01000000",
+    "openTime": 1632982042016,
+    "closeTime": 1633068442016
+  }
+]

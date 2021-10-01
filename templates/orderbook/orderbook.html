@@ -6,8 +6,9 @@
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}
 <link rel="stylesheet" href="{% static 'css/farm.css' %}">
+    <link rel="stylesheet" href="{% static 'assets/plugins/chart-morris/css/morris.css' %}">
 <style>
-.nav-pills .nav-link.active.sell { 
+.nav-pills .nav-link.active.sell {
     background-color: red;
 }
 </style>
@@ -29,18 +30,20 @@
                                 <h5>{% trans "Create Order" %}</h5>
                             </div>
                             <div class="card-body">
-                                <h5>{{ trading_pair.pair }} <span id="current-price-{{ trading_pair.get_symbol | lower }}" class="float-right"></span></h5>
+                                <h5>{{ trading_pair.pair }} <small class="text-success float-right">{{ bid_price }}</small><small id="current-price-{{ trading_pair.get_symbol | lower }}" class="text-danger float-right mr-2"></small></h5>
                                 <div class="row">
 
                                     <div class="col-md-8">
                                         <!-- TradingView Widget BEGIN -->
                                         <div class="tradingview-widget-container">
                                             <div id="tradingview_8e91b"></div>
-                                            <div class="tradingview-widget-copyright"><a
-                                                    href="https://www.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE"
-                                                    rel="noopener" target="_blank"><span
-                                                    class="blue-text">{{ trading_pair.get_symbol }} Chart</span></a> by TradingView
-                                            </div>
+                                            {% if 'JILL' not in request.path %}
+                                                <div class="tradingview-widget-copyright"><a
+                                                        href="https://www.tradingview.com/symbols/BTCUSDT/?exchange=BINANCE"
+                                                        rel="noopener" target="_blank"><span
+                                                        class="blue-text">{{ trading_pair.get_symbol }} Chart</span></a> by TradingView
+                                                </div>
+                                            {% endif %}
                                             <script type="text/javascript"
                                                     src="https://s3.tradingview.com/tv.js"></script>
                                             <script type="text/javascript">
@@ -61,7 +64,7 @@
                                                     }
                                                 );
                                             }
-                                                
+
                                             </script>
                                         </div>
                                         <!-- TradingView Widget END -->
@@ -116,7 +119,7 @@
                                                                step="0.5" onchange="updateVolume(this.value, this)"
                                                                id="customRange3">-->
                                                         <input type="text" class="js-range-slider" name="my_range" value=""
-                                                            
+
                                                             data-min="0"
                                                             data-max-fund="{% market_currency_balance view.kwargs.slug user 'buy' %}"
                                                             data-max="100"
@@ -170,9 +173,9 @@
                                                                step="0.5" onchange="updateVolume(this.value, this)"
                                                                id="customRange2">
                                                         -->
-                                                        
+
                                                         <input type="text" class="js-range-slider" name="my_range2" value=""
-                                                            
+
                                                             data-min="0"
                                                             data-max-fund="{% market_currency_balance view.kwargs.slug user 'sell' %}"
                                                             data-max="100"
@@ -197,7 +200,7 @@
                                                         <a class="btn btn-primary btn-block" href="{% url 'account_login' %}?next={{ request.path }}">{% trans "Login" %}</a>
                                                     {% endif %}
 
-                                                    
+
                                                 </form>
                                             </div>
 
@@ -333,7 +336,7 @@
                             <p>You need 10,000 JILL to buy this contract</p>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
         </div>
@@ -370,39 +373,41 @@
 
 <!-- Specific Page JS goes HERE  -->
 {% block javascripts %}
+    <script src="{% static 'assets/plugins/chart-morris/js/raphael.min.js' %}"></script>
+    <script src="{% static 'assets/plugins/chart-morris/js/morris.min.js' %}"></script>
     <script>
 
         $(".js-range-slider").ionRangeSlider({
             onChange: function (data) {
-                
+
                 let inputDom = document.getElementById($(data.input).data('input-id'))
                 var maxFund = $(data.input).data('max-fund')
-                console.log(maxFund, data.from_percent, maxFund * data.from_percent, data.from)
+                //console.log(maxFund, data.from_percent, maxFund * data.from_percent, data.from)
                 inputDom.value = maxFund * data.from/100.0
             }
         })
 
         let priceInputTag = document.getElementsByName('order_type')
-        
+
         for (const element of priceInputTag){
             element.addEventListener('change', (e) =>{
                 let priceParentElement = e.target.parentNode.parentNode.previousElementSibling
                 if (e.target.value === 'market'){
-                                        
+
                     priceParentElement.style.display = 'none'
-                    console.log(priceParentElement.getElementsByTagName('input')[0])
+                    //console.log(priceParentElement.getElementsByTagName('input')[0])
 
                 }else if(e.target.value === 'limit'){
                     priceParentElement.style.display = 'block'
                 }
-                
+
             })
         }
 
         function streamPrice(symbol='btcusdt', changeEl) {
             let priceTag = document.getElementById(changeEl)
             //let changeTag = document.getElementById(`change-${changeEl}`)
-            
+
             var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
             biSocket.onmessage = function (event) {
                 let messageObject = JSON.parse(event.data)
@@ -411,10 +416,10 @@
                     let pr = messageObject.c/thousandthPrice
                     axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
                     .then(function (response) {
-                        
+
                         priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
                         //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
-                        
+
 
                     })
                     .catch(function (error) {
@@ -427,17 +432,31 @@
                     changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
 
                 }
-                
+
                 //console.log(thousandthPrice)
-                
+
             }
 
         }
 
         streamPrice(
-            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}', 
+            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}',
             'current-price-{{ trading_pair.get_symbol | lower }}'
             )
+
+        function jillChart() {
+            new Morris.Line({
+                element: 'tradingview_8e91b',
+                data: {{ jill_chart_data|safe }},
+                xkey: 'closeTime',
+                ykeys: ['lastPrice'],
+                labels: ['lastPrice']
+            })
+
+        }
+        if ('{{ request.path }}'.includes('JILL')){
+            jillChart()
+        }
 
         function updateVolume(val, elm) {
             var volumeElement

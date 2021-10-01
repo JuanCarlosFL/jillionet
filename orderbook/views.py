@@ -1,10 +1,13 @@
+import json
+from statistics import mean, StatisticsError
+
 from django.http.response import JsonResponse
 from django.shortcuts import render
 from django.views.generic.edit import CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse
 
-from .models import Order, TradingPair
+from .models import Order, TradingPair, JillPrice
 from .controller import get_mathing_order
 from historicalData.controller import get_exchange_price
 
@@ -69,13 +72,24 @@ class OrderListView(CreateView):
 
         #get_exchange_price()
 
+        bid_list = self.get_initial().get('buy_orders')[:10]
+        try:
+            bid_price = mean([x.price for x in bid_list])
+        except StatisticsError:
+            bid_price = 0
+        print(bid_price, len(bid_list))
+
+        jill_chart_data = [json.loads(jill_price.data) for jill_price in JillPrice.objects.all()]
+
         context.update({
             'buy_orders': self.get_initial().get('buy_orders'),
             'sell_orders': self.get_initial().get('sell_orders'),
             'trading_pair': trading_pair,
             'all_order': self.model.objects.all(),
             'open_orders': self.model.objects.filter(status=Order.NEW),
-            'current_price': self.get_initial().get('price')
+            'current_price': self.get_initial().get('price'),
+            'bid_price': bid_price,
+            'jill_chart_data': jill_chart_data
         })
         return context
 
