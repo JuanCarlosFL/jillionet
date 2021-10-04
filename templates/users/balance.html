@@ -31,158 +31,38 @@
                         </div>
                     </div>
                     <div id="my-funds-dom" class="row">
-                        {% for bal_type in balances %}
-                            {% get_bal bal_type user as my_bal %}
-                            <div class="col-xl-8 col-md-6">
-                                <div class="card Recent-Users">
-                                    <div class="card-header">
-                                        <h5>{{ bal_type.name }}</h5>
-                                    </div>
-                                    <div class="card-block px-0 py-3">
-                                        <div class="table-responsive">
-                                            <table class="table table-hover">
-                                                <tbody>
-                                                {% for balance in my_bal %}
-                                                    <tr class="unread">
-                                                        <td><img class="rounded-circle" style="width:40px;"
-                                                                 src="{{ balance.currency.get_currency_icon }}"
-                                                                 alt="activity-user"></td>
-                                                        <td>
-                                                            <h6 class="mb-1">{{ balance.currency.code }}</h6>
-                                                            {#                                                            <p class="m-0">Lorem Ipsum is simply…</p>#}
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="text-muted">{{ balance.amount | floatformat:4 }}</h6>
-                                                            <p class="m-0 small">€ 0.00</p>
-                                                        </td>
-                                                        <td>
-                                                            <button data-toggle="modal"
-                                                                    data-target="#withdrawModal{{ balance.id }}"
-                                                                    type="button"
-                                                                    class="label theme-bg2 text-white f-12">Withdraw
-                                                            </button>
-                                                            <button
-                                                                    type="button" data-toggle="modal"
-                                                                    data-target="#depositModal{{ balance.id }}"
-                                                                    class="label theme-bg text-white f-12">Deposit
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                {% endfor %}
-
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            {% for balance in my_bal %}
-                                <!-- Withdraw Modal -->
-                                <div class="modal fade" id="withdrawModal{{ balance.id }}" tabindex="-1" role="dialog"
-                                     aria-labelledby="withdrawModal{{ balance.id }}Label" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="withdrawModal{{ balance.id }}Label">
-                                                    Withdraw {{ balance.currency.code }}
-                                                    from {{ balance.balance_for.name }}</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Deposit Modal -->
-                                <div class="modal fade" id="depositModal{{ balance.id }}" tabindex="-1" role="dialog"
-                                     aria-labelledby="depositModal{{ balance.id }}Label" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="depositModal{{ balance.id }}Label">
-                                                    Deposit {{ balance.currency.code }}
-                                                    to {{ balance.balance_for.name }}</h5>
-                                                <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                    <span aria-hidden="true">&times;</span>
-                                                </button>
-                                            </div>
-                                            <div class="modal-body">
-                                                ...
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                                    Close
-                                                </button>
-                                                <button type="button" class="btn btn-primary">Save changes</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        {% endfor %}
-
+                        <fund-component/>
                     </div>
+                    <div class="row">
+                        <div class="col-xl-8 col-md-6">
+                            <div class="card Recent-Users">
+                                <div class="card-header">
+                                    <h5>External wallet</h5>
 
-                    <div class="col-xl-8 col-md-6">
-                        <div class="card Recent-Users">
-                            <div class="card-header">
-                                <h5>External wallet</h5>
-
-                            </div>
-                            <div class="card-block px-0 py-3">
-                                <div class="table-responsive">
-                                    <table class="table table-hover">
-                                        <tbody>
-                                        <tr class="unread">
-                                            <td><img class="rounded-circle" style="width:40px;"
-                                                     src="{% static 'img/jill_icon.png' %}"
-                                                     alt="jill"></td>
-
-                                            <td>
-                                                <h6 class="text-muted">{{ user.get_jill_wallet_ballance }}</h6>
-                                                <p id="JILL-wallet" class="m-0 small">€ 0.00</p>
-                                            </td>
-
-                                        </tr>
-                                        <tbody>
-                                    </table>
                                 </div>
-                            </div>
+                                <div class="card-block px-0 py-3">
+                                    <div class="table-responsive">
+                                        <table class="table table-hover">
+                                            <tbody>
+                                            <tr class="unread">
+                                                <td><img class="rounded-circle" style="width:40px;"
+                                                         src="{% static 'img/jill_icon.png' %}"
+                                                         alt="jill"></td>
 
+                                                <td>
+                                                    <h6 class="text-muted">{{ user.get_jill_wallet_ballance }}</h6>
+                                                    <p id="JILL-wallet" class="m-0 small">€ 0.00</p>
+                                                </td>
+
+                                            </tr>
+                                            <tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
-                    {% comment %}<div>
-                        <table>
-                            <tr>
-                                <th>Currency</th>
-                                <th>Amount</th>
-                            </tr>
-                            {% for balance in object_list %}
-                                <tr>
-                                    <td>{{ balance.currency.code }}</td>
-                                    <td>{{ balance.amount }}</td>
-                                </tr>
-
-                            {% endfor %}
-
-                        </table>
-
-                        <p>The Balance total in € is:</p>
-
-                    </div>{% endcomment %}
-
 
                 </div>
                 <!-- [ Main Content ] end -->
@@ -201,8 +81,9 @@
     <script src="{% static 'assets/plugins/chart-morris/js/morris.min.js' %}"></script>
     {{ all_fund_json|json_script:"my-funds" }}
     <script>
-    let totalAssets = {{ user.all_asset_total | safe }}
-    console.log(totalAssets)
+        let totalAssets = {{ user.all_asset_total | safe }};
+        let allFunds = {{ user.get_all_contract_funds | safe }};
+        //console.log(allFunds)
 
     </script>
     <script>
@@ -251,8 +132,6 @@
 
 
         }
-
-        var biSocket = new WebSocket("wss://stream.binance.com:9443/ws/btcusdt@trade");
 
         var jillWalletBalance = parseFloat('{{user.get_jill_wallet_ballance}}')
 
@@ -333,71 +212,26 @@
         }
 
         streamPrice(symbol = 'btcusdt', 'JILL-wallet');
-let currencyFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 2,
-    style: 'currency',
-    currency: 'EUR',
-})
 
-let jillEuroCurrencyFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 8,
-    style: 'currency',
-    currency: 'EUR',
-})
+        let currencyFormatter = new Intl.NumberFormat(Intl.locale, {
+            maximumFractionDigits: 2,
+            style: 'currency',
+            currency: 'EUR',
+        })
 
-let numberFormatter = new Intl.NumberFormat(Intl.locale, {
-    maximumFractionDigits: 2,
+        let jillEuroCurrencyFormatter = new Intl.NumberFormat(Intl.locale, {
+            maximumFractionDigits: 8,
+            style: 'currency',
+            currency: 'EUR',
+        })
 
-})
+        let numberFormatter = new Intl.NumberFormat(Intl.locale, {
+            maximumFractionDigits: 2,
+
+        })
 
     </script>
-    <!--<script src="{% static 'js/fundsComponent.js' %}"></script>-->
+
     <script src="{% static 'js/vue-component.js' %}"></script>
 
 {% endblock javascripts %}
-{% comment %}
-
-    <table class="text-center">
-        <tr>
-            <th>Pair</th>
-            <th>Buy/Sell</th>
-            <th>Status</th>
-            <th>Order type</th>
-            <th>Volume</th>
-            <th>Price</th>
-        </tr>
-        {% for order in order_history %}
-            <tr>
-                <td>{{ order.trading_pair.pair }}</td>
-                <td>{{ order.buy_sell }}</td>
-                <td>{{ order.status }}</td>
-                <td>{{ order.order_type }}</td>
-                <td>{{ order.volume | floatformat:4 }}</td>
-                <td>{{ order.price | floatformat:4 }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Open Orders</h2>
-
-    <table class="text-center">
-        <tr>
-            <th>Pair</th>
-            <th>Buy/Sell</th>
-            <th>Status</th>
-            <th>Order type</th>
-            <th>Volume</th>
-            <th>Price</th>
-        </tr>
-        {% for order in open_orders %}
-            <tr>
-                <td>{{ order.trading_pair.pair }}</td>
-                <td>{{ order.buy_sell }}</td>
-                <td>{{ order.status }}</td>
-                <td>{{ order.order_type }}</td>
-                <td>{{ order.volume | floatformat:4 }}</td>
-                <td>{{ order.price | floatformat:4 }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-{% endcomment %}

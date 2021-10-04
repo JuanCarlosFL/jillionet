@@ -335,97 +335,11 @@
                 
                 let inputDom = document.getElementById($(data.input).data('input-id'))
                 var maxFund = $(data.input).data('max-fund')
-                console.log(maxFund, data.from_percent, maxFund * data.from_percent, data.from)
+                //console.log(maxFund, data.from_percent, maxFund * data.from_percent, data.from)
                 inputDom.value = maxFund * data.from/100.0
             }
         })
 
-        function updateVolume(val, elm) {
-            var volumeElement
-            volumeElement = document.getElementById('id_buy_volume');
-            if(elm.classList.contains('_sell')) {
-                volumeElement = document.getElementById('id_sell_volume');
-            }
-            volumeElement.value = val;
-        }
+
     </script>
 {% endblock javascripts %}
-
-{% comment %}
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Hello World</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="css/style.css">
-
-
-
-</head>
-
-
-
-<body>
-
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h1 class="text-center">Bienvenido a Jillionet</h1>
-      <br>
-
-      <h2 class="text-center">Orderbook Level spred</h2>
-
-      <h2 class="text-center">Trading pair {{ trading_pair.pair }}</h2>
-
-      <h2 class="text-center">Bid Price {{sell_orders.first.price | floatformat:2}}</h2>
-      <h2 class="text-center">Ask Price {{buy_orders.last.price | floatformat:2}}</h2>
-
-{% if form %}
-      <div>
-        <h2>{{view.kwargs.slug}}</h2>
-        <form action="." method="POST">
-            {% csrf_token %}
-            {{form.as_p}}
-            <button>Order</button>
-        </form>
-    </div>
-    {% endif %}
-     
-    </div>
-  </div>
-
-</div>
-
-<p class="text-center">Buybook <br><br></p>
-<table class="text-center">
-  <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th><th>Price</th>
-  </tr>
-  {% for buy_order in buy_orders%}
-  <tr>
-    <td>{{buy_order.trading_pair.pair}}</td><td>{{buy_order.buy_sell}}</td><td>{{buy_order.order_type}}</td><td>{{buy_order.volume | floatformat:4}}</td><td>{{buy_order.price | floatformat:4}}</td>
-  </tr>
-  {% endfor %}
-</table>
-
-<p>Sellbook <br><br></p>
-
-<table>
-
-  <tr>
-    <th>Pair</th><th>Buy/Sell</th><th>Order type</th><th>Volume</th>
-  </tr>
-  {% for sell_order in sell_orders %}
-  <tr>
-    <td>{{sell_order.trading_pair.pair}}</td><td>{{sell_order.buy_sell}}</td><td>{{sell_order.order_type}}</td><td>{{sell_order.volume | floatformat:4}}</td><td>{{sell_order.price | floatformat:4}}</td>
-  </tr>
-  {% endfor %}
-
-</table>
-
-
-
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-{% endcomment %}
