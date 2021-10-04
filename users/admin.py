@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
 
 from users.forms import UserChangeForm, UserCreationForm
-from .models import UserBalance, UserLevel, BalanceFor
+from .models import UserBalance, UserLevel, BalanceFor, Loan
 
 User = get_user_model()
 
@@ -15,7 +15,15 @@ class UserAdmin(auth_admin.UserAdmin):
     add_form = UserCreationForm
     fieldsets = (
         (None, {"fields": ("username", "password")}),
-        (_("Personal info"), {"fields": ("first_name", "last_name", "phone_number", "email", "level", "jillion_public_key", "rank")}),
+        (
+            _("Personal info"),
+            {
+                "fields": (
+                    "first_name", "last_name", "phone_number", "email",
+                    "level", "jillion_public_key", "rank", "loan"
+                )
+            }
+        ),
         (
             _("Permissions"),
             {
@@ -30,13 +38,22 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "first_name", "last_name", "phone_number", "rank", "jillion_public_key"]
+    list_display = ["username", "first_name", "last_name", "phone_number", "rank", "jillion_public_key", "loan_amount"]
     search_fields = ["username"]
     list_filter = ()
 
     add_fieldsets = auth_admin.UserAdmin.add_fieldsets + (
         (None, {'fields': ('phone_number',)}),
     )
+
+    def loan_amount(self, obj):
+        try:
+            return obj.loan.amount
+        except:
+            return None
+
+    loan_amount.short_description = 'Loan amount'
+    loan_amount.admin_order_field = 'loan__amount'
 
 
 @admin.register(UserBalance)
@@ -69,3 +86,4 @@ class User_level_field(admin.ModelAdmin):
 
 
 admin.site.register(BalanceFor)
+admin.site.register(Loan)

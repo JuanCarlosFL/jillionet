@@ -39,6 +39,7 @@ class User(AbstractUser):
     level = models.ForeignKey('UserLevel', on_delete=models.SET_NULL, null=True, blank=True)
     jillion_public_key = models.TextField(blank=True, null=True)
     rank = models.IntegerField(null=True, blank=True)
+    loan = models.OneToOneField('Loan', on_delete=models.CASCADE, null=True, blank=True)
     # user_level = models.CharField(max_length=50, choices=USER_LEVEL_CHOICES, default=BRONZE, null=True)
     # balance = models.ForeignKey("UserBalance", on_delete=models.SET_NULL, null=True, blank=True)
 
@@ -112,3 +113,21 @@ class UserLevel(models.Model):
 
     def __str__(self):
         return self.level_key
+
+
+class Loan(models.Model):
+    ACTIVE = 'active'
+    PAID = 'paid'
+    STATUS_CHOICES = (
+        (PAID, PAID.title()),
+        (ACTIVE, ACTIVE.title()),
+    )
+
+    status = models.CharField(max_length=200, choices=STATUS_CHOICES, default=ACTIVE)
+    amount = models.DecimalField(decimal_places=18, max_digits=36, default=0)
+
+    def __str__(self):
+        try:
+            return f'{self.user.username}--{self.amount}--{self.status}'
+        except User.DoesNotExist:
+            return f'{self.amount}--{self.status}'
