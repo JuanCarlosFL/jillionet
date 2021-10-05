@@ -8,6 +8,27 @@ let app = Vue.createApp({
     methods: {
         getMyFunds() {
             console.log(this.totalAssets)
+        },
+        formatCurrrency() {
+            let currencyFormatter = new Intl.NumberFormat(Intl.locale, {
+                maximumFractionDigits: 2,
+                style: 'currency',
+                currency: 'EUR',
+            })
+            return currencyFormatter
+        },
+        formatJillCurrency() {
+            return  new Intl.NumberFormat(Intl.locale, {
+                maximumFractionDigits: 8,
+                style: 'currency',
+                currency: 'EUR',
+            })
+        },
+        formatNumber() {
+            return new Intl.NumberFormat(Intl.locale, {
+                maximumFractionDigits: 2,
+
+            })
         }
     }
 })
@@ -17,6 +38,17 @@ app.component('fund-component', {
         return {
             allFunds: allFunds
         }
+    },
+    props: ['formatnum', 'formatjillcur', 'formatcur'],
+    methods: {
+        generateQrCode(publicKey, id) {
+            console.log(this.$refs, id)
+            //let qrcodeContainer = document.getElementById(id);
+            //console.log(qrcodeContainer);
+            //qrcodeContainer.innerHTML = "";
+            //new QRCode(qrcodeContainer, publicKey);
+        }
+
     },
     template:`
         <div v-for="(fund, i) in allFunds" :key="i" class="col-xl-8 col-md-6">
@@ -88,7 +120,17 @@ app.component('fund-component', {
                                     </button>
                                 </div>
                                 <div class="modal-body">
-                                    ...
+                                    <form>
+                                        <h3 class="text-center">{{formatnum().format(asset.amount)}} {{asset.currency_code}}</h3>
+                                        <div><input type="number" class="form-control" placeholder="Amount"></div>
+                                        <div class="mt-2">
+                                            
+                                           <input type="text" class="js-range-slider" name="my_range" :data-max="asset.amount" value="" />
+                                        </div> 
+                                        <div class="mt-3">
+                                            <input type="text" class="form-control" placeholder="Pulic key">
+                                        </div>                                                                               
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -115,7 +157,12 @@ app.component('fund-component', {
                                 </button>
                             </div>
                             <div class="modal-body">
-                                ...
+                                <div>
+                                    <p><b>Public key</b></p>
+                                    
+                                    <div :id="'qrcode-'+asset.id" ref="id" :code="generateQrCode(asset.public_key, id)" class="qrcode"></div>
+                                    
+                                </div> 
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">
@@ -168,7 +215,10 @@ app.component('fund-component', {
                 </template>
             </div>
         </div>
-    `
+    `,
+    mounted() {
+        $(".js-range-slider").ionRangeSlider();
+    }
 })
 
 app.component('all-assets', {
@@ -270,5 +320,7 @@ app.component('donut-chart', {
         this.displayDonutChart()
     }
 })
+
+//app.component(VueQrcode.name, VueQrcode);
 
 app.mount('#main-body')

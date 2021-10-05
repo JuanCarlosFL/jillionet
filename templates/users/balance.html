@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div id="my-funds-dom" class="row">
-                        <fund-component/>
+                        <fund-component :formatnum="formatNumber" :formatjillcur="formatJillCurrency" :formatcur="formatCurrrency"/>
                     </div>
                     <div class="row">
                         <div class="col-xl-8 col-md-6">
@@ -75,7 +75,9 @@
 
 {% block javascripts %}
     <script src="https://unpkg.com/vue@next"></script>
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.js" integrity="sha512-is1ls2rgwpFZyixqKFEExPHVUUL+pPkBEPw47s/6NDQ4n1m6T/ySeDW3p54jp45z2EJ0RSOgilqee1WhtelXfA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>#}
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/@aecworks/vue-qrcode"></script>#}
 
     <script src="{% static 'assets/plugins/chart-morris/js/raphael.min.js' %}"></script>
     <script src="{% static 'assets/plugins/chart-morris/js/morris.min.js' %}"></script>
