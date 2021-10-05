@@ -30,7 +30,15 @@
                                 <h5>{% trans "Create Order" %}</h5>
                             </div>
                             <div class="card-body">
-                                <h5>{{ trading_pair.pair }} <small class="text-success float-right">{{ bid_price }}</small><small id="current-price-{{ trading_pair.get_symbol | lower }}" class="text-danger float-right mr-2"></small></h5>
+                                <h5>
+                                    {{ trading_pair.pair }} 
+                                    <small class="text-success float-right">
+                                        <strong>Buy</strong> <span id="current-bid-price-{{ trading_pair.get_symbol | lower }}">{{ bid_price }}</span>
+                                    </small>
+                                    <small class="text-danger float-right mr-2">
+                                        <strong>Sell</strong> <span id="current-ask-price-{{ trading_pair.get_symbol | lower }}">{{asks_price}}</span>
+                                    </small>
+                                </h5>
                                 <div class="row">
 
                                     <div class="col-md-8">
@@ -414,18 +422,27 @@
                 if (changeEl.includes('jill')) {
                     let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
                     let pr = messageObject.c/thousandthPrice
-                    axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
-                    .then(function (response) {
+                    if(changeEl.includes('bid')){
+                        //console.log('bid', {{bid_price|safe}})
+                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format({{bid_price|safe}} * pr)
+                    }else if(changeEl.includes('ask')) {
+                        //console.log('bid', {{ask_price|safe}})
+                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format({{ask_price|safe}} * pr)
+                    }else {
+                        axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                        .then(function (response) {
 
-                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
-                        //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+                            priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
+                            //changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
 
 
-                    })
-                    .catch(function (error) {
-                        console.log
-                    }).then(function (response) {})
-                    //console.log(pr)
+                        })
+                        .catch(function (error) {
+                            console.log
+                        }).then(function (response) {})
+                        //console.log(pr)
+
+                        }                    
 
                 } else {
                     priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
@@ -439,9 +456,15 @@
 
         }
 
+        //stream bid price
         streamPrice(
             '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}',
-            'current-price-{{ trading_pair.get_symbol | lower }}'
+            'current-bid-price-{{ trading_pair.get_symbol | lower }}'
+            )
+        //stream ask price
+        streamPrice(
+            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}',
+            'current-ask-price-{{ trading_pair.get_symbol | lower }}'
             )
 
         function jillChart() {

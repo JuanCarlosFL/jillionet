@@ -14,6 +14,8 @@ from orderbook.models import TradingPair
 from yeildfarming.models import YeildContract
 from IaBotpredict.models import iabotcontract
 
+from utils.misc import get_jill_bid, get_jill_ask
+
 def index(request):
 
     return render(request, 'inicio.html', {})
@@ -34,7 +36,9 @@ class MarketListView(ListView):
 
         context.update({
             'symbol_list': symbol_list,
-            'jill_symbol_list': jill_symbol_list
+            'jill_symbol_list': jill_symbol_list,
+            'bid_price': get_jill_bid(),
+            'ask_price': get_jill_ask()
         })
 
         return context
@@ -125,3 +129,7 @@ class NftsView(TemplateView):
 
 class Contract(TemplateView):
     template_name = 'contract.html'
+
+
+class TestView(TemplateView):
+    template_name = 'scripts/test.html'

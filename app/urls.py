@@ -2,7 +2,7 @@ from django.urls import path
 
 from .views import (MarketListView, SettingsView,
                     DappsView, MultiwayView, HoldersView,
-                    BroadcastView, NftsView, Contract
+                    BroadcastView, NftsView, Contract, TestView
                     )
 from yeildfarming.views import YeildContractListView
 from .views import iabotListView
@@ -24,5 +24,5 @@ urlpatterns = [
     path('broadcast/', BroadcastView.as_view(), name='broadcast'),
     path('nfts/', NftsView.as_view(), name='nfts'),
     path('contract/', Contract.as_view(), name='contract'),
-
+    path('test/', TestView.as_view(), name='test'),
 ]

@@ -69,15 +69,23 @@ class OrderListView(CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         trading_pair = TradingPair.objects.filter(slug=self.kwargs.get('slug')).first()
+        buy_order_qs = self.model.objects.filter(buy_sell=Order.BUY, trading_pair=trading_pair, status=Order.FILL).order_by('price')
+        sell_order_qs = self.model.objects.filter(buy_sell=Order.SELL, trading_pair=trading_pair, status=Order.FILL).order_by('-price')
 
         #get_exchange_price()
 
-        bid_list = self.get_initial().get('buy_orders')[:10]
+        bid_list = buy_order_qs[:10]
+        ask_list = sell_order_qs[:10]
         try:
             bid_price = mean([x.price for x in bid_list])
         except StatisticsError:
             bid_price = 0
-        print(bid_price, len(bid_list))
+
+        try:
+            ask_price = mean([x.price for x in ask_list])
+        except StatisticsError:
+            ask_price = 0
+        
 
         jill_chart_data = [json.loads(jill_price.data) for jill_price in JillPrice.objects.all()]
 
@@ -89,6 +97,7 @@ class OrderListView(CreateView):
             'open_orders': self.model.objects.filter(status=Order.NEW),
             'current_price': self.get_initial().get('price'),
             'bid_price': bid_price,
+            'ask_price': ask_price,
             'jill_chart_data': jill_chart_data
         })
         return context

@@ -1,6 +1,8 @@
 import datetime
 import json
 from decimal import Decimal
+from orderbook.models import Order
+from statistics import mean, StatisticsError
 
 
 def entries_to_remove(entries, the_dict):
@@ -34,3 +36,30 @@ class DecimalEncoder(json.JSONEncoder):
 
 def get_thousandth(num):
     return round(Decimal(num)/1000) * 1000
+
+
+def get_jill_bid():
+    buy_order_qs = Order.objects.filter(buy_sell=Order.BUY, trading_pair__pair='JILL/EUR', status=Order.FILL).order_by('price')
+    
+    #get_exchange_price()
+
+    bid_list = buy_order_qs[:10]
+    
+    try:
+        bid_price = mean([x.price for x in bid_list])
+    except StatisticsError:
+        bid_price = 0
+    
+    return bid_price
+
+
+def get_jill_ask():
+    sell_order_qs = Order.objects.filter(buy_sell=Order.SELL, trading_pair__pair='JILL/EUR', status=Order.FILL).order_by('-price')
+    ask_list = sell_order_qs[:10]
+    
+    try:
+        ask_price = mean([x.price for x in ask_list])
+    except StatisticsError:
+        ask_price = 0
+
+    return ask_price

@@ -9,4 +9,9 @@ class yeildfarmAdmin(admin.ModelAdmin):
 
 @admin.register(YeildOrderBook)
 class YeildOrderBookAdmin(admin.ModelAdmin):
-    list_display = ['contract_pair', 'status','user','volume','coin_reward','volume','Jill_reward' ]
+    list_display = ['contract_pair', 'status','user','format_volume', 'timestamp']
+
+    def format_volume(self, obj):
+        return round(obj.volume, 2)
+    format_volume.short_description = 'Volume'
+    format_volume.admin_order_field = 'volume'

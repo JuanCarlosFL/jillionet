@@ -30,6 +30,16 @@
                                         <div class="col text-right">
                                             <h3 id="{{ market.get_symbol | lower }}">0</h3>
                                             <h5 class="text-c-green mb-0"><span id="change-{{ market.get_symbol | lower }}" >0</span>% <span class="text-muted">Change</span></h5>
+                                            {% if 'JILL' in market.get_symbol %}
+                                                <h6>
+                                                    <small class="text-success float-right">
+                                                        <strong>Buy</strong> <span id="current-bid-price-{{ market.get_symbol | lower }}">{{ bid_price }}</span>
+                                                    </small>
+                                                    <small class="text-danger float-right mr-2">
+                                                        <strong>Sell</strong> <span id="current-ask-price-{{ market.get_symbol | lower }}">{{ask_price}}</span>
+                                                    </small>
+                                                </h6>
+                                            {%endif%}
                                         </div>
                                     </div>
                                 </div>
@@ -76,39 +86,59 @@
     }
 
     function streamPrice(symbol='btcusdt', changeEl) {
-        let priceTag = document.getElementById(changeEl)
-        let changeTag = document.getElementById(`change-${changeEl}`)
-        //console.log(changeEl, priceTag)
-        var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
-        biSocket.onmessage = function (event) {
-            let messageObject = JSON.parse(event.data)
-            if (changeEl.includes('jill')) {
-                let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
-                let pr = messageObject.c/thousandthPrice
-                axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
-                .then(function (response) {
-                    
-                    priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
+            let priceTag = document.getElementById(changeEl)
+            let changeTag = document.getElementById(`change-${changeEl}`)
+
+            var biSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol}@ticker`);
+            biSocket.onmessage = function (event) {
+                let messageObject = JSON.parse(event.data)
+                if (changeEl.includes('jill')) {
+                    let thousandthPrice = Math.round(messageObject.c/1000) * 1000;
+                    let pr = messageObject.c/thousandthPrice
+                    if(changeEl.includes('bid')){
+                        //console.log('bid', {{bid_price|safe}})
+                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format({{bid_price|safe}} * pr)
+                    }else if(changeEl.includes('ask')) {
+                        //console.log('bid', {{ask_price|safe}})
+                        priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format({{ask_price|safe}} * pr)
+                    }else {
+                        axios.get(`/orderbook/get-jillion-price/JILL_EUR`)
+                        .then(function (response) {
+
+                            priceTag.innerText = new Intl.NumberFormat(Intl.locale, {maximumSignificantDigits: 8}).format(response.data.last_price * pr)
+                            changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+
+
+                        })
+                        .catch(function (error) {
+                            console.log
+                        }).then(function (response) {})
+                        //console.log(pr)
+
+                        }                    
+
+                } else {
+                    priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
                     changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
-                    //console.log(response.data.last_price * pr)
 
-                })
-                .catch(function (error) {
-                    console.log
-                }).then(function (response) {})
-                //console.log(pr)
+                }
 
-            } else {
-                priceTag.innerText = new Intl.NumberFormat().format(messageObject.c)
-                changeTag.innerText = new Intl.NumberFormat().format(messageObject.P)
+                //console.log(thousandthPrice)
 
             }
-            
-            //console.log(thousandthPrice)
-            
-        }
 
-    }
+        }
+        //stream bid price
+        streamPrice(
+            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}',
+            'current-bid-price-{{ trading_pair.get_symbol | lower }}'
+            )
+        //stream ask price
+        streamPrice(
+            '{{ trading_pair.get_symbol | lower }}'.includes('jill')?'btcusdt':'{{ trading_pair.get_symbol | lower }}',
+            'current-ask-price-{{ trading_pair.get_symbol | lower }}'
+            )
+
 
     symbolList.forEach(function (item) {
         streamPrice(item, item);
