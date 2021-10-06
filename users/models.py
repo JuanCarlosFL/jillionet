@@ -56,16 +56,19 @@ class User(AbstractUser):
         return self.get_balance(balance_for).filter(currency__code=currency).first()
 
     def get_jill_wallet_ballance(self):
-        # ABI = json.loads(ABI_json)
-        w3 = Web3(Web3.HTTPProvider(settings.INFURA_KEY))
-        #print(w3.isConnected())
+        try:
+            # ABI = json.loads(ABI_json)
+            w3 = Web3(Web3.HTTPProvider(settings.INFURA_KEY))
+            #print(w3.isConnected())
 
-        contract_address = '0x83053843161Ef9fe5b44211a56d2ADf201BeDEF9'
+            contract_address = '0x83053843161Ef9fe5b44211a56d2ADf201BeDEF9'
 
-        contract = w3.eth.contract(contract_address, abi=settings.JILLION_ABI)
-        holder = Web3.toChecksumAddress(self.jillion_public_key)
-        raw_balance = contract.functions.balanceOf(holder).call()
-        return Decimal(raw_balance)/(10**18)
+            contract = w3.eth.contract(contract_address, abi=settings.JILLION_ABI)
+            holder = Web3.toChecksumAddress(self.jillion_public_key)
+            raw_balance = contract.functions.balanceOf(holder).call()
+            return Decimal(raw_balance)/(10**18)
+        except ValueError:
+            return 0
 
 
 class BalanceFor(models.Model):

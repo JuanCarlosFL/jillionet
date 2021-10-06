@@ -85,7 +85,6 @@ class OrderListView(CreateView):
             ask_price = mean([x.price for x in ask_list])
         except StatisticsError:
             ask_price = 0
-        
 
         jill_chart_data = [json.loads(jill_price.data) for jill_price in JillPrice.objects.all()]
 

@@ -77,21 +77,24 @@ const fundsContainer = async (funds) => {
         mainFunds.push(obj)
     }
 
+    if(totalFundsSet.length>1) {
+        var graph = Morris.Donut({
+            element: 'morris-donut-chart',
+            data: totalFundsSet,
+            colors: [
+                '#1de9b6',
+                '#A389D4',
+                '#04a9f5',
+                '#1dc4e9',
+            ],
+            resize: true,
+            formatter: function(x) {
+                return currencyFormatter.format(x)
+            }
+        });
+    }
 
-    var graph = Morris.Donut({
-        element: 'morris-donut-chart',
-        data: totalFundsSet,
-        colors: [
-            '#1de9b6',
-            '#A389D4',
-            '#04a9f5',
-            '#1dc4e9',
-        ],
-        resize: true,
-        formatter: function(x) {
-            return currencyFormatter.format(x)
-        }
-    });
+
 
     //document.getElementById('my-funds-dom').innerHTML = initialCont;
     document.getElementById('main-funds').innerHTML = mainComponent(mainFunds);

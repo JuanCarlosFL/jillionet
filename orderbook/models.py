@@ -136,7 +136,7 @@ class JillPrice(models.Model):
         (BUY, BUY.title()),
         (SELL, SELL.title()),
     )
-    buy_sell = models.CharField(max_length=200, choices=CHOICES, null=True)
+    # buy_sell = models.CharField(max_length=200, choices=CHOICES, null=True)
     data = models.JSONField()
     timestamp = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
